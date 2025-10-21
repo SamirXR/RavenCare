@@ -1,0 +1,125 @@
+{
+  "hospital_name": "AIIMS, New Delhi",
+  "city": "New Delhi",
+  "contact_number": "+91-11-26588500",
+  "email": "info@aiims.mock",
+  "address": "Ansari Nagar, New Delhi, 110029",
+  "departments": [
+    {
+      "specialty": "ENT",
+      "floor": "2nd Floor",
+      "doctors": [
+        {
+          "name": "Dr. Rakesh Verma",
+          "qualification": "MS, DLO (ENT)",
+          "experience_years": 18,
+          "sub_specialization": "Otology, Hearing loss",
+          "languages_spoken": ["English", "Hindi", "Punjabi"],
+          "patient_rating": 4.8,
+          "slots": ["09:00", "11:00", "14:00"],
+          "contact_email": "ent1@aiims.mock",
+          "awards": ["Top ENT Surgeon 2021"]
+        },
+        {
+          "name": "Dr. Priya Malhotra",
+          "qualification": "MS, DLO (ENT)",
+          "experience_years": 12,
+          "sub_specialization": "Rhinology, Sinus surgery",
+          "languages_spoken": ["English", "Hindi", "Marathi"],
+          "patient_rating": 4.7,
+          "slots": ["10:00", "12:30", "15:00"],
+          "contact_email": "ent2@aiims.mock",
+          "awards": ["Best Rhinologist 2020"]
+        },
+        {
+          "name": "Dr. Anil Kapoor",
+          "qualification": "MS, DLO (ENT)",
+          "experience_years": 20,
+          "sub_specialization": "Laryngology, Voice disorders",
+          "languages_spoken": ["English", "Hindi", "Gujarati"],
+          "patient_rating": 4.9,
+          "slots": ["09:30", "12:00", "15:30"],
+          "contact_email": "ent3@aiims.mock",
+          "awards": ["Lifetime Achievement in Laryngology 2021"]
+        },
+        {
+          "name": "Dr. Neha Sharma",
+          "qualification": "MS, DLO (ENT)",
+          "experience_years": 10,
+          "sub_specialization": "Pediatric ENT, Ear infections",
+          "languages_spoken": ["English", "Hindi", "Bengali"],
+          "patient_rating": 4.6,
+          "slots": ["09:00", "11:30", "14:30"],
+          "contact_email": "ent4@aiims.mock",
+          "awards": ["Emerging Pediatric ENT Specialist 2020"]
+        },
+        {
+          "name": "Dr. Vikram Sinha",
+          "qualification": "MS, DLO (ENT)",
+          "experience_years": 15,
+          "sub_specialization": "Head and neck surgery, Thyroid",
+          "languages_spoken": ["English", "Hindi", "Tamil"],
+          "patient_rating": 4.8,
+          "slots": ["10:00", "12:30", "15:00"],
+          "contact_email": "ent5@aiims.mock",
+          "awards": ["Top Head & Neck Surgeon 2021"]
+        },
+        {
+          "name": "Dr. Anjali Gupta",
+          "qualification": "MS, DLO (ENT)",
+          "experience_years": 13,
+          "sub_specialization": "Cochlear implants, Hearing rehabilitation",
+          "languages_spoken": ["English", "Hindi", "Malayalam"],
+          "patient_rating": 4.7,
+          "slots": ["09:30", "12:00", "15:30"],
+          "contact_email": "ent6@aiims.mock",
+          "awards": ["Best Cochlear Implant Surgeon 2020"]
+        },
+        {
+          "name": "Dr. Arjun Mehta",
+          "qualification": "MS, DLO (ENT)",
+          "experience_years": 16,
+          "sub_specialization": "Skull base surgery, Tumor surgery",
+          "languages_spoken": ["English", "Hindi", "Kannada"],
+          "patient_rating": 4.8,
+          "slots": ["10:00", "13:00", "15:30"],
+          "contact_email": "ent7@aiims.mock",
+          "awards": ["Excellence in Skull Base Surgery 2021"]
+        },
+        {
+          "name": "Dr. Neeraj Bansal",
+          "qualification": "MS, DLO (ENT)",
+          "experience_years": 14,
+          "sub_specialization": "Sinus surgery, Endoscopic procedures",
+          "languages_spoken": ["English", "Hindi", "Punjabi"],
+          "patient_rating": 4.7,
+          "slots": ["09:00", "11:30", "14:00"],
+          "contact_email": "ent8@aiims.mock",
+          "awards": ["Top Sinus Surgeon 2022"]
+        },
+        {
+          "name": "Dr. Ritu Agarwal",
+          "qualification": "MS, DLO (ENT)",
+          "experience_years": 11,
+          "sub_specialization": "Voice therapy, ENT rehabilitation",
+          "languages_spoken": ["English", "Hindi", "Bengali"],
+          "patient_rating": 4.6,
+          "slots": ["09:30", "12:00", "14:30"],
+          "contact_email": "ent9@aiims.mock",
+          "awards": ["Emerging ENT Therapist 2021"]
+        },
+        {
+          "name": "Dr. Karan Bansal",
+          "qualification": "MS, DLO (ENT)",
+          "experience_years": 17,
+          "sub_specialization": "Temporal bone surgery, Otology",
+          "languages_spoken": ["English", "Hindi", "Marathi"],
+          "patient_rating": 4.9,
+          "slots": ["10:00", "13:00", "16:00"],
+          "contact_email": "ent10@aiims.mock",
+          "awards": ["Best Otologist 2022"]
+        }
+      ]
+    }
+  ]
+}

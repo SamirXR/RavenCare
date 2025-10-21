@@ -1,0 +1,125 @@
+{
+  "hospital_name": "AIIMS, New Delhi",
+  "city": "New Delhi",
+  "contact_number": "+91-11-26588500",
+  "email": "info@aiims.mock",
+  "address": "Ansari Nagar, New Delhi, 110029",
+  "departments": [
+    {
+      "specialty": "Orthopedics",
+      "floor": "2nd Floor",
+      "doctors": [
+        {
+          "name": "Dr. Rakesh Verma",
+          "qualification": "MS, MCh (Orthopedics)",
+          "experience_years": 18,
+          "sub_specialization": "Joint replacement, Sports injuries",
+          "languages_spoken": ["English", "Hindi"],
+          "patient_rating": 4.8,
+          "slots": ["09:00", "11:00", "14:00"],
+          "contact_email": "ortho1@aiims.mock",
+          "awards": ["Best Orthopedic Surgeon 2021"]
+        },
+        {
+          "name": "Dr. Priya Malhotra",
+          "qualification": "MS, MCh (Orthopedics)",
+          "experience_years": 12,
+          "sub_specialization": "Spine surgery, Trauma care",
+          "languages_spoken": ["English", "Hindi"],
+          "patient_rating": 4.7,
+          "slots": ["10:00", "12:30", "15:00"],
+          "contact_email": "ortho2@aiims.mock",
+          "awards": ["Excellence in Spine Surgery 2020"]
+        },
+        {
+          "name": "Dr. Anil Kapoor",
+          "qualification": "MS, MCh (Orthopedics)",
+          "experience_years": 20,
+          "sub_specialization": "Pediatric orthopedics, Clubfoot treatment",
+          "languages_spoken": ["English", "Hindi"],
+          "patient_rating": 4.9,
+          "slots": ["09:30", "12:00", "15:30"],
+          "contact_email": "ortho3@aiims.mock",
+          "awards": ["Lifetime Achievement in Pediatric Orthopedics 2021"]
+        },
+        {
+          "name": "Dr. Neha Sharma",
+          "qualification": "MS, MCh (Orthopedics)",
+          "experience_years": 10,
+          "sub_specialization": "Arthroscopy, Sports injury rehabilitation",
+          "languages_spoken": ["English", "Hindi"],
+          "patient_rating": 4.6,
+          "slots": ["09:00", "11:30", "14:30"],
+          "contact_email": "ortho4@aiims.mock",
+          "awards": ["Emerging Orthopedic Surgeon 2020"]
+        },
+        {
+          "name": "Dr. Vikram Sinha",
+          "qualification": "MS, MCh (Orthopedics)",
+          "experience_years": 15,
+          "sub_specialization": "Knee replacement, Hip replacement",
+          "languages_spoken": ["English", "Hindi"],
+          "patient_rating": 4.8,
+          "slots": ["10:00", "12:30", "15:00"],
+          "contact_email": "ortho5@aiims.mock",
+          "awards": ["Top Joint Replacement Surgeon 2021"]
+        },
+        {
+          "name": "Dr. Anjali Gupta",
+          "qualification": "MS, MCh (Orthopedics)",
+          "experience_years": 13,
+          "sub_specialization": "Hand surgery, Fracture management",
+          "languages_spoken": ["English", "Hindi"],
+          "patient_rating": 4.7,
+          "slots": ["09:30", "12:00", "15:30"],
+          "contact_email": "ortho6@aiims.mock",
+          "awards": ["Best Hand Surgeon 2020"]
+        },
+        {
+          "name": "Dr. Arjun Mehta",
+          "qualification": "MS, MCh (Orthopedics)",
+          "experience_years": 16,
+          "sub_specialization": "Shoulder surgery, Sports injuries",
+          "languages_spoken": ["English", "Hindi"],
+          "patient_rating": 4.8,
+          "slots": ["10:00", "13:00", "15:30"],
+          "contact_email": "ortho7@aiims.mock",
+          "awards": ["Excellence in Shoulder Surgery 2021"]
+        },
+        {
+          "name": "Dr. Neeraj Bansal",
+          "qualification": "MS, MCh (Orthopedics)",
+          "experience_years": 14,
+          "sub_specialization": "Spine deformities, Trauma care",
+          "languages_spoken": ["English", "Hindi"],
+          "patient_rating": 4.7,
+          "slots": ["09:00", "11:30", "14:00"],
+          "contact_email": "ortho8@aiims.mock",
+          "awards": ["Top Spine Surgeon 2022"]
+        },
+        {
+          "name": "Dr. Ritu Agarwal",
+          "qualification": "MS, MCh (Orthopedics)",
+          "experience_years": 11,
+          "sub_specialization": "Arthroscopy, Sports medicine",
+          "languages_spoken": ["English", "Hindi"],
+          "patient_rating": 4.6,
+          "slots": ["09:30", "12:00", "14:30"],
+          "contact_email": "ortho9@aiims.mock",
+          "awards": ["Emerging Sports Orthopedist 2021"]
+        },
+        {
+          "name": "Dr. Karan Bansal",
+          "qualification": "MS, MCh (Orthopedics)",
+          "experience_years": 17,
+          "sub_specialization": "Hip and knee reconstruction, Trauma care",
+          "languages_spoken": ["English", "Hindi"],
+          "patient_rating": 4.9,
+          "slots": ["10:00", "13:00", "16:00"],
+          "contact_email": "ortho10@aiims.mock",
+          "awards": ["Best Clinical Orthopedic Surgeon 2022"]
+        }
+      ]
+    }
+  ]
+}

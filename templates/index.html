@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RavenCare - AI Medical Triage Dashboard</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --success: #059669;
+            --warning: #d97706;
+            --error: #dc2626;
+            --bg: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-tertiary: #64748b;
+            --border: #1e293b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header */
+        .header {
+            padding: 2rem 0;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.875rem;
+            font-weight: 600;
+            letter-spacing: -0.025em;
+        }
+
+        .header-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-tertiary);
+        }
+
+        .status-dot.active {
+            background: var(--success);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
+        }
+
+        .stat-card:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--primary);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .stat-value {
+            font-size: 2.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.025em;
+        }
+
+        .stat-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        /* Control Panel */
+        .control-panel {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.025em;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: var(--primary-dark);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg);
+            border-color: var(--text-tertiary);
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-left: 0.5rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Progress Bar */
+        .progress-section {
+            margin-top: 1.5rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .progress-label span:first-child {
+            color: var(--text-secondary);
+        }
+
+        .progress-label span:last-child {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .progress-bar-container {
+            background: var(--bg);
+            border-radius: 0.25rem;
+            height: 0.5rem;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        /* Console */
+        .console-section {
+            background: var(--bg-secondary);
+            border-radius: 0.5rem;
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .console-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .console-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .console-body {
+            padding: 1rem;
+            height: 400px;
+            overflow-y: auto;
+            font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+            font-size: 0.8125rem;
+            line-height: 1.6;
+            background: var(--bg);
+        }
+
+        .console-body::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .console-body::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .console-body::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        .console-body::-webkit-scrollbar-thumb:hover {
+            background: var(--text-tertiary);
+        }
+
+        .console-log {
+            margin-bottom: 0.25rem;
+            padding: 0.5rem;
+            display: flex;
+            gap: 0.75rem;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .console-log.info {
+            color: var(--text-secondary);
+        }
+
+        .console-log.success {
+            color: var(--success);
+        }
+
+        .console-log.warning {
+            color: var(--warning);
+        }
+
+        .console-log.error {
+            color: var(--error);
+        }
+
+        .console-log.progress {
+            color: var(--primary);
+        }
+
+        .timestamp {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+            min-width: 75px;
+            flex-shrink: 0;
+        }
+
+        .log-content {
+            flex: 1;
+        }
+
+        /* Results */
+        .results-section {
+            margin-top: 2rem;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .result-card {
+            background: var(--bg-secondary);
+            border-radius: 0.5rem;
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .result-card:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--primary);
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .patient-name {
+            font-size: 1.125rem;
+            font-weight: 600;
+            letter-spacing: -0.025em;
+        }
+
+        .urgency-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .urgency-critical {
+            background: rgba(220, 38, 38, 0.1);
+            color: var(--error);
+        }
+
+        .urgency-high {
+            background: rgba(217, 119, 6, 0.1);
+            color: var(--warning);
+        }
+
+        .urgency-moderate {
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+        }
+
+        .urgency-low {
+            background: rgba(5, 150, 105, 0.1);
+            color: var(--success);
+        }
+
+        .result-detail {
+            margin-bottom: 0.75rem;
+        }
+
+        .result-detail-label {
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .result-detail-value {
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-tertiary);
+            font-size: 0.875rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            width: 90%;
+            max-width: 1200px;
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.025em;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            line-height: 1;
+            transition: color 0.2s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        .modal-body {
+            padding: 2rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .modal-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-body::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .modal-body::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        .modal-body::-webkit-scrollbar-thumb:hover {
+            background: var(--text-tertiary);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+        }
+
+        .data-table th {
+            text-align: left;
+            padding: 0.75rem;
+            background: var(--bg);
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.875rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .data-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-primary);
+            font-size: 0.875rem;
+        }
+
+        .data-table tr:hover {
+            background: var(--bg);
+        }
+
+        .data-card {
+            background: var(--bg);
+            padding: 1.5rem;
+            border-radius: 0.375rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+        }
+
+        .data-card-header {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .data-row:last-child {
+            border-bottom: none;
+        }
+
+        .data-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .data-value {
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-align: right;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-primary {
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+        }
+
+        .badge-success {
+            background: rgba(5, 150, 105, 0.1);
+            color: var(--success);
+        }
+
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .loading-spinner::before {
+            content: "";
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .btn-icon {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.75rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .console-body {
+                height: 300px;
+            }
+
+            .modal-content {
+                width: 95%;
+                max-height: 95vh;
+            }
+
+            .modal-body {
+                padding: 1rem;
+            }
+
+            .data-row {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+
+            .data-value {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <h1>RavenCare Triage</h1>
+                <div class="header-status">
+                    <div class="status-dot" id="statusDot"></div>
+                    <span id="headerStatus">System Ready</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Total Patients</div>
+                <div class="stat-value" id="totalPatients">0</div>
+                <div class="stat-subtitle">Loaded</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Processed</div>
+                <div class="stat-value" id="processedPatients">0</div>
+                <div class="stat-subtitle" id="processedStatus">Pending</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Progress</div>
+                <div class="stat-value" id="currentProgress">0%</div>
+                <div class="stat-subtitle" id="timeEstimate">Not started</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Status</div>
+                <div class="stat-value" style="font-size: 1.5rem;" id="currentStatus">Idle</div>
+                <div class="stat-subtitle" id="statusDetail">Ready to start</div>
+            </div>
+        </div>
+
+        <!-- Control Panel -->
+        <div class="control-panel">
+            <h2 class="section-title">Control Panel</h2>
+            <div class="button-group">
+                <button class="btn btn-primary" id="startButton" onclick="startTriage()">
+                    <span class="btn-icon">
+                        🚀 Start Triage
+                    </span>
+                    <span class="spinner" id="loadingSpinner" style="display: none;"></span>
+                </button>
+                <button class="btn btn-secondary" onclick="clearConsole()">
+                    <span class="btn-icon">
+                        🗑️ Clear Console
+                    </span>
+                </button>
+                <button class="btn btn-secondary" onclick="downloadResults()">
+                    <span class="btn-icon">
+                        💾 Download Results
+                    </span>
+                </button>
+            </div>
+
+            <div class="progress-section">
+                <div class="progress-label">
+                    <span>Processing Progress</span>
+                    <span id="progressPercentage">0%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="progressBar" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Viewer Panel -->
+        <div class="control-panel">
+            <h2 class="section-title">System Data</h2>
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="viewPatients()">
+                    <span class="btn-icon">
+                        👤 View Patients
+                    </span>
+                </button>
+                <button class="btn btn-secondary" onclick="viewDoctors()">
+                    <span class="btn-icon">
+                        👨‍⚕️ View Doctors
+                    </span>
+                </button>
+                <button class="btn btn-secondary" onclick="viewSystemInfo()">
+                    <span class="btn-icon">
+                        ℹ️ System Info
+                    </span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Console -->
+        <div class="console-section">
+            <div class="console-header">
+                <div class="console-title">
+                    Activity Log
+                </div>
+                <div class="status-dot" id="consoleIndicator"></div>
+            </div>
+            <div class="console-body" id="consoleBody">
+                <div class="console-log info">
+                    <span class="timestamp">[System]</span>
+                    <span class="log-content">Ready to start. Click "Start Triage" to begin processing.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div class="results-section">
+            <h2 class="section-title">Results</h2>
+            <div class="results-grid" id="resultsGrid">
+                <div class="empty-state">
+                    No results yet. Start the triage process to see patient assessments.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for viewing data -->
+    <div class="modal" id="dataModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Data Viewer</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <div class="loading-spinner"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let eventSource = null;
+        let isProcessing = false;
+
+        // Start triage process
+        async function startTriage() {
+            if (isProcessing) {
+                addConsoleLog('⚠️ Triage process already running', 'warning');
+                return;
+            }
+
+            const startButton = document.getElementById('startButton');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            
+            startButton.disabled = true;
+            loadingSpinner.style.display = 'inline-block';
+            isProcessing = true;
+
+            try {
+                const response = await fetch('/start_triage', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({})
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    addConsoleLog('✅ ' + data.message, 'success');
+                    connectEventStream();
+                } else {
+                    addConsoleLog('❌ ' + data.message, 'error');
+                    resetButton();
+                }
+            } catch (error) {
+                addConsoleLog('❌ Error starting triage: ' + error, 'error');
+                resetButton();
+            }
+        }
+
+        function resetButton() {
+            document.getElementById('startButton').disabled = false;
+            document.getElementById('loadingSpinner').style.display = 'none';
+            isProcessing = false;
+        }
+
+        // Connect to event stream
+        function connectEventStream() {
+            if (eventSource) {
+                eventSource.close();
+            }
+
+            eventSource = new EventSource('/stream');
+            const indicator = document.getElementById('consoleIndicator');
+            indicator.classList.add('active');
+
+            eventSource.onmessage = function(event) {
+                try {
+                    const update = JSON.parse(event.data);
+                    
+                    if (update.type === 'heartbeat') {
+                        return;
+                    }
+
+                    addConsoleLog(update.message, update.type);
+
+                    // Update stats if data is present
+                    if (update.data) {
+                        updateStats(update.data);
+                    }
+
+                    // Check if completed
+                    if (update.type === 'success' && update.message.includes('completed successfully')) {
+                        setTimeout(() => {
+                            resetButton();
+                            indicator.classList.remove('active');
+                            loadResults();
+                        }, 1000);
+                    }
+
+                } catch (error) {
+                    console.error('Error parsing update:', error);
+                }
+            };
+
+            eventSource.onerror = function(error) {
+                console.error('EventSource error:', error);
+                indicator.classList.remove('active');
+            };
+        }
+
+        // Add console log entry with improved formatting
+        function addConsoleLog(message, type = 'info') {
+            const consoleBody = document.getElementById('consoleBody');
+            
+            // Remove empty state if exists
+            const emptyState = consoleBody.querySelector('.empty-state');
+            if (emptyState) {
+                emptyState.remove();
+            }
+            
+            const logEntry = document.createElement('div');
+            logEntry.className = `console-log ${type}`;
+            
+            const timestamp = new Date().toLocaleTimeString();
+            logEntry.innerHTML = `
+                <span class="timestamp">[${timestamp}]</span>
+                <span class="log-content">${message}</span>
+            `;
+            
+            consoleBody.appendChild(logEntry);
+            consoleBody.scrollTop = consoleBody.scrollHeight;
+        }
+
+        // Update stats with improved visual feedback
+        function updateStats(data) {
+            if (data.total_patients !== undefined) {
+                document.getElementById('totalPatients').textContent = data.total_patients;
+            }
+
+            if (data.patient_number !== undefined) {
+                const processed = data.patient_number;
+                const total = data.total || data.total_patients || 100;
+                document.getElementById('processedPatients').textContent = processed;
+                document.getElementById('processedStatus').textContent = `${processed}/${total}`;
+            }
+
+            if (data.progress !== undefined) {
+                const progress = data.progress;
+                document.getElementById('currentProgress').textContent = progress + '%';
+                document.getElementById('progressBar').style.width = progress + '%';
+                document.getElementById('progressPercentage').textContent = progress + '%';
+            }
+
+            if (data.patient_name !== undefined) {
+                document.getElementById('currentStatus').textContent = 'Processing';
+                document.getElementById('statusDetail').textContent = data.patient_name;
+                document.getElementById('headerStatus').textContent = 'Processing';
+                document.getElementById('statusDot').classList.add('active');
+                document.getElementById('consoleIndicator').classList.add('active');
+            }
+
+            // Add result card if patient completed
+            if (data.specialty && data.urgency !== undefined) {
+                addResultCard(data);
+            }
+        }
+
+        // Add result card with improved design and enhanced matching info
+        function addResultCard(data) {
+            const resultsGrid = document.getElementById('resultsGrid');
+            
+            // Remove empty state if exists
+            const emptyState = resultsGrid.querySelector('.empty-state');
+            if (emptyState) {
+                emptyState.remove();
+            }
+            
+            const urgencyClass = 
+                data.urgency >= 76 ? 'urgency-critical' :
+                data.urgency >= 51 ? 'urgency-high' :
+                data.urgency >= 26 ? 'urgency-moderate' : 'urgency-low';
+            
+            const urgencyLabel = 
+                data.urgency >= 76 ? 'Critical' :
+                data.urgency >= 51 ? 'High' :
+                data.urgency >= 26 ? 'Moderate' : 'Low';
+
+            // Match quality badge styling
+            const matchScore = data.match_score || 0;
+            const matchQuality = data.match_quality || 'unknown';
+            const isEmergency = data.doctor && data.doctor.includes('Emergency');
+            const matchQualityClass = 
+                matchQuality === 'excellent' ? 'badge-success' :
+                matchQuality === 'good' ? 'badge-primary' :
+                matchQuality === 'fair' ? 'urgency-moderate' : 'urgency-low';
+
+            const card = document.createElement('div');
+            card.className = 'result-card';
+            card.innerHTML = `
+                <div class="result-header">
+                    <div class="patient-name">${data.patient_name}</div>
+                    <div class="urgency-badge ${urgencyClass}">${urgencyLabel}</div>
+                </div>
+                <div class="result-detail">
+                    <div class="result-detail-label">Specialty</div>
+                    <div class="result-detail-value">${data.specialty}</div>
+                </div>
+                <div class="result-detail">
+                    <div class="result-detail-label">Urgency Score</div>
+                    <div class="result-detail-value">${data.urgency}/100</div>
+                </div>
+                <div class="result-detail">
+                    <div class="result-detail-label">Doctor</div>
+                    <div class="result-detail-value">${data.doctor}</div>
+                </div>
+                ${isEmergency ? `
+                <div class="result-detail">
+                    <div class="result-detail-label">Status</div>
+                    <div class="result-detail-value"><span class="badge urgency-critical" style="font-size: 0.75rem;">🚨 EMERGENCY CASE</span></div>
+                </div>
+                ` : matchScore > 0 ? `
+                <div class="result-detail">
+                    <div class="result-detail-label">Match Score</div>
+                    <div class="result-detail-value">${matchScore.toFixed(1)}/170 <span class="badge ${matchQualityClass}" style="margin-left: 0.5rem; font-size: 0.7rem;">${matchQuality.toUpperCase()}</span></div>
+                </div>
+                ` : ''}
+            `;
+            
+            resultsGrid.appendChild(card);
+        }
+
+        // Clear console with animation
+        function clearConsole() {
+            const consoleBody = document.getElementById('consoleBody');
+            consoleBody.innerHTML = '<div class="console-log info"><span class="timestamp">[System]</span><span class="log-content">Console cleared.</span></div>';
+        }
+
+        // Load results with status update
+        async function loadResults() {
+            try {
+                const response = await fetch('/results');
+                const data = await response.json();
+                
+                if (data.success && data.results.length > 0) {
+                    document.getElementById('currentStatus').textContent = 'Complete';
+                    document.getElementById('statusDetail').textContent = `${data.total} processed`;
+                    document.getElementById('headerStatus').textContent = 'Completed';
+                    document.getElementById('statusDot').classList.remove('active');
+                    document.getElementById('consoleIndicator').classList.remove('active');
+                    addConsoleLog(`Loaded ${data.total} results`, 'success');
+                }
+            } catch (error) {
+                console.error('Error loading results:', error);
+            }
+        }
+
+        // Download results
+        async function downloadResults() {
+            try {
+                const response = await fetch('/results');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const blob = new Blob([JSON.stringify(data.results, null, 2)], {
+                        type: 'application/json'
+                    });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `triage_results_${new Date().toISOString()}.json`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                    addConsoleLog('💾 Results downloaded', 'success');
+                }
+            } catch (error) {
+                addConsoleLog('❌ Error downloading results: ' + error, 'error');
+            }
+        }
+
+        // Poll status periodically
+        setInterval(async () => {
+            if (isProcessing) {
+                try {
+                    const response = await fetch('/status');
+                    const status = await response.json();
+                    
+                    if (status.current_step === 'complete' || status.current_step === 'error') {
+                        isProcessing = false;
+                    }
+                } catch (error) {
+                    console.error('Error polling status:', error);
+                }
+            }
+        }, 2000);
+
+        // Modal functions
+        function closeModal() {
+            const modal = document.getElementById('dataModal');
+            modal.classList.remove('active');
+        }
+
+        function openModal(title, content) {
+            const modal = document.getElementById('dataModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+            
+            modalTitle.textContent = title;
+            modalBody.innerHTML = content;
+            modal.classList.add('active');
+        }
+
+        // Click outside modal to close
+        window.onclick = function(event) {
+            const modal = document.getElementById('dataModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // View Patients function
+        async function viewPatients() {
+            openModal('📋 Patient Information', '<div class="loading-spinner"></div>');
+            
+            try {
+                const response = await fetch('/api/patients');
+                const data = await response.json();
+                
+                if (data.success && data.patients.length > 0) {
+                    let content = '<div class="section-title">All Patients</div>';
+                    
+                    data.patients.forEach((patient, index) => {
+                        content += `
+                            <div class="data-card">
+                                <div class="data-card-header">${index + 1}. ${patient.name}</div>
+                                <div class="data-row">
+                                    <span class="data-label">Age</span>
+                                    <span class="data-value">${patient.age} years</span>
+                                </div>
+                                <div class="data-row">
+                                    <span class="data-label">Gender</span>
+                                    <span class="data-value">${patient.gender}</span>
+                                </div>
+                                <div class="data-row">
+                                    <span class="data-label">Contact</span>
+                                    <span class="data-value">${patient.contact_number}</span>
+                                </div>
+                                <div class="data-row">
+                                    <span class="data-label">Email</span>
+                                    <span class="data-value">${patient.email}</span>
+                                </div>
+                                <div class="data-row">
+                                    <span class="data-label">Language</span>
+                                    <span class="data-value">${patient.preferred_language}</span>
+                                </div>
+                                <div class="data-row">
+                                    <span class="data-label">Preferred Slot</span>
+                                    <span class="data-value">${patient.preferred_slot}</span>
+                                </div>
+                                <div class="data-row">
+                                    <span class="data-label">Mapped Specialty</span>
+                                    <span class="data-value"><span class="badge badge-primary">${patient.mapped_specialty}</span></span>
+                                </div>
+                                <div class="data-row">
+                                    <span class="data-label">Symptoms</span>
+                                    <span class="data-value" style="text-align: left; max-width: 70%;">${patient.symptoms}</span>
+                                </div>
+                                ${patient.pre_existing_conditions && patient.pre_existing_conditions.length > 0 ? `
+                                <div class="data-row">
+                                    <span class="data-label">Pre-existing Conditions</span>
+                                    <span class="data-value">${patient.pre_existing_conditions.join(', ')}</span>
+                                </div>
+                                ` : ''}
+                            </div>
+                        `;
+                    });
+                    
+                    document.getElementById('modalBody').innerHTML = content;
+                } else {
+                    document.getElementById('modalBody').innerHTML = `
+                        <div class="empty-state">
+                            No patient data available
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                document.getElementById('modalBody').innerHTML = `
+                    <div class="empty-state" style="color: var(--error);">
+                        Error loading patient data: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        // View Doctors function
+        async function viewDoctors() {
+            openModal('👨‍⚕️ Doctor Information', '<div class="loading-spinner"></div>');
+            
+            try {
+                const response = await fetch('/api/doctors');
+                const data = await response.json();
+                
+                if (data.success && data.doctors.length > 0) {
+                    let content = '<div class="section-title">Available Doctors by Specialty</div>';
+                    
+                    // Separate emergency and regular doctors
+                    const emergencyDoctors = data.doctors.filter(d => d.is_emergency);
+                    const regularDoctors = data.doctors.filter(d => !d.is_emergency);
+                    
+                    // Show emergency doctors first
+                    if (emergencyDoctors.length > 0) {
+                        content += `
+                            <div style="margin-bottom: 2rem;">
+                                <h3 style="color: #dc2626; font-size: 1.25rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #dc2626;">
+                                    🚨 Emergency Doctors (24/7 Available)
+                                </h3>
+                        `;
+                        
+                        emergencyDoctors.forEach(doctor => {
+                            content += `
+                                <div class="data-card" style="border-left: 3px solid #dc2626;">
+                                    <div class="data-card-header" style="color: #dc2626;">
+                                        ${doctor.name} <span class="badge" style="background: rgba(220, 38, 38, 0.1); color: #dc2626; margin-left: 0.5rem;">EMERGENCY</span>
+                                    </div>
+                                    <div class="data-row">
+                                        <span class="data-label">Specialization</span>
+                                        <span class="data-value">${doctor.specialty}</span>
+                                    </div>
+                                    <div class="data-row">
+                                        <span class="data-label">Experience</span>
+                                        <span class="data-value">${doctor.experience_years}${typeof doctor.experience_years === 'string' && !doctor.experience_years.includes('N/A') ? ' years' : ''}</span>
+                                    </div>
+                                    <div class="data-row">
+                                        <span class="data-label">Hospital</span>
+                                        <span class="data-value">${doctor.hospital}</span>
+                                    </div>
+                                    <div class="data-row">
+                                        <span class="data-label">Languages</span>
+                                        <span class="data-value">${doctor.languages_spoken.join(', ')}</span>
+                                    </div>
+                                    <div class="data-row">
+                                        <span class="data-label">Availability</span>
+                                        <span class="data-value" style="color: #dc2626; font-weight: 600;">${doctor.availability}</span>
+                                    </div>
+                                    <div class="data-row">
+                                        <span class="data-label">Contact</span>
+                                        <span class="data-value">${doctor.contact_email}</span>
+                                    </div>
+                                    <div class="data-row">
+                                        <span class="data-label">Emergency Contact</span>
+                                        <span class="data-value" style="color: #dc2626; font-weight: 600;">📞 ${doctor.emergency_contact_number}</span>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        
+                        content += `</div>`;
+                    }
+                    
+                    // Group regular doctors by specialty
+                    const specialtyGroups = {};
+                    regularDoctors.forEach(doc => {
+                        if (!specialtyGroups[doc.specialty]) {
+                            specialtyGroups[doc.specialty] = [];
+                        }
+                        specialtyGroups[doc.specialty].push(doc);
+                    });
+                    
+                    Object.keys(specialtyGroups).sort().forEach(specialty => {
+                        content += `
+                            <div style="margin-bottom: 2rem;">
+                                <h3 style="color: var(--primary); font-size: 1.25rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--primary);">
+                                    ${specialty}
+                                </h3>
+                        `;
+                        
+                        specialtyGroups[specialty].forEach(doctor => {
+                            content += `
+                                <div class="data-card">
+                                    <div class="data-card-header">${doctor.name}</div>
+                                    <div class="data-row">
+                                        <span class="data-label">Qualification</span>
+                                        <span class="data-value">${doctor.qualification}</span>
+                                    </div>
+                                    <div class="data-row">
+                                        <span class="data-label">Experience</span>
+                                        <span class="data-value">${doctor.experience_years} years</span>
+                                    </div>
+                                    ${doctor.sub_specialization ? `
+                                    <div class="data-row">
+                                        <span class="data-label">Sub-specialization</span>
+                                        <span class="data-value">${doctor.sub_specialization}</span>
+                                    </div>
+                                    ` : ''}
+                                    <div class="data-row">
+                                        <span class="data-label">Languages</span>
+                                        <span class="data-value">${doctor.languages_spoken.join(', ')}</span>
+                                    </div>
+                                    <div class="data-row">
+                                        <span class="data-label">Rating</span>
+                                        <span class="data-value">⭐ ${doctor.patient_rating}/5.0</span>
+                                    </div>
+                                    <div class="data-row">
+                                        <span class="data-label">Available Slots</span>
+                                        <span class="data-value">${doctor.slots.join(', ')}</span>
+                                    </div>
+                                    <div class="data-row">
+                                        <span class="data-label">Contact</span>
+                                        <span class="data-value">${doctor.contact_email}</span>
+                                    </div>
+                                    ${doctor.awards && doctor.awards.length > 0 ? `
+                                    <div class="data-row">
+                                        <span class="data-label">Awards</span>
+                                        <span class="data-value" style="text-align: left; max-width: 70%;">🏆 ${doctor.awards.join(', ')}</span>
+                                    </div>
+                                    ` : ''}
+                                </div>
+                            `;
+                        });
+                        
+                        content += `</div>`;
+                    });
+                    
+                    document.getElementById('modalBody').innerHTML = content;
+                } else {
+                    document.getElementById('modalBody').innerHTML = `
+                        <div class="empty-state">
+                            No doctor data available
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                document.getElementById('modalBody').innerHTML = `
+                    <div class="empty-state" style="color: var(--error);">
+                        Error loading doctor data: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        // View System Info function
+        async function viewSystemInfo() {
+            openModal('ℹ️ System Information', '<div class="loading-spinner"></div>');
+            
+            try {
+                const response = await fetch('/api/system-info');
+                const data = await response.json();
+                
+                if (data.success) {
+                    let content = `
+                        <div class="data-card">
+                            <div class="data-card-header">🏥 System Configuration</div>
+                            <div class="data-row">
+                                <span class="data-label">System Name</span>
+                                <span class="data-value">RavenCare AI Medical Triage</span>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-label">Version</span>
+                                <span class="data-value">${data.version || '1.0.0'}</span>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-label">Total Patients Loaded</span>
+                                <span class="data-value">${data.total_patients || 0}</span>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-label">Total Doctors Available</span>
+                                <span class="data-value">${data.total_doctors || 0}</span>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-label">Specialties Covered</span>
+                                <span class="data-value">${data.specialties || 0}</span>
+                            </div>
+                        </div>
+
+                        <div class="data-card">
+                            <div class="data-card-header">🤖 AI Models</div>
+                            <div class="data-row">
+                                <span class="data-label">Primary Analyzer</span>
+                                <span class="data-value"><span class="badge badge-primary">Gemini 2.5 Pro</span></span>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-label">Urgency Assessment</span>
+                                <span class="data-value"><span class="badge badge-primary">Grok 4 Reasoning</span></span>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-label">Final Evaluation</span>
+                                <span class="data-value"><span class="badge badge-primary">OpenAI O4-Mini</span></span>
+                            </div>
+                        </div>
+
+                        <div class="data-card">
+                            <div class="data-card-header">📊 Available Specialties</div>
+                            ${data.specialty_list ? data.specialty_list.map(spec => `
+                                <div class="data-row">
+                                    <span class="data-label">${spec.name}</span>
+                                    <span class="data-value">${spec.doctors} doctor${spec.doctors !== 1 ? 's' : ''}</span>
+                                </div>
+                            `).join('') : '<div class="empty-state">No specialty data available</div>'}
+                        </div>
+
+                        <div class="data-card">
+                            <div class="data-card-header">🔧 Features</div>
+                            <div class="data-row">
+                                <span class="data-label">Multi-Model AI Analysis</span>
+                                <span class="data-value"><span class="badge badge-success">✓ Enabled</span></span>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-label">Automated Doctor Matching</span>
+                                <span class="data-value"><span class="badge badge-success">✓ Enabled</span></span>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-label">Calendar Integration</span>
+                                <span class="data-value"><span class="badge badge-success">✓ Enabled</span></span>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-label">Email Notifications</span>
+                                <span class="data-value"><span class="badge badge-success">✓ Enabled</span></span>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-label">PDF Report Generation</span>
+                                <span class="data-value"><span class="badge badge-success">✓ Enabled</span></span>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-label">Google Sheets Export</span>
+                                <span class="data-value"><span class="badge badge-success">✓ Enabled</span></span>
+                            </div>
+                        </div>
+                    `;
+                    
+                    document.getElementById('modalBody').innerHTML = content;
+                } else {
+                    document.getElementById('modalBody').innerHTML = `
+                        <div class="empty-state">
+                            Unable to load system information
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                document.getElementById('modalBody').innerHTML = `
+                    <div class="empty-state" style="color: var(--error);">
+                        Error loading system info: ${error.message}
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{
+  "hospital_name": "AIIMS, New Delhi",
+  "city": "New Delhi",
+  "contact_number": "+91-11-26588500",
+  "email": "info@aiims.mock",
+  "address": "Ansari Nagar, New Delhi, 110029",
+  "departments": [
+    {
+      "specialty": "Pulmonology",
+      "floor": "4th Floor",
+      "doctors": [
+        {
+          "name": "Dr. Amit Patel",
+          "qualification": "MD, DM (Pulmonology)",
+          "experience_years": 18,
+          "sub_specialization": "Interventional Pulmonology, COPD",
+          "languages_spoken": ["English", "Hindi", "Gujarati"],
+          "patient_rating": 4.8,
+          "slots": ["09:00", "11:00", "14:00"],
+          "contact_email": "pulmo1@aiims.mock"
+        },
+        {
+          "name": "Dr. Sneha Reddy",
+          "qualification": "MD, DM (Pulmonology)",
+          "experience_years": 15,
+          "sub_specialization": "Asthma, Sleep Medicine",
+          "languages_spoken": ["English", "Hindi", "Telugu"],
+          "patient_rating": 4.7,
+          "slots": ["10:00", "12:00", "15:00"],
+          "contact_email": "pulmo2@aiims.mock"
+        }
+      ]
+    }
+  ]
+}

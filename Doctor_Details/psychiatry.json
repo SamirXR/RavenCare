@@ -1,0 +1,125 @@
+{
+  "hospital_name": "AIIMS, New Delhi",
+  "city": "New Delhi",
+  "contact_number": "+91-11-26588500",
+  "email": "info@aiims.mock",
+  "address": "Ansari Nagar, New Delhi, 110029",
+  "departments": [
+    {
+      "specialty": "Psychiatry",
+      "floor": "9th Floor",
+      "doctors": [
+        {
+          "name": "Dr. Arjun Malhotra",
+          "qualification": "MD (Psychiatry)",
+          "experience_years": 16,
+          "sub_specialization": "Mood disorders, Depression",
+          "languages_spoken": ["English", "Hindi", "Tamil"],
+          "patient_rating": 4.8,
+          "slots": ["09:00", "11:00", "14:00"],
+          "contact_email": "psy1@aiims.mock",
+          "awards": ["Top Psychiatrist 2022"]
+        },
+        {
+          "name": "Dr. Meera Singh",
+          "qualification": "MD (Psychiatry)",
+          "experience_years": 14,
+          "sub_specialization": "Anxiety disorders, Cognitive behavioral therapy",
+          "languages_spoken": ["English", "Hindi", "Bengali"],
+          "patient_rating": 4.7,
+          "slots": ["09:30", "12:00", "15:00"],
+          "contact_email": "psy2@aiims.mock",
+          "awards": ["Best CBT Specialist 2021"]
+        },
+        {
+          "name": "Dr. Rohan Gupta",
+          "qualification": "MD (Psychiatry)",
+          "experience_years": 18,
+          "sub_specialization": "Child and adolescent psychiatry",
+          "languages_spoken": ["English", "Hindi", "Marathi"],
+          "patient_rating": 4.9,
+          "slots": ["10:00", "13:00", "15:30"],
+          "contact_email": "psy3@aiims.mock",
+          "awards": ["Top Child Psychiatrist 2020"]
+        },
+        {
+          "name": "Dr. Ananya Roy",
+          "qualification": "MD (Psychiatry)",
+          "experience_years": 12,
+          "sub_specialization": "Addiction psychiatry, Substance abuse",
+          "languages_spoken": ["English", "Hindi", "Gujarati"],
+          "patient_rating": 4.6,
+          "slots": ["09:00", "11:30", "14:30"],
+          "contact_email": "psy4@aiims.mock",
+          "awards": ["Emerging Addiction Specialist 2021"]
+        },
+        {
+          "name": "Dr. Vikram Joshi",
+          "qualification": "MD (Psychiatry)",
+          "experience_years": 15,
+          "sub_specialization": "Schizophrenia, Psychotic disorders",
+          "languages_spoken": ["English", "Hindi", "Kannada"],
+          "patient_rating": 4.8,
+          "slots": ["10:00", "12:30", "15:00"],
+          "contact_email": "psy5@aiims.mock",
+          "awards": ["Top Psychosis Specialist 2022"]
+        },
+        {
+          "name": "Dr. Priya Nair",
+          "qualification": "MD (Psychiatry)",
+          "experience_years": 13,
+          "sub_specialization": "Geriatric psychiatry, Dementia care",
+          "languages_spoken": ["English", "Hindi", "Malayalam"],
+          "patient_rating": 4.7,
+          "slots": ["09:30", "12:00", "15:00"],
+          "contact_email": "psy6@aiims.mock",
+          "awards": ["Best Geriatric Psychiatrist 2021"]
+        },
+        {
+          "name": "Dr. Arvind Rao",
+          "qualification": "MD (Psychiatry)",
+          "experience_years": 17,
+          "sub_specialization": "Bipolar disorder, Mood stabilization",
+          "languages_spoken": ["English", "Hindi", "Kannada"],
+          "patient_rating": 4.9,
+          "slots": ["10:00", "13:00", "16:00"],
+          "contact_email": "psy7@aiims.mock",
+          "awards": ["Top Bipolar Disorder Specialist 2022"]
+        },
+        {
+          "name": "Dr. Shalini Mehta",
+          "qualification": "MD (Psychiatry)",
+          "experience_years": 12,
+          "sub_specialization": "Trauma, PTSD therapy",
+          "languages_spoken": ["English", "Hindi", "Marathi"],
+          "patient_rating": 4.6,
+          "slots": ["09:00", "11:30", "14:00"],
+          "contact_email": "psy8@aiims.mock",
+          "awards": ["Emerging Trauma Psychiatrist 2020"]
+        },
+        {
+          "name": "Dr. Karan Bansal",
+          "qualification": "MD (Psychiatry)",
+          "experience_years": 19,
+          "sub_specialization": "Obsessive-compulsive disorder (OCD)",
+          "languages_spoken": ["English", "Hindi", "Punjabi"],
+          "patient_rating": 4.9,
+          "slots": ["09:30", "12:30", "15:30"],
+          "contact_email": "psy9@aiims.mock",
+          "awards": ["Lifetime Achievement in OCD Therapy 2021"]
+        },
+        {
+          "name": "Dr. Anjali Gupta",
+          "qualification": "MD (Psychiatry)",
+          "experience_years": 16,
+          "sub_specialization": "Depression, Anxiety management",
+          "languages_spoken": ["English", "Hindi", "Bengali"],
+          "patient_rating": 4.8,
+          "slots": ["10:00", "12:30", "15:30"],
+          "contact_email": "psy10@aiims.mock",
+          "awards": ["Top Clinical Psychiatrist 2022"]
+        }
+      ]
+    }
+  ]
+}

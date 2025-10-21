@@ -1,0 +1,125 @@
+{
+  "hospital_name": "AIIMS, New Delhi",
+  "city": "New Delhi",
+  "contact_number": "+91-11-26588500",
+  "email": "info@aiims.mock",
+  "address": "Ansari Nagar, New Delhi, 110029",
+  "departments": [
+    {
+      "specialty": "Gastroenterology",
+      "floor": "5th Floor",
+      "doctors": [
+        {
+          "name": "Dr. Amit Saxena",
+          "qualification": "MD, DM (Gastroenterology)",
+          "experience_years": 18,
+          "sub_specialization": "Liver diseases, Hepatitis",
+          "languages_spoken": ["English", "Hindi", "Punjabi"],
+          "patient_rating": 4.9,
+          "slots": ["09:00", "11:00", "14:00"],
+          "contact_email": "gastro1@aiims.mock",
+          "awards": ["Best Hepatologist 2021"]
+        },
+        {
+          "name": "Dr. Neha Kapoor",
+          "qualification": "MD, DM (Gastroenterology)",
+          "experience_years": 14,
+          "sub_specialization": "Inflammatory bowel disease, Endoscopy",
+          "languages_spoken": ["English", "Hindi", "Bengali"],
+          "patient_rating": 4.8,
+          "slots": ["09:30", "12:00", "15:00"],
+          "contact_email": "gastro2@aiims.mock",
+          "awards": ["Top IBD Specialist 2020"]
+        },
+        {
+          "name": "Dr. Rohan Mehta",
+          "qualification": "MD, DM (Gastroenterology)",
+          "experience_years": 16,
+          "sub_specialization": "Pancreatic disorders, Endoscopic procedures",
+          "languages_spoken": ["English", "Hindi", "Marathi"],
+          "patient_rating": 4.9,
+          "slots": ["10:00", "13:00", "15:30"],
+          "contact_email": "gastro3@aiims.mock",
+          "awards": ["Excellence in Endoscopy 2021"]
+        },
+        {
+          "name": "Dr. Anjali Roy",
+          "qualification": "MD, DM (Gastroenterology)",
+          "experience_years": 12,
+          "sub_specialization": "Liver transplant, Hepatobiliary diseases",
+          "languages_spoken": ["English", "Hindi", "Tamil"],
+          "patient_rating": 4.7,
+          "slots": ["09:00", "11:30", "14:30"],
+          "contact_email": "gastro4@aiims.mock",
+          "awards": ["Emerging Hepatologist 2020"]
+        },
+        {
+          "name": "Dr. Vikram Joshi",
+          "qualification": "MD, DM (Gastroenterology)",
+          "experience_years": 15,
+          "sub_specialization": "Endoscopic surgery, GI bleeding",
+          "languages_spoken": ["English", "Hindi", "Gujarati"],
+          "patient_rating": 4.8,
+          "slots": ["10:00", "12:30", "15:00"],
+          "contact_email": "gastro5@aiims.mock",
+          "awards": ["Top Endoscopic Surgeon 2022"]
+        },
+        {
+          "name": "Dr. Priya Nair",
+          "qualification": "MD, DM (Gastroenterology)",
+          "experience_years": 13,
+          "sub_specialization": "Pancreatitis, GI motility disorders",
+          "languages_spoken": ["English", "Hindi", "Malayalam"],
+          "patient_rating": 4.7,
+          "slots": ["09:30", "12:00", "15:00"],
+          "contact_email": "gastro6@aiims.mock",
+          "awards": ["Best Clinical Gastroenterologist 2021"]
+        },
+        {
+          "name": "Dr. Arvind Rao",
+          "qualification": "MD, DM (Gastroenterology)",
+          "experience_years": 17,
+          "sub_specialization": "Celiac disease, Liver fibrosis",
+          "languages_spoken": ["English", "Hindi", "Kannada"],
+          "patient_rating": 4.9,
+          "slots": ["10:00", "13:00", "16:00"],
+          "contact_email": "gastro7@aiims.mock",
+          "awards": ["Top Gastroenterologist 2022"]
+        },
+        {
+          "name": "Dr. Shalini Mehta",
+          "qualification": "MD, DM (Gastroenterology)",
+          "experience_years": 12,
+          "sub_specialization": "IBS, Gastrointestinal nutrition",
+          "languages_spoken": ["English", "Hindi", "Marathi"],
+          "patient_rating": 4.6,
+          "slots": ["09:00", "11:30", "14:00"],
+          "contact_email": "gastro8@aiims.mock",
+          "awards": ["Emerging GI Specialist 2020"]
+        },
+        {
+          "name": "Dr. Karan Bansal",
+          "qualification": "MD, DM (Gastroenterology)",
+          "experience_years": 19,
+          "sub_specialization": "GI oncology, Liver cancer",
+          "languages_spoken": ["English", "Hindi", "Punjabi"],
+          "patient_rating": 4.9,
+          "slots": ["09:30", "12:30", "15:30"],
+          "contact_email": "gastro9@aiims.mock",
+          "awards": ["Lifetime Achievement in GI Oncology 2021"]
+        },
+        {
+          "name": "Dr. Anjali Gupta",
+          "qualification": "MD, DM (Gastroenterology)",
+          "experience_years": 16,
+          "sub_specialization": "Hepatology, Endoscopic retrograde cholangiopancreatography (ERCP)",
+          "languages_spoken": ["English", "Hindi", "Bengali"],
+          "patient_rating": 4.8,
+          "slots": ["10:00", "12:30", "15:00"],
+          "contact_email": "gastro10@aiims.mock",
+          "awards": ["Top Hepatologist 2022"]
+        }
+      ]
+    }
+  ]
+}

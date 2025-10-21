@@ -1,0 +1,125 @@
+{
+  "hospital_name": "AIIMS, New Delhi",
+  "city": "New Delhi",
+  "contact_number": "+91-11-26588500",
+  "email": "info@aiims.mock",
+  "address": "Ansari Nagar, New Delhi, 110029",
+  "departments": [
+    {
+      "specialty": "Cardiology",
+      "floor": "3rd Floor",
+      "doctors": [
+        {
+          "name": "Dr. Suresh Iyer",
+          "qualification": "MD, DM (Cardiology)",
+          "experience_years": 20,
+          "sub_specialization": "Interventional Cardiology, Heart Failure",
+          "languages_spoken": ["English", "Hindi", "Tamil"],
+          "patient_rating": 4.9,
+          "slots": ["09:00", "11:00", "14:00"],
+          "contact_email": "cardio1@aiims.mock",
+          "awards": ["Excellence in Interventional Cardiology 2022"]
+        },
+        {
+          "name": "Dr. Meena Kapoor",
+          "qualification": "MD, DM (Cardiology)",
+          "experience_years": 16,
+          "sub_specialization": "Electrophysiology, Arrhythmia management",
+          "languages_spoken": ["English", "Hindi", "Punjabi"],
+          "patient_rating": 4.8,
+          "slots": ["09:30", "12:00", "15:00"],
+          "contact_email": "cardio2@aiims.mock",
+          "awards": ["Top Electrophysiologist 2021"]
+        },
+        {
+          "name": "Dr. Rohan Verma",
+          "qualification": "MD, DM (Cardiology)",
+          "experience_years": 18,
+          "sub_specialization": "Adult Congenital Heart Disease",
+          "languages_spoken": ["English", "Hindi", "Marathi"],
+          "patient_rating": 4.9,
+          "slots": ["10:00", "13:00", "15:30"],
+          "contact_email": "cardio3@aiims.mock",
+          "awards": ["Best Adult CHD Specialist 2020"]
+        },
+        {
+          "name": "Dr. Anjali Sharma",
+          "qualification": "MD, DM (Cardiology)",
+          "experience_years": 14,
+          "sub_specialization": "Heart failure, Cardiac imaging",
+          "languages_spoken": ["English", "Hindi", "Bengali"],
+          "patient_rating": 4.7,
+          "slots": ["09:00", "11:30", "14:30"],
+          "contact_email": "cardio4@aiims.mock",
+          "awards": ["Emerging Cardiac Imaging Specialist 2021"]
+        },
+        {
+          "name": "Dr. Vikram Joshi",
+          "qualification": "MD, DM (Cardiology)",
+          "experience_years": 15,
+          "sub_specialization": "Interventional Cardiology, Structural Heart Disease",
+          "languages_spoken": ["English", "Hindi", "Gujarati"],
+          "patient_rating": 4.8,
+          "slots": ["10:00", "12:30", "15:00"],
+          "contact_email": "cardio5@aiims.mock",
+          "awards": ["Top Interventional Cardiologist 2022"]
+        },
+        {
+          "name": "Dr. Priya Nair",
+          "qualification": "MD, DM (Cardiology)",
+          "experience_years": 13,
+          "sub_specialization": "Preventive Cardiology, Lipid disorders",
+          "languages_spoken": ["English", "Hindi", "Malayalam"],
+          "patient_rating": 4.7,
+          "slots": ["09:30", "12:00", "15:00"],
+          "contact_email": "cardio6@aiims.mock",
+          "awards": ["Best Preventive Cardiologist 2021"]
+        },
+        {
+          "name": "Dr. Arvind Rao",
+          "qualification": "MD, DM (Cardiology)",
+          "experience_years": 17,
+          "sub_specialization": "Pediatric Cardiology, Congenital heart defects",
+          "languages_spoken": ["English", "Hindi", "Kannada"],
+          "patient_rating": 4.9,
+          "slots": ["10:00", "13:00", "16:00"],
+          "contact_email": "cardio7@aiims.mock",
+          "awards": ["Top Pediatric Cardiologist 2022"]
+        },
+        {
+          "name": "Dr. Shalini Mehta",
+          "qualification": "MD, DM (Cardiology)",
+          "experience_years": 12,
+          "sub_specialization": "Cardiac rehabilitation, Exercise physiology",
+          "languages_spoken": ["English", "Hindi", "Marathi"],
+          "patient_rating": 4.6,
+          "slots": ["09:00", "11:30", "14:00"],
+          "contact_email": "cardio8@aiims.mock",
+          "awards": ["Emerging Cardiac Rehab Specialist 2020"]
+        },
+        {
+          "name": "Dr. Karan Bansal",
+          "qualification": "MD, DM (Cardiology)",
+          "experience_years": 19,
+          "sub_specialization": "Structural heart interventions, Valve replacement",
+          "languages_spoken": ["English", "Hindi", "Punjabi"],
+          "patient_rating": 4.9,
+          "slots": ["09:30", "12:30", "15:30"],
+          "contact_email": "cardio9@aiims.mock",
+          "awards": ["Lifetime Achievement in Structural Heart Interventions 2021"]
+        },
+        {
+          "name": "Dr. Anjali Gupta",
+          "qualification": "MD, DM (Cardiology)",
+          "experience_years": 16,
+          "sub_specialization": "Heart failure, Cardiac transplantation",
+          "languages_spoken": ["English", "Hindi", "Bengali"],
+          "patient_rating": 4.8,
+          "slots": ["10:00", "12:30", "15:00"],
+          "contact_email": "cardio10@aiims.mock",
+          "awards": ["Top Heart Transplant Specialist 2022"]
+        }
+      ]
+    }
+  ]
+}

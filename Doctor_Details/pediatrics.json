@@ -1,0 +1,125 @@
+{
+  "hospital_name": "AIIMS, New Delhi",
+  "city": "New Delhi",
+  "contact_number": "+91-11-26588500",
+  "email": "info@aiims.mock",
+  "address": "Ansari Nagar, New Delhi, 110029",
+  "departments": [
+    {
+      "specialty": "Pediatrics",
+      "floor": "6th Floor",
+      "doctors": [
+        {
+          "name": "Dr. Neha Sharma",
+          "qualification": "MD, DCH (Pediatrics)",
+          "experience_years": 15,
+          "sub_specialization": "Neonatology, Newborn care",
+          "languages_spoken": ["English", "Hindi", "Punjabi"],
+          "patient_rating": 4.9,
+          "slots": ["09:00", "11:00", "14:00"],
+          "contact_email": "pedia1@aiims.mock",
+          "awards": ["Top Neonatologist 2022"]
+        },
+        {
+          "name": "Dr. Rohit Verma",
+          "qualification": "MD, DCH (Pediatrics)",
+          "experience_years": 18,
+          "sub_specialization": "Pediatric cardiology",
+          "languages_spoken": ["English", "Hindi", "Marathi"],
+          "patient_rating": 4.9,
+          "slots": ["09:30", "12:00", "15:00"],
+          "contact_email": "pedia2@aiims.mock",
+          "awards": ["Best Pediatric Cardiologist 2021"]
+        },
+        {
+          "name": "Dr. Priya Nair",
+          "qualification": "MD, DCH (Pediatrics)",
+          "experience_years": 14,
+          "sub_specialization": "Pediatric endocrinology",
+          "languages_spoken": ["English", "Hindi", "Malayalam"],
+          "patient_rating": 4.8,
+          "slots": ["10:00", "13:00", "15:30"],
+          "contact_email": "pedia3@aiims.mock",
+          "awards": ["Top Pediatric Endocrinologist 2020"]
+        },
+        {
+          "name": "Dr. Arjun Mehta",
+          "qualification": "MD, DCH (Pediatrics)",
+          "experience_years": 16,
+          "sub_specialization": "Pediatric neurology",
+          "languages_spoken": ["English", "Hindi", "Tamil"],
+          "patient_rating": 4.8,
+          "slots": ["09:00", "11:30", "14:30"],
+          "contact_email": "pedia4@aiims.mock",
+          "awards": ["Excellence in Pediatric Neurology 2021"]
+        },
+        {
+          "name": "Dr. Anjali Gupta",
+          "qualification": "MD, DCH (Pediatrics)",
+          "experience_years": 13,
+          "sub_specialization": "Pediatric gastroenterology",
+          "languages_spoken": ["English", "Hindi", "Gujarati"],
+          "patient_rating": 4.7,
+          "slots": ["10:00", "12:30", "15:00"],
+          "contact_email": "pedia5@aiims.mock",
+          "awards": ["Top Pediatric Gastroenterologist 2022"]
+        },
+        {
+          "name": "Dr. Karan Bansal",
+          "qualification": "MD, DCH (Pediatrics)",
+          "experience_years": 17,
+          "sub_specialization": "Pediatric infectious diseases",
+          "languages_spoken": ["English", "Hindi", "Bengali"],
+          "patient_rating": 4.9,
+          "slots": ["09:30", "12:00", "15:30"],
+          "contact_email": "pedia6@aiims.mock",
+          "awards": ["Best Pediatric Infectious Disease Specialist 2021"]
+        },
+        {
+          "name": "Dr. Meera Singh",
+          "qualification": "MD, DCH (Pediatrics)",
+          "experience_years": 12,
+          "sub_specialization": "Pediatric pulmonology",
+          "languages_spoken": ["English", "Hindi", "Kannada"],
+          "patient_rating": 4.7,
+          "slots": ["09:00", "11:30", "14:00"],
+          "contact_email": "pedia7@aiims.mock",
+          "awards": ["Top Pediatric Pulmonologist 2020"]
+        },
+        {
+          "name": "Dr. Rohan Gupta",
+          "qualification": "MD, DCH (Pediatrics)",
+          "experience_years": 16,
+          "sub_specialization": "Pediatric nephrology",
+          "languages_spoken": ["English", "Hindi", "Punjabi"],
+          "patient_rating": 4.8,
+          "slots": ["10:00", "13:00", "16:00"],
+          "contact_email": "pedia8@aiims.mock",
+          "awards": ["Top Pediatric Nephrologist 2021"]
+        },
+        {
+          "name": "Dr. Shalini Mehta",
+          "qualification": "MD, DCH (Pediatrics)",
+          "experience_years": 11,
+          "sub_specialization": "Pediatric hematology",
+          "languages_spoken": ["English", "Hindi", "Marathi"],
+          "patient_rating": 4.6,
+          "slots": ["09:30", "12:30", "15:00"],
+          "contact_email": "pedia9@aiims.mock",
+          "awards": ["Emerging Pediatric Hematologist 2020"]
+        },
+        {
+          "name": "Dr. Vikram Joshi",
+          "qualification": "MD, DCH (Pediatrics)",
+          "experience_years": 15,
+          "sub_specialization": "General pediatrics, Child nutrition",
+          "languages_spoken": ["English", "Hindi", "Bengali"],
+          "patient_rating": 4.8,
+          "slots": ["10:00", "12:30", "15:30"],
+          "contact_email": "pedia10@aiims.mock",
+          "awards": ["Best Clinical Pediatrician 2022"]
+        }
+      ]
+    }
+  ]
+}

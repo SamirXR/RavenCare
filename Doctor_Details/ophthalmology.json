@@ -1,0 +1,125 @@
+{
+  "hospital_name": "AIIMS, New Delhi",
+  "city": "New Delhi",
+  "contact_number": "+91-11-26588500",
+  "email": "info@aiims.mock",
+  "address": "Ansari Nagar, New Delhi, 110029",
+  "departments": [
+    {
+      "specialty": "Ophthalmology",
+      "floor": "8th Floor",
+      "doctors": [
+        {
+          "name": "Dr. Arjun Malhotra",
+          "qualification": "MS, DO (Ophthalmology)",
+          "experience_years": 16,
+          "sub_specialization": "Retina, Vitreous surgery",
+          "languages_spoken": ["English", "Hindi", "Tamil"],
+          "patient_rating": 4.8,
+          "slots": ["09:00", "11:00", "14:00"],
+          "contact_email": "ophtha1@aiims.mock",
+          "awards": ["Top Retina Specialist 2022"]
+        },
+        {
+          "name": "Dr. Meera Singh",
+          "qualification": "MS, DO (Ophthalmology)",
+          "experience_years": 14,
+          "sub_specialization": "Glaucoma, Laser procedures",
+          "languages_spoken": ["English", "Hindi", "Bengali"],
+          "patient_rating": 4.7,
+          "slots": ["09:30", "12:00", "15:00"],
+          "contact_email": "ophtha2@aiims.mock",
+          "awards": ["Best Glaucoma Specialist 2021"]
+        },
+        {
+          "name": "Dr. Rohan Gupta",
+          "qualification": "MS, DO (Ophthalmology)",
+          "experience_years": 18,
+          "sub_specialization": "Cataract surgery, Phacoemulsification",
+          "languages_spoken": ["English", "Hindi", "Marathi"],
+          "patient_rating": 4.9,
+          "slots": ["10:00", "13:00", "15:30"],
+          "contact_email": "ophtha3@aiims.mock",
+          "awards": ["Top Cataract Surgeon 2020"]
+        },
+        {
+          "name": "Dr. Ananya Roy",
+          "qualification": "MS, DO (Ophthalmology)",
+          "experience_years": 12,
+          "sub_specialization": "Cornea, Refractive surgery",
+          "languages_spoken": ["English", "Hindi", "Gujarati"],
+          "patient_rating": 4.6,
+          "slots": ["09:00", "11:30", "14:30"],
+          "contact_email": "ophtha4@aiims.mock",
+          "awards": ["Emerging Cornea Specialist 2021"]
+        },
+        {
+          "name": "Dr. Vikram Joshi",
+          "qualification": "MS, DO (Ophthalmology)",
+          "experience_years": 15,
+          "sub_specialization": "Pediatric ophthalmology, Strabismus",
+          "languages_spoken": ["English", "Hindi", "Kannada"],
+          "patient_rating": 4.8,
+          "slots": ["10:00", "12:30", "15:00"],
+          "contact_email": "ophtha5@aiims.mock",
+          "awards": ["Top Pediatric Ophthalmologist 2022"]
+        },
+        {
+          "name": "Dr. Priya Nair",
+          "qualification": "MS, DO (Ophthalmology)",
+          "experience_years": 13,
+          "sub_specialization": "Oculoplasty, Cosmetic eye surgery",
+          "languages_spoken": ["English", "Hindi", "Malayalam"],
+          "patient_rating": 4.7,
+          "slots": ["09:30", "12:00", "15:00"],
+          "contact_email": "ophtha6@aiims.mock",
+          "awards": ["Best Oculoplastic Surgeon 2021"]
+        },
+        {
+          "name": "Dr. Arvind Rao",
+          "qualification": "MS, DO (Ophthalmology)",
+          "experience_years": 17,
+          "sub_specialization": "Retina, Diabetic retinopathy",
+          "languages_spoken": ["English", "Hindi", "Kannada"],
+          "patient_rating": 4.9,
+          "slots": ["10:00", "13:00", "16:00"],
+          "contact_email": "ophtha7@aiims.mock",
+          "awards": ["Top Diabetic Retina Specialist 2022"]
+        },
+        {
+          "name": "Dr. Shalini Mehta",
+          "qualification": "MS, DO (Ophthalmology)",
+          "experience_years": 12,
+          "sub_specialization": "Neuro-ophthalmology",
+          "languages_spoken": ["English", "Hindi", "Marathi"],
+          "patient_rating": 4.6,
+          "slots": ["09:00", "11:30", "14:00"],
+          "contact_email": "ophtha8@aiims.mock",
+          "awards": ["Emerging Neuro-Ophthalmologist 2020"]
+        },
+        {
+          "name": "Dr. Karan Bansal",
+          "qualification": "MS, DO (Ophthalmology)",
+          "experience_years": 19,
+          "sub_specialization": "Cataract, Refractive surgery",
+          "languages_spoken": ["English", "Hindi", "Punjabi"],
+          "patient_rating": 4.9,
+          "slots": ["09:30", "12:30", "15:30"],
+          "contact_email": "ophtha9@aiims.mock",
+          "awards": ["Lifetime Achievement in Cataract Surgery 2021"]
+        },
+        {
+          "name": "Dr. Anjali Gupta",
+          "qualification": "MS, DO (Ophthalmology)",
+          "experience_years": 16,
+          "sub_specialization": "Glaucoma, Pediatric ophthalmology",
+          "languages_spoken": ["English", "Hindi", "Bengali"],
+          "patient_rating": 4.8,
+          "slots": ["10:00", "12:30", "15:30"],
+          "contact_email": "ophtha10@aiims.mock",
+          "awards": ["Top Pediatric Ophthalmologist 2022"]
+        }
+      ]
+    }
+  ]
+}

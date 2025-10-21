@@ -1,0 +1,129 @@
+[
+  {
+    "hospital_name": "AIIMS New Emergency, New Delhi",
+    "city": "New Delhi",
+    "contact_number": "+91-11-26588500",
+    "email": "info@aiims.mock",
+    "address": "Ansari Nagar, New Delhi, 110029"
+  },
+  {
+    "name": "Dr. Aditi Mehta",
+    "age": 38,
+    "specialization": "Cardiology",
+    "contact_number": "+91-9810001111",
+    "email": "aditi.mehta@example.com",
+    "experience": "15 years",
+    "hospital_affiliation": "Heart Care Hospital",
+    "availability": "Mon-Fri, 10 AM - 4 PM",
+    "languages_spoken": ["English", "Hindi"],
+    "emergency_contact_number": "+91-9810002222"
+  },
+  {
+    "name": "Dr. Rajesh Kumar",
+    "age": 45,
+    "specialization": "Neurology",
+    "contact_number": "+91-9810003333",
+    "email": "rajesh.kumar@example.com",
+    "experience": "20 years",
+    "hospital_affiliation": "Neuro Care Center",
+    "availability": "Mon-Sat, 9 AM - 5 PM",
+    "languages_spoken": ["English", "Tamil"],
+    "emergency_contact_number": "+91-9810004444"
+  },
+  {
+    "name": "Dr. Priya Singh",
+    "age": 50,
+    "specialization": "Orthopedics",
+    "contact_number": "+91-9810005555",
+    "email": "priya.singh@example.com",
+    "experience": "25 years",
+    "hospital_affiliation": "Bone and Joint Hospital",
+    "availability": "Mon-Fri, 11 AM - 3 PM",
+    "languages_spoken": ["English", "Hindi"],
+    "emergency_contact_number": "+91-9810006666"
+  },
+  {
+    "name": "Dr. Neha Sharma",
+    "age": 32,
+    "specialization": "Pediatrics",
+    "contact_number": "+91-9810007777",
+    "email": "neha.sharma@example.com",
+    "experience": "10 years",
+    "hospital_affiliation": "Children's Health Clinic",
+    "availability": "Mon-Sun, 9 AM - 6 PM",
+    "languages_spoken": ["English", "Hindi"],
+    "emergency_contact_number": "+91-9810008888"
+  },
+  {
+    "name": "Dr. Vikram Joshi",
+    "age": 40,
+    "specialization": "Gastroenterology",
+    "contact_number": "+91-9810009999",
+    "email": "vikram.joshi@example.com",
+    "experience": "18 years",
+    "hospital_affiliation": "Gastro Care Hospital",
+    "availability": "Mon-Fri, 10 AM - 4 PM",
+    "languages_spoken": ["English", "Hindi"],
+    "emergency_contact_number": "+91-9810010000"
+  },
+  {
+    "name": "Dr. Anjali Verma",
+    "age": 36,
+    "specialization": "Dermatology",
+    "contact_number": "+91-9810011111",
+    "email": "anjali.verma@example.com",
+    "experience": "12 years",
+    "hospital_affiliation": "Skin Health Clinic",
+    "availability": "Mon-Sat, 10 AM - 5 PM",
+    "languages_spoken": ["English", "Hindi"],
+    "emergency_contact_number": "+91-9810012222"
+  },
+  {
+    "name": "Dr. Ramesh Gupta",
+    "age": 55,
+    "specialization": "Ophthalmology",
+    "contact_number": "+91-9810013333",
+    "email": "ramesh.gupta@example.com",
+    "experience": "30 years",
+    "hospital_affiliation": "Eye Care Hospital",
+    "availability": "Mon-Fri, 9 AM - 3 PM",
+    "languages_spoken": ["English", "Hindi"],
+    "emergency_contact_number": "+91-9810014444"
+  },
+  {
+    "name": "Dr. Suresh Nair",
+    "age": 48,
+    "specialization": "Endocrinology",
+    "contact_number": "+91-9810015555",
+    "email": "suresh.nair@example.com",
+    "experience": "22 years",
+    "hospital_affiliation": "Endocrine Health Center",
+    "availability": "Mon-Fri, 10 AM - 4 PM",
+    "languages_spoken": ["English", "Malayalam"],
+    "emergency_contact_number": "+91-9810016666"
+  },
+  {
+    "name": "Dr. Kavita Bansal",
+    "age": 30,
+    "specialization": "Psychiatry",
+    "contact_number": "+91-9810017777",
+    "email": "kavita.bansal@example.com",
+    "experience": "8 years",
+    "hospital_affiliation": "Mental Health Clinic",
+    "availability": "Mon-Sun, 10 AM - 6 PM",
+    "languages_spoken": ["English", "Hindi"],
+    "emergency_contact_number": "+91-9810018888"
+  },
+  {
+    "name": "Dr. Amit Choudhary",
+    "age": 42,
+    "specialization": "Emergency Medicine",
+    "contact_number": "+91-9810019999",
+    "email": "amit.choudhary@example.com",
+    "experience": "15 years",
+    "hospital_affiliation": "Emergency Care Hospital",
+    "availability": "24/7",
+    "languages_spoken": ["English", "Hindi"],
+    "emergency_contact_number": "+91-9810020000"
+  }
+]

@@ -1,0 +1,125 @@
+{
+  "hospital_name": "AIIMS, New Delhi",
+  "city": "New Delhi",
+  "contact_number": "+91-11-26588500",
+  "email": "info@aiims.mock",
+  "address": "Ansari Nagar, New Delhi, 110029",
+  "departments": [
+    {
+      "specialty": "Neurology",
+      "floor": "4th Floor",
+      "doctors": [
+        {
+          "name": "Dr. Arjun Malhotra",
+          "qualification": "MD, DM (Neurology)",
+          "experience_years": 16,
+          "sub_specialization": "Parkinson's disease, Movement disorders",
+          "languages_spoken": ["English", "Hindi"],
+          "patient_rating": 4.8,
+          "slots": ["10:00", "13:00", "15:30"],
+          "contact_email": "neuro1@aiims.mock",
+          "awards": ["Excellence in Movement Disorders 2022"]
+        },
+        {
+          "name": "Dr. Meera Singh",
+          "qualification": "MD, DM (Neurology)",
+          "experience_years": 14,
+          "sub_specialization": "Stroke management, Neurocritical care",
+          "languages_spoken": ["English", "Hindi"],
+          "patient_rating": 4.7,
+          "slots": ["09:30", "12:00", "14:30"],
+          "contact_email": "neuro2@aiims.mock",
+          "awards": ["Top Stroke Specialist 2021"]
+        },
+        {
+          "name": "Dr. Rohan Gupta",
+          "qualification": "MD, DM (Neurology)",
+          "experience_years": 18,
+          "sub_specialization": "Epilepsy, Neuroimmunology",
+          "languages_spoken": ["English", "Hindi"],
+          "patient_rating": 4.9,
+          "slots": ["09:00", "11:30", "15:00"],
+          "contact_email": "neuro3@aiims.mock",
+          "awards": ["Best Epileptologist 2020"]
+        },
+        {
+          "name": "Dr. Ananya Roy",
+          "qualification": "MD, DM (Neurology)",
+          "experience_years": 12,
+          "sub_specialization": "Dementia, Cognitive disorders",
+          "languages_spoken": ["English", "Hindi"],
+          "patient_rating": 4.6,
+          "slots": ["10:00", "12:30", "14:30"],
+          "contact_email": "neuro4@aiims.mock",
+          "awards": ["Emerging Neurologist 2021"]
+        },
+        {
+          "name": "Dr. Vikram Joshi",
+          "qualification": "MD, DM (Neurology)",
+          "experience_years": 15,
+          "sub_specialization": "Multiple sclerosis, Neurodegenerative disorders",
+          "languages_spoken": ["English", "Hindi"],
+          "patient_rating": 4.8,
+          "slots": ["09:00", "11:00", "14:00"],
+          "contact_email": "neuro5@aiims.mock",
+          "awards": ["Top Neuroimmunologist 2022"]
+        },
+        {
+          "name": "Dr. Priya Khanna",
+          "qualification": "MD, DM (Neurology)",
+          "experience_years": 13,
+          "sub_specialization": "Headache disorders, Migraine",
+          "languages_spoken": ["English", "Hindi"],
+          "patient_rating": 4.7,
+          "slots": ["09:30", "12:00", "15:00"],
+          "contact_email": "neuro6@aiims.mock",
+          "awards": ["Best Headache Specialist 2021"]
+        },
+        {
+          "name": "Dr. Neeraj Agarwal",
+          "qualification": "MD, DM (Neurology)",
+          "experience_years": 17,
+          "sub_specialization": "Neurogenetics, Rare neurological disorders",
+          "languages_spoken": ["English", "Hindi"],
+          "patient_rating": 4.9,
+          "slots": ["10:00", "13:00", "16:00"],
+          "contact_email": "neuro7@aiims.mock",
+          "awards": ["Top Neurogenetics Specialist 2022"]
+        },
+        {
+          "name": "Dr. Shalini Mehta",
+          "qualification": "MD, DM (Neurology)",
+          "experience_years": 11,
+          "sub_specialization": "Peripheral neuropathy, Electromyography",
+          "languages_spoken": ["English", "Hindi"],
+          "patient_rating": 4.6,
+          "slots": ["09:00", "11:30", "14:30"],
+          "contact_email": "neuro8@aiims.mock",
+          "awards": ["Emerging Neurophysiologist 2020"]
+        },
+        {
+          "name": "Dr. Karan Verma",
+          "qualification": "MD, DM (Neurology)",
+          "experience_years": 19,
+          "sub_specialization": "Neuromuscular disorders, Myopathy",
+          "languages_spoken": ["English", "Hindi"],
+          "patient_rating": 4.9,
+          "slots": ["09:30", "12:30", "15:30"],
+          "contact_email": "neuro9@aiims.mock",
+          "awards": ["Lifetime Achievement in Neuromuscular Disorders 2021"]
+        },
+        {
+          "name": "Dr. Anjali Saxena",
+          "qualification": "MD, DM (Neurology)",
+          "experience_years": 16,
+          "sub_specialization": "Epilepsy surgery, Pediatric neurology",
+          "languages_spoken": ["English", "Hindi"],
+          "patient_rating": 4.8,
+          "slots": ["10:00", "12:30", "15:00"],
+          "contact_email": "neuro10@aiims.mock",
+          "awards": ["Top Pediatric Neurologist 2022"]
+        }
+      ]
+    }
+  ]
+}

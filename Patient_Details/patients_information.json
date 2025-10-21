@@ -1,0 +1,28 @@
+[
+  {
+    "name": "Samir",
+    "age": 21,
+    "gender": "Male",
+    "contact_number": "+91-8595136700",
+    "email": "samirawm7@gmail.com",
+    "intake_method": "Form",
+    "preferred_language": "Hindi",
+    "symptoms": "Persistent low mood and loss of interest in daily activities for several months, accompanied by fatigue, disturbed sleep, decreased appetite, feelings of worthlessness, and difficulty concentrating.",
+    "pre_existing_conditions": ["Depression"],
+    "mapped_specialty": "Psychiatry",
+    "preferred_slot": "09:00"
+  },
+  {
+    "name": "Sanya Kapoor",
+    "age": 28,
+    "gender": "Female",
+    "contact_number": "+91-9810223344",
+    "email": "sanya.kapoor@example.com",
+    "intake_method": "Form",
+    "preferred_language": "English",
+    "symptoms": "Sharp chest pain on the left side lasting 10-15 minutes, occurring during exertion, with shortness of breath and occasional dizziness",
+    "pre_existing_conditions": ["High blood pressure"],
+    "mapped_specialty": "Cardiology",
+    "preferred_slot": "10:00"
+  }
+]

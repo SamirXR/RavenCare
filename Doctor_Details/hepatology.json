@@ -1,0 +1,125 @@
+{
+  "hospital_name": "AIIMS, New Delhi",
+  "city": "New Delhi",
+  "contact_number": "+91-11-26588500",
+  "email": "info@aiims.mock",
+  "address": "Ansari Nagar, New Delhi, 110029",
+  "departments": [
+    {
+      "specialty": "Hepatology",
+      "floor": "6th Floor",
+      "doctors": [
+        {
+          "name": "Dr. Ananya Gupta",
+          "qualification": "MD, DM (Hepatology)",
+          "experience_years": 14,
+          "sub_specialization": "Liver transplant, Viral hepatitis",
+          "languages_spoken": ["English", "Hindi"],
+          "patient_rating": 4.8,
+          "slots": ["09:00", "10:30", "14:00"],
+          "contact_email": "hepatology1@aiims.mock",
+          "awards": ["Best Hepatologist Award 2020"]
+        },
+        {
+          "name": "Dr. Rohit Sharma",
+          "qualification": "MD, DM (Hepatology)",
+          "experience_years": 16,
+          "sub_specialization": "Cirrhosis management, Liver cancer",
+          "languages_spoken": ["English", "Hindi", "Punjabi"],
+          "patient_rating": 4.7,
+          "slots": ["11:00", "13:30", "15:00"],
+          "contact_email": "hepatology2@aiims.mock",
+          "awards": ["Top Liver Specialist 2021"]
+        },
+        {
+          "name": "Dr. Priya Mehta",
+          "qualification": "MD, DM (Hepatology)",
+          "experience_years": 10,
+          "sub_specialization": "Alcoholic liver disease, Fatty liver",
+          "languages_spoken": ["English", "Hindi"],
+          "patient_rating": 4.6,
+          "slots": ["09:30", "12:00", "16:00"],
+          "contact_email": "hepatology3@aiims.mock",
+          "awards": ["Young Hepatologist Award 2019"]
+        },
+        {
+          "name": "Dr. Suresh Kumar",
+          "qualification": "MD, DM (Hepatology)",
+          "experience_years": 22,
+          "sub_specialization": "Liver fibrosis, Autoimmune liver disease",
+          "languages_spoken": ["English", "Hindi", "Punjabi"],
+          "patient_rating": 4.9,
+          "slots": ["10:00", "13:00", "15:30"],
+          "contact_email": "hepatology4@aiims.mock",
+          "awards": ["Lifetime Achievement Award 2021"]
+        },
+        {
+          "name": "Dr. Nidhi Sharma",
+          "qualification": "MD, DM (Hepatology)",
+          "experience_years": 9,
+          "sub_specialization": "Pediatric liver disorders, Liver infections",
+          "languages_spoken": ["English", "Hindi", "Bengali"],
+          "patient_rating": 4.5,
+          "slots": ["09:00", "11:30", "14:30"],
+          "contact_email": "hepatology5@aiims.mock",
+          "awards": ["Excellence in Pediatric Hepatology 2020"]
+        },
+        {
+          "name": "Dr. Vikram Jain",
+          "qualification": "MD, DM (Hepatology)",
+          "experience_years": 18,
+          "sub_specialization": "Liver cancer, Minimally invasive liver procedures",
+          "languages_spoken": ["English", "Hindi", "Marathi"],
+          "patient_rating": 4.8,
+          "slots": ["10:00", "12:30", "15:00"],
+          "contact_email": "hepatology6@aiims.mock",
+          "awards": ["Top Liver Oncologist Award 2022"]
+        },
+        {
+          "name": "Dr. Neha Verma",
+          "qualification": "MD, DM (Hepatology)",
+          "experience_years": 12,
+          "sub_specialization": "Viral hepatitis B & C, Fatty liver",
+          "languages_spoken": ["English", "Hindi"],
+          "patient_rating": 4.7,
+          "slots": ["09:30", "12:00", "16:00"],
+          "contact_email": "hepatology7@aiims.mock",
+          "awards": ["Best Hepatitis Specialist 2021"]
+        },
+        {
+          "name": "Dr. Arjun Kapoor",
+          "qualification": "MD, DM (Hepatology)",
+          "experience_years": 15,
+          "sub_specialization": "Liver transplant follow-up, Cirrhosis care",
+          "languages_spoken": ["English", "Hindi", "Gujarati"],
+          "patient_rating": 4.8,
+          "slots": ["10:00", "13:00", "15:30"],
+          "contact_email": "hepatology8@aiims.mock",
+          "awards": ["Top Liver Transplant Specialist 2020"]
+        },
+        {
+          "name": "Dr. Ritu Agarwal",
+          "qualification": "MD, DM (Hepatology)",
+          "experience_years": 11,
+          "sub_specialization": "Autoimmune liver disease, Fatty liver",
+          "languages_spoken": ["English", "Hindi"],
+          "patient_rating": 4.6,
+          "slots": ["09:00", "11:30", "14:00"],
+          "contact_email": "hepatology9@aiims.mock",
+          "awards": ["Emerging Hepatologist Award 2021"]
+        },
+        {
+          "name": "Dr. Karan Bansal",
+          "qualification": "MD, DM (Hepatology)",
+          "experience_years": 17,
+          "sub_specialization": "Cirrhosis, Liver cancer interventions",
+          "languages_spoken": ["English", "Hindi", "Punjabi"],
+          "patient_rating": 4.9,
+          "slots": ["10:30", "13:00", "16:00"],
+          "contact_email": "hepatology10@aiims.mock",
+          "awards": ["Best Clinical Hepatologist 2022"]
+        }
+      ]
+    }
+  ]
+}

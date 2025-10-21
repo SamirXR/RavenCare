@@ -1,0 +1,125 @@
+{
+  "hospital_name": "AIIMS, New Delhi",
+  "city": "New Delhi",
+  "contact_number": "+91-11-26588500",
+  "email": "info@aiims.mock",
+  "address": "Ansari Nagar, New Delhi, 110029",
+  "departments": [
+    {
+      "specialty": "Dermatology",
+      "floor": "7th Floor",
+      "doctors": [
+        {
+          "name": "Dr. Anjali Mehta",
+          "qualification": "MD (Dermatology)",
+          "experience_years": 14,
+          "sub_specialization": "Cosmetic dermatology, Laser therapy",
+          "languages_spoken": ["English", "Hindi", "Punjabi"],
+          "patient_rating": 4.8,
+          "slots": ["09:00", "11:00", "14:00"],
+          "contact_email": "derma1@aiims.mock",
+          "awards": ["Top Cosmetic Dermatologist 2021"]
+        },
+        {
+          "name": "Dr. Rohan Verma",
+          "qualification": "MD (Dermatology)",
+          "experience_years": 16,
+          "sub_specialization": "Psoriasis, Eczema",
+          "languages_spoken": ["English", "Hindi", "Marathi"],
+          "patient_rating": 4.9,
+          "slots": ["09:30", "12:00", "15:00"],
+          "contact_email": "derma2@aiims.mock",
+          "awards": ["Best Clinical Dermatologist 2020"]
+        },
+        {
+          "name": "Dr. Priya Nair",
+          "qualification": "MD (Dermatology)",
+          "experience_years": 12,
+          "sub_specialization": "Vitiligo, Skin pigmentation disorders",
+          "languages_spoken": ["English", "Hindi", "Malayalam"],
+          "patient_rating": 4.7,
+          "slots": ["10:00", "13:00", "15:30"],
+          "contact_email": "derma3@aiims.mock",
+          "awards": ["Top Vitiligo Specialist 2021"]
+        },
+        {
+          "name": "Dr. Arvind Rao",
+          "qualification": "MD (Dermatology)",
+          "experience_years": 17,
+          "sub_specialization": "Skin cancer, Mohs surgery",
+          "languages_spoken": ["English", "Hindi", "Kannada"],
+          "patient_rating": 4.9,
+          "slots": ["09:00", "11:30", "14:30"],
+          "contact_email": "derma4@aiims.mock",
+          "awards": ["Excellence in Skin Cancer Surgery 2022"]
+        },
+        {
+          "name": "Dr. Shalini Mehta",
+          "qualification": "MD (Dermatology)",
+          "experience_years": 11,
+          "sub_specialization": "Allergic skin disorders",
+          "languages_spoken": ["English", "Hindi", "Marathi"],
+          "patient_rating": 4.6,
+          "slots": ["10:00", "12:30", "15:00"],
+          "contact_email": "derma5@aiims.mock",
+          "awards": ["Emerging Dermatologist 2020"]
+        },
+        {
+          "name": "Dr. Karan Bansal",
+          "qualification": "MD (Dermatology)",
+          "experience_years": 18,
+          "sub_specialization": "Acne, Cosmetic procedures",
+          "languages_spoken": ["English", "Hindi", "Punjabi"],
+          "patient_rating": 4.9,
+          "slots": ["09:30", "12:00", "15:30"],
+          "contact_email": "derma6@aiims.mock",
+          "awards": ["Top Acne Specialist 2021"]
+        },
+        {
+          "name": "Dr. Neha Sharma",
+          "qualification": "MD (Dermatology)",
+          "experience_years": 15,
+          "sub_specialization": "Hair disorders, Trichology",
+          "languages_spoken": ["English", "Hindi", "Bengali"],
+          "patient_rating": 4.8,
+          "slots": ["09:00", "11:30", "14:00"],
+          "contact_email": "derma7@aiims.mock",
+          "awards": ["Best Trichologist 2022"]
+        },
+        {
+          "name": "Dr. Anil Kapoor",
+          "qualification": "MD (Dermatology)",
+          "experience_years": 16,
+          "sub_specialization": "Dermatopathology, Skin biopsy",
+          "languages_spoken": ["English", "Hindi", "Gujarati"],
+          "patient_rating": 4.8,
+          "slots": ["10:00", "13:00", "16:00"],
+          "contact_email": "derma8@aiims.mock",
+          "awards": ["Top Dermatopathologist 2021"]
+        },
+        {
+          "name": "Dr. Priya Malhotra",
+          "qualification": "MD (Dermatology)",
+          "experience_years": 13,
+          "sub_specialization": "Pediatric dermatology",
+          "languages_spoken": ["English", "Hindi", "Tamil"],
+          "patient_rating": 4.7,
+          "slots": ["09:30", "12:30", "15:00"],
+          "contact_email": "derma9@aiims.mock",
+          "awards": ["Best Pediatric Dermatologist 2020"]
+        },
+        {
+          "name": "Dr. Vikram Joshi",
+          "qualification": "MD (Dermatology)",
+          "experience_years": 17,
+          "sub_specialization": "Laser therapy, Cosmetic procedures",
+          "languages_spoken": ["English", "Hindi", "Malayalam"],
+          "patient_rating": 4.9,
+          "slots": ["10:00", "12:30", "15:30"],
+          "contact_email": "derma10@aiims.mock",
+          "awards": ["Top Cosmetic Dermatologist 2022"]
+        }
+      ]
+    }
+  ]
+}

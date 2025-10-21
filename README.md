@@ -1,4 +1,4 @@
-# RavenCare - AI-Powered Medical Triage System Built with Composio
+# RavenCare : AI-Powered Medical Triage System Built with Composio
 
 ## Overview
 
@@ -47,6 +47,9 @@ Each specialty includes **sub-specialization detection** for precise matching.
 - Internet connection (for AI APIs)
 - Google account (for Composio integrations)
 - Composio account (free tier available)
+- Gemini API (Google AI Studio)
+- Grok-4-Fast-Reasioning API (Azure)
+- OpenAI O4-Mini (Azure)
 ```
 
 ### Installation
@@ -89,29 +92,114 @@ python -m src.triage_orchestrator
 
 ### Required API Keys
 
-```bash
-# AI Models
-GEMINI_API_KEY=your_gemini_key
-GROK_API_KEY=your_grok_key
-GROK_ENDPOINT=your_grok_endpoint
-OPENAI_API_KEY=your_openai_key
-OPENAI_ENDPOINT=your_openai_endpoint
+RavenCare requires several API keys for full functionality. Below is a detailed guide on obtaining each key:
 
-# Composio Platform
+#### 1. **Gemini API Key** (Google AI Studio)
+```bash
+GEMINI_API_KEY=your_gemini_key
+```
+
+**How to obtain:**
+1. Visit [Google AI Studio](https://aistudio.google.com/apikey)
+2. Sign in with your Google account
+3. Click **"Get API Key"** or **"Create API Key"**
+4. Copy the generated key and paste it in your `.env` file
+
+**Free Tier:** Available with generous quota for testing
+
+---
+
+#### 2. **Grok API** (Azure AI Services)
+```bash
+GROK_API_KEY=your_grok_key
+GROK_ENDPOINT=https://your-endpoint.services.ai.azure.com/openai/v1/
+```
+
+**How to obtain:**
+1. Create an account at [Azure Portal](https://portal.azure.com)
+2. Navigate to **Azure AI Services** or **Azure OpenAI**
+3. Click **"Create"** to set up a new resource
+4. Once created, go to **"Keys and Endpoint"** in the left sidebar
+5. Copy **KEY 1** or **KEY 2** → Use as `GROK_API_KEY`
+6. Copy the **Endpoint URL** → Use as `GROK_ENDPOINT`
+7. Go to **"Model deployments"** and deploy the Grok model
+8. Note the deployment name for `GROK_MODEL_NAME`
+
+**Note:** Requires Azure subscription (free trial available)
+
+---
+
+#### 3. **OpenAI API** (Azure OpenAI Service)
+```bash
+OPENAI_API_KEY=your_openai_key
+OPENAI_ENDPOINT=https://your-endpoint.cognitiveservices.azure.com/
+```
+
+**How to obtain:**
+1. Go to [Azure Portal](https://portal.azure.com)
+2. Search for **"Azure OpenAI"** service
+3. Create a new Azure OpenAI resource (may require access approval)
+4. Once approved and created, navigate to **"Keys and Endpoint"**
+5. Copy **KEY 1** or **KEY 2** → Use as `OPENAI_API_KEY`
+6. Copy the **Endpoint URL** → Use as `OPENAI_ENDPOINT`
+7. Deploy the **o4-mini** model in **"Model deployments"**
+
+**Important:** Azure OpenAI access may require application approval. Apply at [Azure OpenAI Access Form](https://aka.ms/oai/access)
+
+---
+
+#### 4. **Composio Platform Keys**
+```bash
 COMPOSIO_API_KEY=your_composio_key
 COMPOSIO_USER_ID=your_user_id
+```
 
-# Composio Connected Accounts (Optional - Enable features)
+**How to obtain:**
+1. Sign up at [Composio Dashboard](https://app.composio.dev)
+2. Navigate to **Settings → API Keys**
+3. Copy your **API Key** → Use as `COMPOSIO_API_KEY`
+4. Find your **User ID** in the dashboard or profile → Use as `COMPOSIO_USER_ID`
+
+**Free Tier:** Available with sufficient quota for development
+
+---
+
+#### 5. **Composio Connected Accounts** (Optional - Enables Automation)
+```bash
 COMPOSIO_SHEETS_ACCOUNT_ID=your_sheets_account
 COMPOSIO_CALENDAR_ACCOUNT_ID=your_calendar_account
 COMPOSIO_GMAIL_ACCOUNT_ID=your_gmail_account
 COMPOSIO_DRIVE_ACCOUNT_ID=your_drive_account
+```
 
-# Application
+**How to obtain:**
+1. Go to [Composio Apps](https://app.composio.dev/apps)
+2. Connect each Google Workspace app:
+   - **Google Sheets** (for data dashboards)
+   - **Google Calendar** (for appointment scheduling)
+   - **Gmail** (for email notifications)
+   - **Google Drive** (for PDF report storage)
+3. Authorize each app with your Google account
+4. After connection, go to **"Connected Accounts"**
+5. Copy each **Account ID** and add to `.env`
+
+**Note:** These are optional but highly recommended for full automation features
+
+---
+
+#### 6. **Application Settings**
+```bash
 ADMIN_EMAIL=admin@your-domain.com
 FLASK_SECRET_KEY=random_secret_key
 ```
 
+- **ADMIN_EMAIL**: Your email to receive system notifications
+- **FLASK_SECRET_KEY**: Generate securely with:
+  ```powershell
+  python -c "import secrets; print(secrets.token_hex(32))"
+  ```
+
+---
 
 
 ## Composio Integrations

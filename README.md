@@ -1,4 +1,4 @@
-# RavenCare: Multi-Agent Health Coordination System Built with Composio
+# RavenCare : AI-Powered Medical Triage System Built with Composio
 
 ## Overview
 
@@ -47,19 +47,26 @@ Each specialty includes **sub-specialization detection** for precise matching.
 - Internet connection (for AI APIs)
 - Google account (for Composio integrations)
 - Composio account (free tier available)
-- Gemini API (Google AI Studio)
-- Grok-4-Fast-Reasioning API (Azure)
-- OpenAI O4-Mini (Azure)
+- Git (for cloning repository)
 ```
 
 ### Installation
 
-**1. Install Dependencies**
+**1. Clone the Repository**
+```powershell
+# Clone from GitHub
+git clone https://github.com/SamirXR/RavenCare.git
+
+# Navigate to project directory
+cd RavenCare
+```
+
+**2. Install Dependencies**
 ```powershell
 pip install -r requirements.txt
 ```
 
-**2. Configure Environment Variables**
+**3. Configure Environment Variables**
 ```powershell
 # Copy template
 copy .env.example .env
@@ -68,7 +75,7 @@ copy .env.example .env
 notepad .env
 ```
 
-**3. Verify Configuration**
+**4. Verify Configuration**
 ```powershell
 python -c "from src.config import config; config.print_config_status()"
 ```
@@ -201,6 +208,19 @@ FLASK_SECRET_KEY=random_secret_key
 
 ---
 
+### Quick Setup Checklist
+
+- [ ] Create `.env` file from `.env.example`
+- [ ] Add Gemini API key (Google AI Studio)
+- [ ] Add Azure Grok credentials (Key + Endpoint)
+- [ ] Add Azure OpenAI credentials (Key + Endpoint)
+- [ ] Add Composio API key and User ID
+- [ ] (Optional) Connect Google Workspace apps in Composio
+- [ ] Set admin email
+- [ ] Generate Flask secret key
+- [ ] Test configuration: `python -c "from src.config import config; config.print_config_status()"`
+
+
 
 ## Composio Integrations
 
@@ -272,8 +292,11 @@ FLASK_SECRET_KEY=random_secret_key
 
 ---
 
-## Security
+## Security & Best Practices
 
+- **Environment Variables**: All secrets in `.env`, never in code
+- **Type Hints**: Full type annotations throughout
+- **Error Handling**: Graceful exception handling
 - **Modular Architecture**: Clean separation of concerns
 - **Input Validation**: Patient data sanitization
 - **SSL/TLS Support**: HTTPS for web interface
@@ -292,6 +315,11 @@ FLASK_SECRET_KEY=random_secret_key
 ---
 
 
+## Disclaimer
+
+This system is designed for **educational and demonstration purposes**. It should not replace professional medical judgment. Always consult qualified healthcare professionals for medical advice.
+
+---
 
 ## Future Roadmap
 
@@ -303,9 +331,5 @@ FLASK_SECRET_KEY=random_secret_key
 - Prescription management
 
 ---
-
-## Disclaimer
-
-This system is designed for **educational and demonstration purposes**. It should not replace professional medical judgment. Always consult qualified healthcare professionals for medical advice.
 
 

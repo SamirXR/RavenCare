@@ -1,4 +1,4 @@
-#  RavenCare - Intelligent Medical Triage System built for India
+#  RavenCare - Intelligent Medical Triage Agent built for India
 
 ## Table of Contents
 1. [Overview](#overview)

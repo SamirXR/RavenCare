@@ -292,16 +292,6 @@ FLASK_SECRET_KEY=random_secret_key
 
 ---
 
-## Security & Best Practices
-
-- **Environment Variables**: All secrets in `.env`, never in code
-- **Type Hints**: Full type annotations throughout
-- **Error Handling**: Graceful exception handling
-- **Modular Architecture**: Clean separation of concerns
-- **Input Validation**: Patient data sanitization
-- **SSL/TLS Support**: HTTPS for web interface
-
----
 
 ## Use Cases
 

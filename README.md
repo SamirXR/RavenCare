@@ -1,4 +1,4 @@
-# RavenCare : AI-Powered Medical Triage System Built with Composio
+# RavenCare: Multi-Agent Health Coordination System Built with Composio
 
 ## Overview
 

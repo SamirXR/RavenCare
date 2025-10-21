@@ -272,11 +272,8 @@ FLASK_SECRET_KEY=random_secret_key
 
 ---
 
-## Security & Best Practices
+## Security
 
-- **Environment Variables**: All secrets in `.env`, never in code
-- **Type Hints**: Full type annotations throughout
-- **Error Handling**: Graceful exception handling
 - **Modular Architecture**: Clean separation of concerns
 - **Input Validation**: Patient data sanitization
 - **SSL/TLS Support**: HTTPS for web interface
@@ -295,11 +292,6 @@ FLASK_SECRET_KEY=random_secret_key
 ---
 
 
-## Disclaimer
-
-This system is designed for **educational and demonstration purposes**. It should not replace professional medical judgment. Always consult qualified healthcare professionals for medical advice.
-
----
 
 ## Future Roadmap
 
@@ -311,5 +303,9 @@ This system is designed for **educational and demonstration purposes**. It shoul
 - Prescription management
 
 ---
+
+## Disclaimer
+
+This system is designed for **educational and demonstration purposes**. It should not replace professional medical judgment. Always consult qualified healthcare professionals for medical advice.
 
 

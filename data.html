@@ -1,0 +1,1172 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RavenCare - Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f0f0f;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.15);
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #00d4ff;
+            letter-spacing: -1px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 15px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            color: #888;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .tab-btn:hover {
+            border-color: rgba(0, 212, 255, 0.4);
+            color: #00d4ff;
+        }
+
+        .tab-btn.active {
+            background: rgba(0, 212, 255, 0.1);
+            border-color: #00d4ff;
+            color: #00d4ff;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: rgba(0, 212, 255, 0.03);
+            border: 1px solid rgba(0, 212, 255, 0.15);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(0, 212, 255, 0.3);
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #00d4ff;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Main Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.04) 0%, rgba(0, 212, 255, 0.01) 100%);
+            border: 1px solid rgba(0, 212, 255, 0.15);
+            border-radius: 12px;
+            padding: 30px;
+        }
+
+        .card h2 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            color: #fff;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 11px 14px;
+            background: rgba(0, 212, 255, 0.04);
+            border: 1px solid rgba(0, 212, 255, 0.15);
+            border-radius: 6px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: #555;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #00d4ff;
+            background: rgba(0, 212, 255, 0.08);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.08);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 75px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        /* Button */
+        .btn {
+            padding: 11px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            color: #000;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(0, 212, 255, 0.15);
+        }
+
+        .btn-secondary {
+            background: rgba(0, 212, 255, 0.1);
+            color: #00d4ff;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            padding: 8px 16px;
+            font-size: 0.8rem;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 212, 255, 0.15);
+        }
+
+        .btn-danger {
+            background: rgba(255, 59, 48, 0.15);
+            color: #ff3b30;
+            border: 1px solid rgba(255, 59, 48, 0.3);
+            padding: 8px 14px;
+            font-size: 0.75rem;
+        }
+
+        .btn-danger:hover {
+            background: rgba(255, 59, 48, 0.25);
+        }
+
+        /* Alert */
+        .alert {
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: none;
+            animation: slideIn 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-success {
+            background: rgba(52, 211, 153, 0.12);
+            border: 1px solid rgba(52, 211, 153, 0.3);
+            color: #34d399;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Data Display */
+        .data-section {
+            margin-top: 40px;
+        }
+
+        .data-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .data-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .data-item {
+            background: rgba(0, 212, 255, 0.04);
+            border: 1px solid rgba(0, 212, 255, 0.12);
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            transition: all 0.3s ease;
+        }
+
+        .data-item:hover {
+            border-color: rgba(0, 212, 255, 0.25);
+            background: rgba(0, 212, 255, 0.06);
+        }
+
+        .data-item-info {
+            flex: 1;
+        }
+
+        .data-item-header {
+            font-weight: 600;
+            color: #00d4ff;
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+        }
+
+        .data-item-detail {
+            font-size: 0.8rem;
+            color: #777;
+            margin-bottom: 2px;
+            line-height: 1.5;
+        }
+
+        .data-item-actions {
+            display: flex;
+            gap: 10px;
+            margin-left: 15px;
+            flex-shrink: 0;
+        }
+
+        /* Badges */
+        .urgency-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-top: 8px;
+        }
+
+        .urgency-critical {
+            background: rgba(255, 59, 48, 0.15);
+            color: #ff3b30;
+        }
+
+        .urgency-high {
+            background: rgba(255, 149, 0, 0.15);
+            color: #ff9500;
+        }
+
+        .urgency-medium {
+            background: rgba(255, 204, 0, 0.15);
+            color: #ffcc00;
+        }
+
+        .urgency-low {
+            background: rgba(52, 211, 153, 0.15);
+            color: #34d399;
+        }
+
+        .specialty-badge {
+            display: inline-block;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.25);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: #00d4ff;
+            margin-right: 6px;
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.2px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+        }
+
+        .empty-state-icon {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+        }
+
+        /* Charts Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-bottom: 30px;
+        }
+
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .chart-card {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.04) 0%, rgba(0, 212, 255, 0.01) 100%);
+            border: 1px solid rgba(0, 212, 255, 0.15);
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        .chart-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* Performance Bars */
+        .performance-item {
+            margin-bottom: 20px;
+        }
+
+        .performance-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .performance-label span:first-child {
+            color: #aaa;
+        }
+
+        .performance-label span:last-child {
+            color: #00d4ff;
+            font-weight: 600;
+        }
+
+        .performance-bar {
+            background: rgba(0, 212, 255, 0.08);
+            height: 6px;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .performance-fill {
+            background: linear-gradient(90deg, #00d4ff, #0099cc);
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .main-grid, .chart-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 20px;
+                align-items: flex-start;
+            }
+
+            .tabs {
+                flex-wrap: wrap;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .info-box {
+            background: rgba(0, 212, 255, 0.04);
+            border: 1px solid rgba(0, 212, 255, 0.15);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: #888;
+        }
+
+        .info-box strong {
+            color: #00d4ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo"> RavenCare</div>
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('patients')">Patients</button>
+                <button class="tab-btn" onclick="switchTab('doctors')">Doctors</button>
+                <button class="tab-btn" onclick="switchTab('analytics')">Analytics</button>
+            </div>
+        </div>
+
+        <!-- Patients Tab -->
+        <div id="patients" class="tab-content active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="total-patients">3</div>
+                    <div class="stat-label">Total Patients</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="critical-count">1</div>
+                    <div class="stat-label">Critical Cases</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="pending-count">2</div>
+                    <div class="stat-label">Pending Triage</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="matched-count">0</div>
+                    <div class="stat-label">Matched</div>
+                </div>
+            </div>
+
+            <div class="main-grid">
+                <div class="card">
+                    <h2>Add Patient</h2>
+                    <div id="patient-alert" class="alert"></div>
+                    
+                    <form id="patientForm">
+                        <div class="form-group">
+                            <label>Name *</label>
+                            <input type="text" id="patientName" placeholder="John Doe" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Age *</label>
+                                <input type="number" id="patientAge" placeholder="35" min="0" max="150" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Gender *</label>
+                                <select id="patientGender" required>
+                                    <option value="">Select</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email *</label>
+                            <input type="email" id="patientEmail" placeholder="john@example.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Phone *</label>
+                            <input type="tel" id="patientPhone" placeholder="+1 (555) 123-4567" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Medical History</label>
+                            <textarea id="patientHistory" placeholder="Diabetes, Hypertension..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Symptoms *</label>
+                            <textarea id="patientSymptoms" placeholder="Chest pain, difficulty breathing..." required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Duration *</label>
+                            <input type="text" id="patientDuration" placeholder="e.g., 2 days" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Add Patient</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h2>Sample Data</h2>
+                    <div class="info-box">
+                        <strong>Sarah Johnson</strong><br>
+                        28F | Cardiology<br>
+                        Chest pain, shortness of breath<br>
+                        <span class="urgency-badge urgency-critical">Critical</span>
+                    </div>
+                    <div class="info-box">
+                        <strong>Michael Chen</strong><br>
+                        45M | Neurology<br>
+                        Severe headache, dizziness<br>
+                        <span class="urgency-badge urgency-high">High</span>
+                    </div>
+                    <div class="info-box">
+                        <strong>Emma Wilson</strong><br>
+                        34F | Gastroenterology<br>
+                        Abdominal pain, nausea<br>
+                        <span class="urgency-badge urgency-medium">Medium</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="data-section">
+                <h3>Patient Records</h3>
+                <div id="patientList" class="data-list">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📭</div>
+                        <p>No patients added yet</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Doctors Tab -->
+        <div id="doctors" class="tab-content">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="total-doctors">3</div>
+                    <div class="stat-label">Total Doctors</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="available-doctors">2</div>
+                    <div class="stat-label">Available</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="specialties-count">3</div>
+                    <div class="stat-label">Specialties</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="avg-rating">4.7</div>
+                    <div class="stat-label">Avg Rating</div>
+                </div>
+            </div>
+
+            <div class="main-grid">
+                <div class="card">
+                    <h2>Add Doctor</h2>
+                    <div id="doctor-alert" class="alert"></div>
+                    
+                    <form id="doctorForm">
+                        <div class="form-group">
+                            <label>Name *</label>
+                            <input type="text" id="doctorName" placeholder="Dr. James Smith" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>License *</label>
+                                <input type="text" id="doctorLicense" placeholder="LIC-123456" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Experience *</label>
+                                <input type="number" id="doctorExperience" placeholder="10" min="0" max="70" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Specialty *</label>
+                            <select id="doctorSpecialty" required>
+                                <option value="">Select</option>
+                                <option value="Cardiology">Cardiology</option>
+                                <option value="Neurology">Neurology</option>
+                                <option value="Gastroenterology">Gastroenterology</option>
+                                <option value="Orthopedics">Orthopedics</option>
+                                <option value="Pediatrics">Pediatrics</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Sub-Specialization</label>
+                            <input type="text" id="doctorSubSpecialty" placeholder="e.g., Pediatric Cardiology">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email *</label>
+                            <input type="email" id="doctorEmail" placeholder="doctor@hospital.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Phone *</label>
+                            <input type="tel" id="doctorPhone" placeholder="+1 (555) 987-6543" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Rating *</label>
+                                <input type="number" id="doctorRating" placeholder="4.5" min="0" max="5" step="0.1" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Availability *</label>
+                                <select id="doctorAvailability" required>
+                                    <option value="">Select</option>
+                                    <option value="Available">Available</option>
+                                    <option value="In Consultation">Consulting</option>
+                                    <option value="Break">Break</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Add Doctor</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h2>Directory</h2>
+                    <div class="info-box">
+                        <strong>Dr. Robert Turner</strong><br>
+                        Cardiology | ⭐ 4.9<br>
+                        18 years | 💚 Available
+                    </div>
+                    <div class="info-box">
+                        <strong>Dr. Lisa Martinez</strong><br>
+                        Neurology | ⭐ 4.7<br>
+                        12 years | 💛 Consulting
+                    </div>
+                    <div class="info-box">
+                        <strong>Dr. Anil Patel</strong><br>
+                        Gastroenterology | ⭐ 4.6<br>
+                        15 years | 💚 Available
+                    </div>
+                </div>
+            </div>
+
+            <div class="data-section">
+                <h3>Doctor Registry</h3>
+                <div id="doctorList" class="data-list">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">👥</div>
+                        <p>No doctors added yet</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Tab -->
+        <div id="analytics" class="tab-content">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">156</div>
+                    <div class="stat-label">Total Triages</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">94.2%</div>
+                    <div class="stat-label">Accuracy</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">2.3m</div>
+                    <div class="stat-label">Avg Response</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4.8⭐</div>
+                    <div class="stat-label">Satisfaction</div>
+                </div>
+            </div>
+
+            <div class="chart-grid">
+                <div class="chart-card">
+                    <h3>Triage Distribution</h3>
+                    <div class="chart-container">
+                        <canvas id="triageChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <h3>AI Model Accuracy</h3>
+                    <div class="chart-container">
+                        <canvas id="accuracyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-grid">
+                <div class="chart-card">
+                    <h3>System Performance</h3>
+                    <div style="padding: 10px 0;">
+                        <div class="performance-item">
+                            <div class="performance-label">
+                                <span>Ensemble Consensus</span>
+                                <span>98.7%</span>
+                            </div>
+                            <div class="performance-bar">
+                                <div class="performance-fill" style="width: 98.7%"></div>
+                            </div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="performance-label">
+                                <span>Doctor Matching</span>
+                                <span>96.4%</span>
+                            </div>
+                            <div class="performance-bar">
+                                <div class="performance-fill" style="width: 96.4%"></div>
+                            </div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="performance-label">
+                                <span>System Uptime</span>
+                                <span>99.9%</span>
+                            </div>
+                            <div class="performance-bar">
+                                <div class="performance-fill" style="width: 99.9%"></div>
+                            </div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="performance-label">
+                                <span>Automation Efficiency</span>
+                                <span>97.2%</span>
+                            </div>
+                            <div class="performance-bar">
+                                <div class="performance-fill" style="width: 97.2%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <h3>Specialty Coverage</h3>
+                    <div class="chart-container">
+                        <canvas id="specialtyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-card" style="margin-bottom: 0;">
+                <h3>Response Time Trend (Last 7 Days)</h3>
+                <div style="position: relative; height: 300px;">
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Demo Data
+        const demoPatients = [
+            {
+                id: 1,
+                name: "Sarah Johnson",
+                age: 28,
+                gender: "Female",
+                email: "sarah.j@email.com",
+                phone: "+1 (555) 123-4567",
+                symptoms: "Chest pain, shortness of breath",
+                medicalHistory: "Asthma, Family history of heart disease",
+                duration: "2 hours",
+                urgency: "CRITICAL",
+                specialty: "Cardiology"
+            },
+            {
+                id: 2,
+                name: "Michael Chen",
+                age: 45,
+                gender: "Male",
+                email: "m.chen@email.com",
+                phone: "+1 (555) 234-5678",
+                symptoms: "Severe headache, dizziness",
+                medicalHistory: "Migraine, Hypertension",
+                duration: "4 hours",
+                urgency: "HIGH",
+                specialty: "Neurology"
+            },
+            {
+                id: 3,
+                name: "Emma Wilson",
+                age: 34,
+                gender: "Female",
+                email: "emma.w@email.com",
+                phone: "+1 (555) 345-6789",
+                symptoms: "Abdominal pain, nausea",
+                medicalHistory: "Acid reflux",
+                duration: "1 day",
+                urgency: "MEDIUM",
+                specialty: "Gastroenterology"
+            }
+        ];
+
+        const demoDoctors = [
+            {
+                id: 1,
+                name: "Dr. Robert Turner",
+                license: "LIC-004521",
+                specialty: "Cardiology",
+                experience: 18,
+                email: "r.turner@hospital.com",
+                phone: "+1 (555) 901-2345",
+                rating: 4.9,
+                availability: "Available"
+            },
+            {
+                id: 2,
+                name: "Dr. Lisa Martinez",
+                license: "LIC-004522",
+                specialty: "Neurology",
+                experience: 12,
+                email: "l.martinez@hospital.com",
+                phone: "+1 (555) 902-3456",
+                rating: 4.7,
+                availability: "In Consultation"
+            },
+            {
+                id: 3,
+                name: "Dr. Anil Patel",
+                license: "LIC-004523",
+                specialty: "Gastroenterology",
+                experience: 15,
+                email: "a.patel@hospital.com",
+                phone: "+1 (555) 903-4567",
+                rating: 4.6,
+                availability: "Available"
+            }
+        ];
+
+        let patients = [...demoPatients];
+        let doctors = [...demoDoctors];
+        let charts = {};
+
+        // Tab Switching
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+
+            if (tabName === 'analytics') {
+                setTimeout(initCharts, 100);
+            }
+        }
+
+        // Form Handlers
+        document.getElementById('patientForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const newPatient = {
+                id: Date.now(),
+                name: document.getElementById('patientName').value,
+                age: parseInt(document.getElementById('patientAge').value),
+                gender: document.getElementById('patientGender').value,
+                email: document.getElementById('patientEmail').value,
+                phone: document.getElementById('patientPhone').value,
+                medicalHistory: document.getElementById('patientHistory').value,
+                symptoms: document.getElementById('patientSymptoms').value,
+                duration: document.getElementById('patientDuration').value,
+                urgency: ['CRITICAL', 'HIGH', 'MEDIUM', 'LOW'][Math.floor(Math.random() * 4)],
+                specialty: ['Cardiology', 'Neurology', 'Gastroenterology', 'Orthopedics'][Math.floor(Math.random() * 4)]
+            };
+
+            patients.push(newPatient);
+            this.reset();
+            showAlert('patient-alert', `✅ ${newPatient.name} added successfully!`);
+            updatePatientStats();
+            renderPatients();
+        });
+
+        document.getElementById('doctorForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const newDoctor = {
+                id: Date.now(),
+                name: document.getElementById('doctorName').value,
+                license: document.getElementById('doctorLicense').value,
+                experience: parseInt(document.getElementById('doctorExperience').value),
+                specialty: document.getElementById('doctorSpecialty').value,
+                email: document.getElementById('doctorEmail').value,
+                phone: document.getElementById('doctorPhone').value,
+                rating: parseFloat(document.getElementById('doctorRating').value),
+                availability: document.getElementById('doctorAvailability').value
+            };
+
+            doctors.push(newDoctor);
+            this.reset();
+            showAlert('doctor-alert', `✅ ${newDoctor.name} added successfully!`);
+            updateDoctorStats();
+            renderDoctors();
+        });
+
+        function showAlert(elementId, message) {
+            const alert = document.getElementById(elementId);
+            alert.textContent = message;
+            alert.classList.add('show', 'alert-success');
+            setTimeout(() => alert.classList.remove('show'), 3000);
+        }
+
+        function renderPatients() {
+            const listHtml = patients.map(p => `
+                <div class="data-item">
+                    <div class="data-item-info">
+                        <div class="data-item-header">${p.name}</div>
+                        <div class="data-item-detail">${p.age} ${p.gender} | ${p.email}</div>
+                        <div class="data-item-detail">${p.phone}</div>
+                        <div class="data-item-detail">${p.specialty} • ${p.symptoms}</div>
+                        <span class="urgency-badge urgency-${p.urgency.toLowerCase()}">${p.urgency}</span>
+                    </div>
+                    <div class="data-item-actions">
+                        <button class="btn btn-danger" onclick="deletePatient(${p.id})">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('patientList').innerHTML = listHtml || `<div class="empty-state"><div class="empty-state-icon">📭</div><p>No patients</p></div>`;
+        }
+
+        function renderDoctors() {
+            const listHtml = doctors.map(d => `
+                <div class="data-item">
+                    <div class="data-item-info">
+                        <div class="data-item-header">${d.name}</div>
+                        <div class="data-item-detail">License: ${d.license} | ${d.experience} years</div>
+                        <div class="data-item-detail">${d.email} | ${d.phone}</div>
+                        <div class="data-item-detail">${d.specialty} • ⭐ ${d.rating}/5 • ${d.availability}</div>
+                        <span class="specialty-badge">${d.specialty}</span>
+                    </div>
+                    <div class="data-item-actions">
+                        <button class="btn btn-danger" onclick="deleteDoctor(${d.id})">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('doctorList').innerHTML = listHtml || `<div class="empty-state"><div class="empty-state-icon">👥</div><p>No doctors</p></div>`;
+        }
+
+        function deletePatient(id) {
+            patients = patients.filter(p => p.id !== id);
+            updatePatientStats();
+            renderPatients();
+            showAlert('patient-alert', '✅ Patient deleted!');
+        }
+
+        function deleteDoctor(id) {
+            doctors = doctors.filter(d => d.id !== id);
+            updateDoctorStats();
+            renderDoctors();
+            showAlert('doctor-alert', '✅ Doctor deleted!');
+        }
+
+        function updatePatientStats() {
+            document.getElementById('total-patients').textContent = patients.length;
+            document.getElementById('critical-count').textContent = patients.filter(p => p.urgency === 'CRITICAL').length;
+            document.getElementById('pending-count').textContent = patients.length;
+            document.getElementById('matched-count').textContent = Math.floor(patients.length * 0.3);
+        }
+
+        function updateDoctorStats() {
+            document.getElementById('total-doctors').textContent = doctors.length;
+            document.getElementById('available-doctors').textContent = doctors.filter(d => d.availability === 'Available').length;
+            const specs = new Set(doctors.map(d => d.specialty)).size;
+            document.getElementById('specialties-count').textContent = specs;
+            const avgRating = (doctors.reduce((sum, d) => sum + d.rating, 0) / doctors.length).toFixed(1);
+            document.getElementById('avg-rating').textContent = avgRating;
+        }
+
+        // Charts
+        function initCharts() {
+            const chartConfig = {
+                font: { family: "'Inter', sans-serif", size: 12, weight: 500, color: '#aaa' },
+                borderColor: 'rgba(0, 212, 255, 0.15)',
+                gridColor: 'rgba(0, 212, 255, 0.08)'
+            };
+
+            Chart.defaults.color = '#aaa';
+            Chart.defaults.borderColor = chartConfig.gridColor;
+
+            // Triage Chart
+            if (!charts.triage) {
+                const triageCtx = document.getElementById('triageChart').getContext('2d');
+                charts.triage = new Chart(triageCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Critical', 'High', 'Medium', 'Low'],
+                        datasets: [{
+                            data: [12, 28, 78, 38],
+                            backgroundColor: ['#ff3b30', '#ff9500', '#ffcc00', '#34d399'],
+                            borderColor: '#0f0f0f',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'bottom' } }
+                    }
+                });
+            }
+
+            // Accuracy Chart
+            if (!charts.accuracy) {
+                const accuracyCtx = document.getElementById('accuracyChart').getContext('2d');
+                charts.accuracy = new Chart(accuracyCtx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['Gemini', 'Grok', 'OpenAI', 'Consensus'],
+                        datasets: [{
+                            label: 'Accuracy %',
+                            data: [96, 94, 97, 98.7],
+                            backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                            borderColor: '#00d4ff',
+                            pointBackgroundColor: '#00d4ff',
+                            pointBorderColor: '#fff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: { r: { min: 90, max: 100 } }
+                    }
+                });
+            }
+
+            // Specialty Chart
+            if (!charts.specialty) {
+                const specialtyCtx = document.getElementById('specialtyChart').getContext('2d');
+                charts.specialty = new Chart(specialtyCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Cardiology', 'Neurology', 'Gastro', 'Orthopedics'],
+                        datasets: [{
+                            label: 'Cases',
+                            data: [24, 28, 15, 12],
+                            backgroundColor: '#00d4ff',
+                            borderRadius: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y',
+                        plugins: { legend: { display: false } }
+                    }
+                });
+            }
+
+            // Trend Chart
+            if (!charts.trend) {
+                const trendCtx = document.getElementById('trendChart').getContext('2d');
+                charts.trend = new Chart(trendCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        datasets: [{
+                            label: 'Avg Response Time (sec)',
+                            data: [145, 132, 128, 145, 120, 110, 115],
+                            borderColor: '#00d4ff',
+                            backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                            tension: 0.4,
+                            fill: true,
+                            pointBackgroundColor: '#00d4ff',
+                            pointBorderColor: '#fff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'top' } }
+                    }
+                });
+            }
+        }
+
+        // Initialize
+        updatePatientStats();
+        updateDoctorStats();
+        renderPatients();
+        renderDoctors();
+    </script>
+</body>
+</html>

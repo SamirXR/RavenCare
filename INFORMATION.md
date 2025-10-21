@@ -1,4 +1,4 @@
-# 📚 RavenCare - Intelligent Medical Triage System
+#  RavenCare - Intelligent Medical Triage System built for India
 
 ## Table of Contents
 1. [Overview](#overview)

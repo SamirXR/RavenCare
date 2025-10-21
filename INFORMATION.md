@@ -1,540 +1,720 @@
-# 📚 RavenCare - Technical Information & Component Guide
+# 📚 RavenCare - Intelligent Medical Triage System
 
 ## Table of Contents
-1. [System Architecture](#system-architecture)
-2. [AI Analysis Components](#ai-analysis-components)
-3. [Composio Integrations](#composio-integrations)
-4. [Doctor Matching Engine](#doctor-matching-engine)
-5. [Service Components](#service-components)
-6. [Configuration Management](#configuration-management)
-7. [Data Flow & Pipeline](#data-flow--pipeline)
-8. [API Integration Details](#api-integration-details)
-9. [Enhancement History](#enhancement-history)
+1. [Overview](#overview)
+2. [Triage Workflow](#triage-workflow)
+3. [8-Factor Scoring Algorithm](#8-factor-scoring-algorithm)
+4. [Sub-Specialization Intelligence](#sub-specialization-intelligence)
+5. [Match Quality & Scoring Examples](#match-quality--scoring-examples)
 
 ---
 
-## System Architecture
+## Overview
 
-### Overview
-RavenCare follows a **modular, service-oriented architecture** with clear separation of concerns:
+RavenCare is an AI-powered medical triage system that analyzes patient symptoms, determines urgency levels, identifies the appropriate medical specialty, and matches patients with the most suitable doctors. The core of the system lies in its **intelligent triage workflow** and the **8-Factor Scoring Algorithm** for doctor matching.
+
+### Key Capabilities
+
+✅ **Multi-AI Analysis**: Leverages three AI models (Gemini, Grok, O4-Mini) for comprehensive assessment
+✅ **Intelligent Urgency Scoring**: 0-100 scale with risk stratification
+✅ **Smart Doctor Matching**: Advanced 8-factor algorithm with 170-point maximum score
+✅ **Sub-Specialization Awareness**: 200+ medical keywords for precise matching
+✅ **Age-Appropriate Care**: Pediatric and geriatric considerations
+✅ **Urgency-Based Prioritization**: Critical cases matched with experienced doctors
+
+---
+
+## Triage Workflow
+
+The RavenCare triage system follows a **7-step sequential workflow** that combines AI analysis, intelligent matching, and comprehensive reporting. Each step builds upon the previous one to ensure accurate patient assessment and optimal doctor matching.
+
+### Step 1: Patient Data Input & Validation
+
+**Input Source**: `Patient_Details/patients_information.json`
+
+**Required Information**:
+- **Demographics**: Name, age, gender, contact information
+- **Clinical Data**: Symptoms description, pre-existing conditions
+- **Preferences**: Language preference, preferred appointment time slot
+
+**Validation Process**:
+- Verify all required fields are present
+- Parse symptom descriptions
+- Validate contact information format
+- Check for emergency keywords
+
+---
+
+### Step 2: AI Analysis Stage 1 - Gemini Symptom Analysis
+
+**AI Model**: Google Gemini 2.5 Pro
+
+**Primary Objectives**:
+1. **Symptom Understanding**: Deep analysis of patient's symptom description
+2. **Specialty Identification**: Determine primary medical specialty (among 11 supported)
+3. **Condition Recognition**: Identify potential medical conditions
+4. **Red Flag Detection**: Spot critical warning signs
+5. **Test Recommendations**: Suggest appropriate diagnostic tests
+
+**Supported Specialties**:
+- Cardiology
+- Neurology
+- Gastroenterology
+- Pulmonology
+- Orthopedics
+- Dermatology
+- Psychiatry
+- Pediatrics
+- Ophthalmology
+- ENT (Ear, Nose, Throat)
+- Hepatology
+
+**Output Example**:
+```json
+{
+  "specialty": "Cardiology",
+  "potential_conditions": [
+    "Acute Coronary Syndrome",
+    "Unstable Angina",
+    "Myocardial Infarction"
+  ],
+  "reasoning": "Patient presents with classic cardiac symptoms including chest pain radiating to left arm, accompanied by diaphoresis and shortness of breath. These symptoms are highly suggestive of acute cardiac event requiring immediate evaluation.",
+  "red_flags": [
+    "Chest pain radiating to arm",
+    "Diaphoresis (sweating)",
+    "Shortness of breath at rest"
+  ],
+  "recommended_tests": [
+    "ECG (12-lead)",
+    "Cardiac Troponin I/T",
+    "Complete Blood Count",
+    "Lipid Profile"
+  ]
+}
+```
+
+---
+
+### Step 3: AI Analysis Stage 2 - Grok Urgency Scoring
+
+**AI Model**: xAI Grok 4 Fast Reasoning
+
+**Primary Objectives**:
+1. **Urgency Quantification**: Calculate numerical urgency score (0-100)
+2. **Risk Stratification**: Categorize patient into risk levels
+3. **Time Sensitivity**: Determine required time-to-treatment
+4. **Critical Flag Identification**: Highlight life-threatening symptoms
+
+**Urgency Score Scale**:
+
+| Score Range | Urgency Level | Action Required | Timeline |
+|-------------|---------------|-----------------|----------|
+| 0-25 | **Low** | Routine care | Days to weeks |
+| 26-50 | **Moderate** | Same-day appointment | Within 24 hours |
+| 51-75 | **High** | Urgent care | Within 2-6 hours |
+| 76-100 | **Critical** | Emergency care | Immediate |
+
+**Risk Level Categories**:
+- **Low Risk**: Stable condition, no immediate danger
+- **Moderate Risk**: Requires prompt attention but not life-threatening
+- **High Risk**: Potentially serious, needs urgent evaluation
+- **Critical Risk**: Life-threatening situation, emergency response needed
+
+**Output Example**:
+```json
+{
+  "urgency_score": 92,
+  "risk_level": "critical",
+  "time_to_treatment": "immediate - emergency department",
+  "red_flags": [
+    "Possible myocardial infarction in progress",
+    "High risk for cardiac arrest",
+    "Time-sensitive cardiac event"
+  ],
+  "reasoning": "The combination of crushing chest pain, radiation to left arm, diaphoresis, and dyspnea represents a constellation of symptoms highly indicative of acute MI. Immediate emergency department evaluation with ECG and cardiac biomarkers is essential. Delay in treatment could result in significant myocardial damage or death."
+}
+```
+
+---
+
+### Step 4: AI Analysis Stage 3 - O4-Mini Final Evaluation
+
+**AI Model**: OpenAI O4-Mini
+
+**Primary Objectives**:
+1. **Cross-Validation**: Compare and validate Gemini and Grok analyses
+2. **Conflict Resolution**: Resolve any discrepancies between AI models
+3. **Confidence Scoring**: Provide confidence level for final assessment
+4. **Action Plan**: Generate comprehensive clinical action plan
+5. **Quality Assurance**: Flag inconsistencies for human review
+
+**Evaluation Process**:
+- Analyze both Gemini and Grok outputs
+- Check for agreement on specialty and urgency
+- Synthesize findings into unified assessment
+- Generate actionable recommendations
+
+**Output Example**:
+```json
+{
+  "final_specialty": "Cardiology",
+  "confidence": 0.98,
+  "action_plan": "IMMEDIATE EMERGENCY DEPARTMENT REFERRAL. Patient requires: (1) Immediate 12-lead ECG, (2) Cardiac biomarker panel (Troponin I/T, CK-MB), (3) Aspirin 325mg chewed if no contraindications, (4) Oxygen therapy if SpO2 <94%, (5) IV access and continuous cardiac monitoring. Cardiology consultation for potential cardiac catheterization.",
+  "additional_recommendations": [
+    "Aspirin 325mg (chewed, not swallowed)",
+    "Nitroglycerin sublingual if systolic BP >90mmHg",
+    "Oxygen 2-4L/min via nasal cannula",
+    "IV access x2 (18-gauge preferred)",
+    "Continuous telemetry monitoring"
+  ],
+  "validation_notes": "Strong agreement between Gemini and Grok models. Both identified cardiology as primary specialty with high urgency. Symptom pattern is classic for acute coronary syndrome. No conflicting information detected. High confidence in assessment."
+}
+```
+
+---
+
+### Step 5: Intelligent Doctor Matching (8-Factor Algorithm)
+
+**Core Algorithm**: Advanced 8-Factor Scoring System
+
+This is the **heart of RavenCare's intelligence** - a sophisticated matching algorithm that evaluates doctors across 8 different dimensions to find the optimal match for each patient. The algorithm generates a score up to **170 points maximum** and includes detailed match explanations.
+
+**See detailed explanation in the [8-Factor Scoring Algorithm](#8-factor-scoring-algorithm) section below.**
+
+---
+
+### Step 6: Comprehensive Report Generation
+
+**Report Types Generated**:
+
+1. **Patient Report (Simplified)**
+   - Easy-to-understand language
+   - Color-coded urgency indicators
+   - Matched doctor information with contact details
+   - Appointment time and meeting link
+   - Next steps and instructions
+   - What to expect during consultation
+
+2. **Doctor Report (Clinical)**
+   - Full medical terminology
+   - Complete AI analysis from all three models
+   - Detailed urgency scoring and reasoning
+   - Patient medical history and pre-existing conditions
+   - Recommended diagnostic approach
+   - Red flags and critical findings
+   - Sub-specialization match explanation
+
+3. **Admin Consolidated Report**
+   - Executive summary with key statistics
+   - All patients processed in current batch
+   - Urgency level distribution
+   - Specialty breakdown
+   - Critical cases highlighted
+   - System performance metrics
+
+**Format**: Professional PDF documents with custom styling, tables, and branding
+
+---
+
+### Step 7: Result Compilation & Storage
+
+**Final Output Structure**:
+
+All triage results are compiled into a comprehensive JSON structure containing:
+- Patient demographic and clinical information
+- Complete AI analysis results from all three models
+- Matched doctor details with scoring breakdown
+- Match quality assessment and explanation
+- Urgency categorization and risk level
+- Timestamps and processing metadata
+
+**Storage Location**: JSON files saved for record-keeping and future reference
+
+---
+
+## Workflow Diagram
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                   WEB INTERFACE (Flask)                     │
-│                      app.py + templates/                    │
-└────────────────────────┬────────────────────────────────────┘
-                         │
-┌────────────────────────▼────────────────────────────────────┐
-│              ORCHESTRATION LAYER                            │
-│            src/triage_orchestrator.py                       │
-│   (Coordinates all agents, services, and workflow)          │
-└─────┬─────────────┬────────────────┬───────────────────────┘
-      │             │                │
-┌─────▼──────┐ ┌───▼─────────┐ ┌────▼──────────────┐
-│  AI AGENTS │ │  SERVICES   │ │  CONFIGURATION    │
-│ src/agents/│ │src/services/│ │   src/config/     │
-└────────────┘ └─────────────┘ └───────────────────┘
+│ STEP 1: Patient Data Input                                  │
+│ • Load patient information from JSON                        │
+│ • Validate required fields                                  │
+│ • Parse symptoms and medical history                        │
+└────────────────────┬────────────────────────────────────────┘
+                     │
+                     ▼
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 2: Gemini Analysis (AI Agent 1)                        │
+│ • Comprehensive symptom analysis                            │
+│ • Medical specialty identification                          │
+│ • Potential condition recognition                           │
+│ • Red flag detection                                        │
+│ • Test recommendations                                      │
+│                                                             │
+│ OUTPUT: specialty, conditions, reasoning, red_flags         │
+└────────────────────┬────────────────────────────────────────┘
+                     │
+                     ▼
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 3: Grok Urgency Assessment (AI Agent 2)                │
+│ • Calculate urgency score (0-100 scale)                     │
+│ • Determine risk level and category                         │
+│ • Identify critical red flags                               │
+│ • Estimate time-to-treatment requirement                    │
+│                                                             │
+│ OUTPUT: urgency_score, risk_level, time_to_treatment        │
+└────────────────────┬────────────────────────────────────────┘
+                     │
+                     ▼
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 4: O4-Mini Final Evaluation (AI Agent 3)               │
+│ • Cross-validate Gemini and Grok analyses                   │
+│ • Resolve any specialty conflicts                           │
+│ • Generate consolidated action plan                         │
+│ • Provide confidence scores                                 │
+│                                                             │
+│ OUTPUT: final_specialty, confidence, action_plan            │
+└────────────────────┬────────────────────────────────────────┘
+                     │
+                     ▼
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 5: Doctor Matching (8-Factor Algorithm)                │
+│ • Load doctors from specialty-specific JSON                 │
+│ • Calculate 8-factor score for each doctor                  │
+│ • Apply sub-specialization matching                         │
+│ • Urgency-based prioritization                              │
+│ • Age-appropriate care consideration                        │
+│ • Select best match with highest score                      │
+│                                                             │
+│ OUTPUT: matched_doctor, score, quality, explanation         │
+└────────────────────┬────────────────────────────────────────┘
+                     │
+                     ▼
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 6: Report Generation                                   │
+│ • Patient PDF (simplified language)                         │
+│ • Doctor PDF (clinical details)                             │
+│ • Admin PDF (consolidated summary)                          │
+│ • JSON data files                                           │
+│                                                             │
+│ OUTPUT: Multiple PDF reports + JSON records                 │
+└────────────────────┬────────────────────────────────────────┘
+                     │
+                     ▼
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 7: Result Compilation & Storage                        │
+│ • Compile all results into unified structure                │
+│ • Save to JSON for record-keeping                           │
+│ • Return complete triage result                             │
+│                                                             │
+│ OUTPUT: Complete triage result with all details             │
+└─────────────────────────────────────────────────────────────┘
 ```
-
-### Design Principles
-1. **Separation of Concerns**: Each module has a single, well-defined responsibility
-2. **Dependency Injection**: Services are injected, making testing easier
-3. **Configuration-Driven**: All settings centralized in `src/config/settings.py`
-4. **Error Handling**: Graceful degradation when services are unavailable
-5. **Type Safety**: Full type hints throughout the codebase
 
 ---
 
-## AI Analysis Components
+## 8-Factor Scoring Algorithm
 
-### 1. Gemini Analyzer (`src/agents/gemini_analyzer.py`)
+The **8-Factor Scoring Algorithm** is the crown jewel of RavenCare's intelligent matching system. It represents a significant evolution from basic matching to a sophisticated, multi-dimensional evaluation system that considers medical expertise, patient preferences, urgency factors, and age-appropriate care.
 
-**Purpose**: Initial comprehensive symptom analysis and specialty detection
+### Algorithm Overview
 
-**Technology**: Google Gemini 2.5 Pro via `google-generativeai` library
+**Maximum Possible Score**: **170 points**
 
-**Key Responsibilities**:
-- Parse and understand patient symptoms
-- Identify medical conditions
-- Map to primary and secondary specialties
-- Provide initial clinical reasoning
+**Design Philosophy**:
+- **Medical Appropriateness First**: Prioritizes clinical suitability over convenience
+- **Urgency-Aware**: Critical cases automatically matched with senior, experienced doctors
+- **Sub-Specialization Intelligence**: Matches specific conditions with relevant expertise
+- **Age-Appropriate Care**: Considers pediatric and geriatric needs
+- **Patient-Centered**: Incorporates patient preferences (language, timing)
+- **Quality-Focused**: Rewards excellence (ratings, awards, experience)
 
-**Output Structure**:
-```python
-{
-    "specialty": "Cardiology",
-    "potential_conditions": ["Coronary Artery Disease", "Angina"],
-    "reasoning": "Detailed analysis...",
-    "red_flags": ["Chest pain radiating to arm"],
-    "recommended_tests": ["ECG", "Troponin levels"],
-    "secondary_specialties": ["Internal Medicine"]
-}
-```
+**Evolution from Basic to Advanced**:
 
-**Configuration Required**:
-- `GEMINI_API_KEY`: Google AI Studio API key
-
-**Prompting Strategy**:
-- System prompt defines medical expert role
-- Includes all 11 supported specialties
-- Requests structured JSON output
-- Emphasizes urgency indicators
+| Version | Factors | Max Score | Key Features |
+|---------|---------|-----------|--------------|
+| **Version 1.0** (Basic) | 3 factors | 100 points | Slot + Language + Rating only |
+| **Version 2.0** (Current) | 8 factors | 170 points | Sub-specialty, urgency, age matching, comprehensive scoring |
 
 ---
 
-### 2. Grok Analyzer (`src/agents/grok_analyzer.py`)
+### The 8 Factors Explained
 
-**Purpose**: Urgency scoring and risk assessment
+#### Factor 1: Slot Availability (40-60 points)
 
-**Technology**: xAI Grok 4 Fast Reasoning via custom endpoint
+**Base Value**: 40 points  
+**Maximum Value**: 60 points  
+**Weight**: Highest (35% of total score)
 
-**Key Responsibilities**:
-- Calculate urgency score (0-100 scale)
-- Identify red flag symptoms
-- Estimate time-to-treatment requirement
-- Provide risk stratification
+**Why It's Important**: Timely access to care is crucial, especially for urgent cases. This factor ensures patients get appointments when they need them most.
 
-**Urgency Scale**:
+**Scoring Logic**:
+
+1. **Exact Match (40 points)**
+   - Doctor's available slot matches patient's preferred time slot exactly
+   - Example: Patient prefers 10:00 AM, Doctor has 10:00 AM available
+   
+2. **Critical Urgency Bonus (+20 points)**
+   - Applied when urgency score ≥ 90 (Critical category)
+   - Total: 60 points for critical cases with exact match
+   - Rationale: Critical patients need immediate access, so perfect timing match is rewarded heavily
+   
+3. **Alternative Slot Available (20 points)**
+   - Doctor has slots available, but not the exact preferred time
+   - Still provides access to care, just not at ideal time
+   - Example: Patient prefers 10:00 AM, Doctor has 11:00 AM or 2:00 PM available
+   
+4. **No Availability (0 points)**
+   - Doctor has no available appointment slots
+   - Should not be matched unless no other options exist
+
+**Real-World Example**:
 ```
-0-25:   Low urgency (routine care, can wait days)
-26-50:  Moderate urgency (same-day appointment)
-51-75:  High urgency (urgent care within hours)
-76-100: Critical urgency (emergency care immediately)
+Patient: Prefers 9:00 AM, Urgency Score = 95 (Critical - possible heart attack)
+Doctor A: Has 9:00 AM available → 40 + 20 = 60 points (critical bonus applied)
+Doctor B: Has 10:00 AM available → 20 points (alternative slot)
+Doctor C: No slots available → 0 points
 ```
-
-**Output Structure**:
-```python
-{
-    "urgency_score": 85,
-    "risk_level": "high",
-    "time_to_treatment": "immediate",
-    "red_flags": ["Severe chest pain", "Shortness of breath"],
-    "reasoning": "Detailed risk analysis..."
-}
-```
-
-**Configuration Required**:
-- `GROK_API_KEY`: xAI API key
-- `GROK_ENDPOINT`: Custom endpoint URL
-
-**Unique Features**:
-- Fast reasoning model optimized for quick decisions
-- Calibrated for medical triage scenarios
-- Conservative bias (errs on side of caution)
 
 ---
 
-### 3. O4-Mini Evaluator (`src/agents/o4mini_evaluator.py`)
+#### Factor 2: Language Match (25 points)
 
-**Purpose**: Final evaluation and cross-validation
+**Maximum Value**: 25 points  
+**Weight**: 15% of total score
 
-**Technology**: OpenAI O4-Mini via custom endpoint
+**Why It's Important**: Clear communication between doctor and patient is fundamental for accurate diagnosis, treatment compliance, and patient satisfaction. Language barriers can lead to misdiagnosis and poor outcomes.
 
-**Key Responsibilities**:
-- Cross-validate Gemini and Grok analyses
-- Final specialty determination
-- Consolidated action plan
-- Quality check on AI outputs
+**Scoring Logic**:
 
-**Output Structure**:
-```python
-{
-    "final_specialty": "Cardiology",
-    "confidence": 0.95,
-    "action_plan": "Immediate referral to cardiologist...",
-    "additional_recommendations": ["ECG", "Cardiac enzymes"],
-    "notes": "Both models agree on cardiovascular origin..."
-}
+1. **Perfect Match (25 points)**
+   - Patient's preferred language is in doctor's list of spoken languages
+   - Example: Patient speaks Hindi, Doctor speaks Hindi, English, Tamil
+   
+2. **No Match (0 points)**
+   - Patient's preferred language not spoken by doctor
+   - Communication would require translator (not ideal)
+
+**Real-World Example**:
+```
+Patient: Prefers Tamil
+Doctor A: Speaks Tamil, English, Hindi → 25 points
+Doctor B: Speaks English, Hindi only → 0 points
 ```
 
-**Configuration Required**:
-- `OPENAI_API_KEY`: OpenAI API key
-- `OPENAI_ENDPOINT`: Custom endpoint URL
-
-**Validation Logic**:
-- Compares outputs from Gemini and Grok
-- Resolves conflicts using medical knowledge
-- Provides confidence scores
-- Flags inconsistencies for human review
+**Impact**: In multilingual countries like India, this factor is critical. A patient explaining chest pain symptoms in their native language provides much richer clinical information than struggling in a second language.
 
 ---
 
-## Composio Integrations
+#### Factor 3: Doctor Rating (20 points)
 
-**Composio** is the backbone of all Google Workspace integrations in RavenCare. It provides unified API access to Gmail, Calendar, Sheets, and Drive.
+**Maximum Value**: 20 points  
+**Weight**: 12% of total score
 
-### Why Composio?
+**Why It's Important**: Patient satisfaction ratings reflect clinical quality, bedside manner, communication skills, and overall care experience. High-rated doctors tend to provide better outcomes.
 
-✅ **Unified Authentication**: Single API key for all Google services
-✅ **Simplified Integration**: No complex OAuth flows to manage
-✅ **Account Management**: Connect multiple Google accounts easily
-✅ **Reliable API**: Production-grade reliability and error handling
-✅ **Fast Setup**: Minutes instead of hours for integration
+**Scoring Logic**:
 
-### Composio Setup
+- **Formula**: `(doctor_rating / 5.0) × 20`
+- **Scale**: 0-5 stars → 0-20 points
+- **Linear scaling** ensures proportional reward
 
-**Required Environment Variables**:
-```bash
-COMPOSIO_API_KEY=your_composio_key          # Main API key
-COMPOSIO_USER_ID=your_user_id               # Your Composio user ID
+**Scoring Examples**:
 
-# Connected Account IDs (one per Google service)
-COMPOSIO_SHEETS_ACCOUNT_ID=account_id_1
-COMPOSIO_CALENDAR_ACCOUNT_ID=account_id_2
-COMPOSIO_GMAIL_ACCOUNT_ID=account_id_3
-COMPOSIO_DRIVE_ACCOUNT_ID=account_id_4
+| Doctor Rating | Calculation | Points Awarded |
+|---------------|-------------|----------------|
+| 5.0 stars | (5.0 / 5.0) × 20 | 20 points |
+| 4.5 stars | (4.5 / 5.0) × 20 | 18 points |
+| 4.0 stars | (4.0 / 5.0) × 20 | 16 points |
+| 3.5 stars | (3.5 / 5.0) × 20 | 14 points |
+| 3.0 stars | (3.0 / 5.0) × 20 | 12 points |
+| 2.0 stars | (2.0 / 5.0) × 20 | 8 points |
+
+**Real-World Example**:
 ```
-
-**Getting Account IDs**:
-1. Sign up at https://composio.dev
-2. Connect your Google account(s)
-3. Note the account IDs for each service
-4. Add to `.env` file
+Doctor A: 4.9/5.0 rating (98% satisfaction) → 19.6 points
+Doctor B: 4.2/5.0 rating (84% satisfaction) → 16.8 points
+Doctor C: 3.5/5.0 rating (70% satisfaction) → 14.0 points
+```
 
 ---
 
-### 1. Gmail Integration (`src/services/email_service.py`)
+#### Factor 4: Experience Years (15 points)
 
-**Composio Actions Used**: `GMAIL_SEND_EMAIL`
+**Maximum Value**: 15 points  
+**Weight**: 9% of total score
 
-**Purpose**: Send automated email notifications to stakeholders
+**Why It's Important**: Clinical experience correlates with diagnostic accuracy, surgical skill, and ability to handle complex cases. More experienced doctors have seen more clinical scenarios and can recognize subtle patterns.
 
-**Features Implemented**:
-- HTML email templates with professional styling
-- Multi-recipient support (admin, patients, doctors)
-- Embedded calendar meeting links
-- Inline PDF download links (via Google Drive)
-- Delivery status tracking
+**Scoring Logic**:
 
-**Email Types**:
+- **Formula**: `min(experience_years, 30) / 30 × 15`
+- **Cap**: 30 years (to avoid over-weighting very senior doctors who may be less active)
+- **Gradual scaling** rewards experience proportionally
 
-1. **Admin Consolidated Report**
-```python
-{
-    "to": config.ADMIN_EMAIL,
-    "subject": "RavenCare Triage Report - [Date]",
-    "body": """
-        <html>
-            <body>
-                <h2>Patient Triage Summary</h2>
-                <ul>
-                    <li>Total Patients: X</li>
-                    <li>Critical Cases: Y</li>
-                    ...
-                </ul>
-            </body>
-        </html>
-    """
-}
+**Scoring Examples**:
+
+| Experience | Calculation | Points Awarded |
+|------------|-------------|----------------|
+| 30+ years | (30 / 30) × 15 | 15 points (max) |
+| 25 years | (25 / 30) × 15 | 12.5 points |
+| 20 years | (20 / 30) × 15 | 10 points |
+| 15 years | (15 / 30) × 15 | 7.5 points |
+| 10 years | (10 / 30) × 15 | 5 points |
+| 5 years | (5 / 30) × 15 | 2.5 points |
+| 2 years | (2 / 30) × 15 | 1 point |
+
+**Real-World Example**:
+```
+Doctor A: 28 years experience → 14 points
+Doctor B: 15 years experience → 7.5 points
+Doctor C: 5 years experience → 2.5 points
 ```
 
-2. **Patient Individual Report**
-```python
-{
-    "to": patient_email,
-    "subject": "Your Medical Triage Results",
-    "body": """
-        <html>
-            <body>
-                <h2>Hello [Name],</h2>
-                <p>Your triage assessment is complete.</p>
-                <p>Urgency Level: [Level]</p>
-                <p>Matched Doctor: Dr. [Name]</p>
-                <a href="[drive_link]">Download Report</a>
-                <a href="[calendar_link]">View Appointment</a>
-            </body>
-        </html>
-    """
-}
-```
-
-3. **Doctor Clinical Report**
-```python
-{
-    "to": doctor_email,
-    "subject": "New Patient Assignment - [Name]",
-    "body": """
-        <html>
-            <body>
-                <h2>Patient Assignment</h2>
-                <p>Patient: [Name], Age: [Age]</p>
-                <p>Chief Complaint: [Symptoms]</p>
-                <p>Urgency: [Score]/100</p>
-                <a href="[drive_link]">Clinical Report</a>
-            </body>
-        </html>
-    """
-}
-```
-
-**Code Example**:
-```python
-from composio import Composio
-
-composio = Composio(api_key=config.COMPOSIO_API_KEY)
-
-result = composio.tools.execute(
-    "GMAIL_SEND_EMAIL",
-    user_id=config.COMPOSIO_USER_ID,
-    arguments={
-        "to": recipient_email,
-        "subject": email_subject,
-        "body": html_body
-    },
-    connected_account_id=config.COMPOSIO_GMAIL_ACCOUNT_ID
-)
-```
-
-**Error Handling**:
-- Graceful degradation if Gmail not configured
-- Retry logic for temporary failures
-- Detailed error logging
+**Why Capped at 30 Years?**: Doctors with 35-40 years of experience may be nearing retirement or reducing their clinical hours. The cap ensures we don't over-prioritize seniority at the expense of active practice.
 
 ---
 
-### 2. Google Sheets Integration (`src/services/sheets_service.py`)
+#### Factor 5: Sub-Specialization Match (30 points) ⭐ **MOST INNOVATIVE**
 
-**Composio Actions Used**: `GOOGLESHEETS_SHEET_FROM_JSON`
+**Maximum Value**: 30 points  
+**Weight**: 18% of total score
 
-**Purpose**: Create online, shareable triage dashboards
+**Why It's Important**: Within each specialty, doctors have sub-specializations. A cardiologist might focus on interventional procedures, while another focuses on heart failure management. Matching the patient's specific condition to the right sub-specialist dramatically improves outcomes.
 
-**Features Implemented**:
-- Auto-formatted spreadsheets with headers
-- Color-coded urgency levels
-- Sortable and filterable columns
-- Shareable public links
-- Real-time data updates
+**Scoring Logic**:
 
-**Sheet Structure**:
+1. **Strong Match (30 points)**
+   - Patient's symptoms/condition directly matches doctor's sub-specialization
+   - Algorithm detects relevant medical keywords in symptoms
+   - Example: "Arrhythmia" symptoms matched with "Electrophysiology" sub-specialist
+   
+2. **Partial Match (15 points)**
+   - Some overlap between condition and sub-specialization
+   - Related but not exact match
+   - Example: General cardiac symptoms with preventive cardiology specialist
+   
+3. **No Match (0 points)**
+   - No relevant sub-specialization alignment
+   - Doctor is general specialist without specific focus
 
-| Column | Data | Format |
-|--------|------|--------|
-| Patient Name | String | Plain text |
-| Age | Number | Plain number |
-| Gender | String | Plain text |
-| Urgency Score | Number | Conditional formatting |
-| Urgency Level | String | Color-coded |
-| Specialty | String | Plain text |
-| Matched Doctor | String | Plain text |
-| Appointment Time | Datetime | Formatted time |
-| Status | String | Status badge |
+**How It Works**:
 
-**Data Transformation**:
-```python
-def _convert_to_sheet_format(self, triage_results: List[Dict]) -> List[Dict]:
-    """Convert triage data to Google Sheets JSON format"""
-    
-    sheet_data = []
-    
-    # Header row
-    sheet_data.append({
-        "Patient Name": "name",
-        "Age": "age",
-        "Urgency Score": "score",
-        "Urgency Level": "level",
-        ...
-    })
-    
-    # Data rows
-    for record in triage_results:
-        sheet_data.append({
-            "Patient Name": record['patient']['name'],
-            "Age": record['patient']['age'],
-            "Urgency Score": record['analyses']['urgency_score'],
-            ...
-        })
-    
-    return sheet_data
+The system maintains a **comprehensive medical keyword database** with **200+ keywords** mapped to sub-specializations across all 11 specialties. When a patient describes symptoms, the algorithm:
+
+1. Extracts medical keywords from symptom description
+2. Compares against sub-specialization keyword database
+3. Finds the best matching sub-specialization
+4. Scores doctors based on sub-specialization alignment
+
+**Example - Cardiology Sub-Specializations**:
+
+| Sub-Specialty | Example Keywords | Use Cases |
+|---------------|------------------|-----------|
+| **Interventional Cardiology** | blocked arteries, angioplasty, stent, coronary artery disease, MI, chest pain on exertion | Heart attacks, blocked arteries, need for stents |
+| **Electrophysiology** | arrhythmia, irregular heartbeat, palpitations, atrial fibrillation, AFib, tachycardia | Heart rhythm disorders, pacemaker needs |
+| **Heart Failure** | shortness of breath, swelling, edema, fluid retention, cardiomyopathy, fatigue | Chronic heart failure management |
+| **Preventive Cardiology** | high cholesterol, hypertension, diabetes, risk assessment, family history | Risk reduction, prevention programs |
+
+**Real-World Example**:
+```
+Patient Symptoms: "Irregular heartbeat, episodes of rapid heart rate, feeling dizzy"
+Keyword Detection: "irregular heartbeat" + "rapid heart rate" → Electrophysiology
+
+Doctor A: Sub-specialization = "Electrophysiology, Arrhythmia Management" → 30 points (strong match)
+Doctor B: Sub-specialization = "Interventional Cardiology" → 0 points (no match)
+Doctor C: Sub-specialization = "General Cardiology" → 0 points (no specific match)
 ```
 
-**Code Example**:
-```python
-result = composio.tools.execute(
-    "GOOGLESHEETS_SHEET_FROM_JSON",
-    user_id=config.COMPOSIO_USER_ID,
-    arguments={
-        "title": "RavenCare Triage Report - Oct 21, 2025",
-        "sheet_name": "Patient Triage Data",
-        "sheet_json": formatted_data
-    },
-    connected_account_id=config.COMPOSIO_SHEETS_ACCOUNT_ID
-)
-
-sheet_url = f"https://docs.google.com/spreadsheets/d/{result['data']['spreadsheetId']}/edit"
-```
-
-**Benefits**:
-- ✅ No manual Excel exports needed
-- ✅ Real-time sharing with medical staff
-- ✅ Easy data analysis with Google Sheets tools
-- ✅ Mobile access for on-the-go viewing
+**Impact**: This factor alone can make the difference between seeing a general cardiologist vs. an arrhythmia specialist - potentially saving critical diagnostic time and improving treatment outcomes.
 
 ---
 
-### 3. Google Calendar Integration (`src/services/calendar_service.py`)
+#### Factor 6: Awards & Recognition (10 points)
 
-**Composio Actions Used**: `GOOGLECALENDAR_CREATE_EVENT`
+**Maximum Value**: 10 points  
+**Weight**: 6% of total score
 
-**Purpose**: Automatic appointment scheduling with meeting links
+**Why It's Important**: Professional awards indicate excellence recognized by peers, medical institutions, or professional bodies. Awards reflect superior clinical outcomes, research contributions, or teaching excellence.
 
-**Features Implemented**:
-- Appointment creation for patient-doctor consultations
-- Google Meet link generation
-- Email invitations to all participants
-- Timezone-aware scheduling
-- Automatic reminders
+**Scoring Logic**:
 
-**Event Structure**:
-```python
-{
-    "summary": "Medical Consultation: [Patient] with Dr. [Doctor]",
-    "description": """
-        Patient: [Name]
-        Urgency: [Level]
-        Specialty: [Specialty]
-        
-        Please review the clinical report before the appointment.
-    """,
-    "start": {
-        "dateTime": "2025-10-22T10:00:00",
-        "timeZone": "Asia/Kolkata"
-    },
-    "end": {
-        "dateTime": "2025-10-22T10:30:00",
-        "timeZone": "Asia/Kolkata"
-    },
-    "attendees": [
-        {"email": patient_email},
-        {"email": doctor_email},
-        {"email": admin_email}
-    ],
-    "conferenceData": {
-        "createRequest": {
-            "requestId": "unique_id",
-            "conferenceSolutionKey": {"type": "hangoutsMeet"}
-        }
-    }
-}
+1. **Has Awards (10 points)**
+   - Doctor has received professional recognition
+   - Examples: "Best Cardiologist 2023", "Excellence in Patient Care", "Outstanding Physician Award"
+   
+2. **No Awards (0 points)**
+   - No recorded awards or recognition
+
+**Real-World Example**:
+```
+Doctor A: "Excellence in Cardiac Surgery 2022, Best Cardiologist Award 2023" → 10 points
+Doctor B: No awards listed → 0 points
 ```
 
-**Code Example**:
-```python
-# Parse appointment time
-tomorrow = datetime.now() + timedelta(days=1)
-hour, minute = map(int, preferred_slot.split(':'))
-start_time = tomorrow.replace(hour=hour, minute=minute)
-end_time = start_time + timedelta(minutes=30)
-
-result = composio.tools.execute(
-    "GOOGLECALENDAR_CREATE_EVENT",
-    user_id=config.COMPOSIO_USER_ID,
-    arguments={
-        "summary": f"Medical Consultation: {patient_name} with Dr. {doctor_name}",
-        "description": event_description,
-        "start_time": start_time.isoformat(),
-        "end_time": end_time.isoformat(),
-        "attendees": [patient_email, doctor_email],
-        "conference_data": {"create_request": True}
-    },
-    connected_account_id=config.COMPOSIO_CALENDAR_ACCOUNT_ID
-)
-
-meeting_link = result['data']['hangoutLink']
-```
-
-**Smart Scheduling**:
-- ✅ Matches patient's preferred time slot
-- ✅ Defaults to next available day
-- ✅ 30-minute appointment duration
-- ✅ Sends email invitations automatically
-- ✅ Creates Google Meet links for remote consultations
+**Why 10 Points?**: Awards are important but shouldn't outweigh clinical factors like sub-specialization match or urgency-experience alignment. This weight ensures excellence is rewarded without dominating the scoring.
 
 ---
 
-### 4. Google Drive Integration (`src/services/email_service.py`)
+#### Factor 7: Age-Appropriate Care (10 points) ⭐ **PATIENT-CENTERED**
 
-**Composio Actions Used**: 
-- `GOOGLEDRIVE_UPLOAD_FILE`
-- `GOOGLEDRIVE_ADD_FILE_SHARING_PREFERENCE`
+**Maximum Value**: 10 points  
+**Weight**: 6% of total score
 
-**Purpose**: Store PDF reports and generate shareable links
+**Why It's Important**: Children and elderly patients have unique medical needs. Pediatric specialists understand child development and age-specific conditions. Experienced doctors are better equipped for complex geriatric care with multiple comorbidities.
 
-**Features Implemented**:
-- PDF upload to Google Drive
-- Public sharing link generation
-- Organized folder structure
-- Automatic permissions management
+**Scoring Logic**:
 
-**Workflow**:
+**For Pediatric Patients (Age 0-18)**:
+- **Pediatric Specialist (10 points)**
+  - Doctor's sub-specialization includes "pediatric" keywords
+  - Example: "Pediatric Cardiology", "Children's Heart Specialist"
+  
+**For Geriatric Patients (Age 65+)**:
+- **Experienced Doctor (5 points)**
+  - Doctor has 10+ years experience
+  - Rationale: Elderly patients often have complex medical histories and multiple conditions; experienced doctors handle this complexity better
 
-1. **Upload PDF to Drive**
-```python
-result = composio.tools.execute(
-    "GOOGLEDRIVE_UPLOAD_FILE",
-    user_id=config.COMPOSIO_USER_ID,
-    arguments={
-        "file_to_upload": "/path/to/report.pdf",
-        "folder_to_upload_to": "root"  # or specific folder ID
-    },
-    connected_account_id=config.COMPOSIO_DRIVE_ACCOUNT_ID
-)
+**For Adult Patients (Age 19-64)**:
+- **No specific bonus (0 points)**
+  - Standard matching applies
 
-file_id = result['data']['id']
+**Real-World Examples**:
+
+**Scenario 1: 8-year-old with heart murmur**
+```
+Doctor A: "Pediatric Cardiologist, 15 years experience" → 10 points
+Doctor B: "General Cardiologist, 20 years experience" → 0 points
+(Even though Doctor B has more experience, pediatric specialty matters more for children)
 ```
 
-2. **Make File Shareable**
-```python
-composio.tools.execute(
-    "GOOGLEDRIVE_ADD_FILE_SHARING_PREFERENCE",
-    user_id=config.COMPOSIO_USER_ID,
-    arguments={
-        "file_id": file_id,
-        "role": "reader",
-        "type": "anyone"  # Public link
-    },
-    connected_account_id=config.COMPOSIO_DRIVE_ACCOUNT_ID
-)
+**Scenario 2: 72-year-old with heart failure**
 ```
-
-3. **Generate Shareable Link**
-```python
-drive_link = f"https://drive.google.com/file/d/{file_id}/view"
+Doctor A: "Heart Failure Specialist, 22 years experience" → 5 points
+Doctor B: "Heart Failure Specialist, 6 years experience" → 0 points
+(Elderly patient benefits from senior doctor's experience managing complex cases)
 ```
-
-**Integration with Email**:
-- PDF links embedded in email notifications
-- Recipients can download reports directly
-- No email attachment size limits
-- Reports remain accessible long-term
 
 ---
 
-## Doctor Matching Engine
+#### Factor 8: Urgency-Experience Alignment (10 points) ⭐ **LIFE-SAVING**
 
-### Overview
-The doctor matching system has evolved from a simple 3-factor algorithm to an advanced **8-factor intelligent matching system** with sub-specialization awareness.
+**Maximum Value**: 10 points  
+**Weight**: 6% of total score
 
-### Evolution Timeline
+**Why It's Important**: In critical medical situations, you want the most experienced doctor available. This factor ensures that patients with life-threatening conditions are matched with senior specialists who have the skills and experience to handle emergencies.
 
-**Version 1.0** (Basic):
-- 3 factors: slot, language, rating
-- Max score: 100 points
-- No sub-specialty matching
+**Scoring Logic**:
 
-**Version 2.0** (Enhanced):
-- 8 factors with weighted scoring
-- Max score: 170 points
-- Sub-specialty matching with 200+ keywords
-- Urgency-aware prioritization
-- Age-appropriate care matching
+**For Critical Urgency (Score ≥ 90)**:
+- **Senior Specialist Required: 20+ years experience → 10 points**
+- **Rationale**: Critical cases (possible heart attack, stroke, severe trauma) need doctors who have seen hundreds of similar cases
+
+**For High Urgency (Score 70-89)**:
+- **Experienced Specialist Required: 10+ years experience → 10 points**
+- **Rationale**: High urgency cases need solid experience and quick decision-making
+
+**For Moderate/Low Urgency (Score < 70)**:
+- **No specific requirement → 0 points**
+- **Rationale**: Routine cases can be handled by doctors at any experience level
+
+**Real-World Examples**:
+
+**Scenario 1: Critical Case - Possible Heart Attack (Urgency = 95)**
+```
+Patient: 58-year-old with crushing chest pain, sweating, shortness of breath
+
+Doctor A: 25 years experience → 10 points (critical urgency bonus)
+Doctor B: 8 years experience → 0 points (insufficient for critical case)
+
+Result: Doctor A is strongly preferred for this life-threatening situation
+```
+
+**Scenario 2: High Urgency - Severe Arrhythmia (Urgency = 75)**
+```
+Patient: 65-year-old with rapid irregular heartbeat, dizziness
+
+Doctor A: 15 years experience → 10 points (high urgency bonus)
+Doctor B: 5 years experience → 0 points (needs more experience)
+
+Result: Doctor A is preferred for managing complex arrhythmia
+```
+
+**Scenario 3: Routine Case - Follow-up (Urgency = 30)**
+```
+Patient: 40-year-old routine cardiology check-up
+
+Doctor A: 20 years experience → 0 points (no urgency bonus)
+Doctor B: 3 years experience → 0 points (no urgency bonus)
+
+Result: Both equally acceptable; other factors determine match
+```
+
+**Impact**: This factor is potentially life-saving. It ensures that a patient having a heart attack isn't matched with a newly qualified cardiologist when a senior interventional cardiologist is available.
 
 ---
 
-### 8-Factor Scoring Algorithm
+### Total Score Calculation Example
 
-**File**: `src/services/doctor_matcher.py`
+**Complete Scoring Breakdown for a Real Case**:
 
-#### Factor Breakdown
+**Patient Profile**:
+- Name: Rajesh Kumar
+- Age: 55
+- Symptoms: "Severe chest pain radiating to left arm, sweating, shortness of breath"
+- Urgency Score: 92 (Critical)
+- Specialty: Cardiology
+- Preferred Language: Hindi
+- Preferred Slot: 10:00 AM
+
+**Doctor Profile**:
+- Name: Dr. Suresh Iyer
+- Experience: 24 years
+- Sub-specialization: "Interventional Cardiology, Acute Coronary Syndrome"
+- Languages: Hindi, English, Tamil
+- Rating: 4.8/5.0
+- Slots: 09:00, 10:00, 14:00
+- Awards: "Excellence in Interventional Cardiology 2022"
+
+**Scoring Calculation**:
+
+| Factor | Evaluation | Points | Explanation |
+|--------|------------|--------|-------------|
+| **Slot Availability** | Exact match + Critical bonus | **60** | Has 10:00 slot (40) + Critical urgency (20) |
+| **Language Match** | Perfect match | **25** | Speaks Hindi ✓ |
+| **Doctor Rating** | 4.8/5.0 | **19.2** | (4.8/5.0) × 20 = 19.2 |
+| **Experience** | 24 years | **12** | (24/30) × 15 = 12.0 |
+| **Sub-Specialization** | Strong match | **30** | "Interventional" + "Acute Coronary Syndrome" keywords match perfectly |
+| **Awards** | Has awards | **10** | Excellence award ✓ |
+| **Age-Appropriate** | Adult patient | **0** | No bonus (adult) |
+| **Urgency-Experience** | Critical + 20+ years | **10** | Perfect alignment ✓ |
+| | | | |
+| **TOTAL SCORE** | | **166.2 / 170** | **Excellent Match (98%)** |
+
+**Match Quality**: **Excellent** (score ≥ 100)
+
+**Match Explanation Generated**:
+> "Dr. Suresh Iyer was matched because: appointment slot perfectly matches patient preference, speaks patient's preferred language (Hindi), has specific expertise in patient's condition (Interventional Cardiology and Acute Coronary Syndrome), highly experienced (24 years in practice), excellent patient rating (4.8/5.0), recognized with professional awards (Excellence in Interventional Cardiology 2022), and has the senior expertise required for this critical cardiac emergency."
+
+---
+
+### Match Quality Categories
+
+Based on the total score, each match is assigned a quality rating:
+
+| Total Score | Match Quality | Interpretation | Action |
+|-------------|---------------|----------------|--------|
+| **100-170** | **Excellent** | Ideal match across multiple dimensions | Proceed with high confidence |
+| **70-99** | **Good** | Solid match, minor gaps in some factors | Acceptable, proceed |
+| **50-69** | **Fair** | Adequate but not ideal | Consider alternatives if available |
+| **0-49** | **Low** | Poor match, significant gaps | Avoid if possible, expand search |
+
+**Real-World Decision Making**:
+
+- **Excellent Match**: Doctor is highly suitable across clinical expertise, availability, and patient preferences
+- **Good Match**: Doctor is qualified and available, some non-critical factors may not align perfectly
+- **Fair Match**: Minimally acceptable; might occur when doctor pool is limited
+- **Low Match**: Should trigger alerts for manual review or expansion of doctor search radius
 
 **1. Slot Availability (40-60 points)**
 ```python
@@ -632,670 +812,443 @@ elif urgency_score >= 70 and doctor.experience_years >= 10:
 
 ---
 
-### Sub-Specialization Intelligence
+## Sub-Specialization Intelligence
 
-**File**: `src/services/advanced_matcher.py`
+One of the most sophisticated components of RavenCare is its **Sub-Specialization Intelligence System**. This system recognizes that within each medical specialty, there are highly specialized areas of focus. Matching a patient's specific condition to a doctor's sub-specialization can dramatically improve clinical outcomes.
 
-**Purpose**: Map patient symptoms to specific sub-specialties within a specialty
+### The Challenge
 
-**Keyword Database**: 200+ medical keywords mapped across 11 specialties
+Consider **Cardiology** - it's a broad specialty covering everything from:
+- Heart attacks and blocked arteries → **Interventional Cardiology**
+- Irregular heartbeats and pacemakers → **Electrophysiology**
+- Chronic heart failure management → **Heart Failure Specialist**
+- Risk assessment and prevention → **Preventive Cardiology**
 
-#### Example Mappings
+A patient with atrial fibrillation (irregular heartbeat) would be much better served by an electrophysiologist than an interventional cardiologist, even though both are excellent cardiologists.
 
-**Cardiology**:
-```python
-CARDIOLOGY_SUBSPECIALTIES = {
-    "interventional_cardiology": [
-        "blocked arteries", "angioplasty", "stent",
-        "coronary artery disease", "heart attack", "MI",
-        "chest pain on exertion", "stable angina"
-    ],
-    "electrophysiology": [
-        "arrhythmia", "irregular heartbeat", "palpitations",
-        "atrial fibrillation", "AFib", "heart rhythm",
-        "fast heart rate", "tachycardia", "bradycardia"
-    ],
-    "heart_failure": [
-        "shortness of breath", "swelling", "edema",
-        "fluid retention", "heart failure", "cardiomyopathy",
-        "fatigue", "exercise intolerance"
-    ],
-    "preventive_cardiology": [
-        "high cholesterol", "hypertension", "diabetes",
-        "risk assessment", "prevention", "family history"
-    ]
-}
+### The Solution: Medical Keyword Database
+
+RavenCare maintains a comprehensive database of **200+ medical keywords** mapped to sub-specializations across all 11 specialties. This allows the system to:
+
+1. **Extract Keywords**: Analyze patient symptom descriptions
+2. **Match Patterns**: Identify relevant sub-specialization keywords
+3. **Score Alignment**: Calculate match strength between symptoms and doctor expertise
+4. **Assign Points**: Award up to 30 points for strong sub-specialization matches
+
+---
+
+### Sub-Specialization Mappings by Specialty
+
+#### 1. Cardiology Sub-Specializations
+
+| Sub-Specialty | Key Symptom Keywords | Clinical Focus |
+|---------------|----------------------|----------------|
+| **Interventional Cardiology** | blocked arteries, angioplasty, stent, coronary artery disease, heart attack, MI, chest pain on exertion, stable angina | Procedures to open blocked arteries, stent placement, treating heart attacks |
+| **Electrophysiology** | arrhythmia, irregular heartbeat, palpitations, atrial fibrillation, AFib, heart rhythm, fast heart rate, tachycardia, bradycardia, pacemaker | Heart rhythm disorders, pacemakers, ablation procedures |
+| **Heart Failure** | shortness of breath, swelling, edema, fluid retention, heart failure, cardiomyopathy, fatigue, exercise intolerance | Chronic heart failure management, fluid management |
+| **Preventive Cardiology** | high cholesterol, hypertension, diabetes, risk assessment, prevention, family history, lipid management | Risk reduction, lifestyle modification, primary prevention |
+
+**Example Match**:
 ```
-
-**Neurology**:
-```python
-NEUROLOGY_SUBSPECIALTIES = {
-    "stroke": [
-        "stroke", "CVA", "paralysis", "weakness",
-        "facial drooping", "slurred speech", "TIA",
-        "sudden onset", "numbness on one side"
-    ],
-    "epilepsy": [
-        "seizure", "epilepsy", "convulsions", "fits",
-        "loss of consciousness", "twitching", "jerking"
-    ],
-    "movement_disorders": [
-        "tremor", "Parkinson's", "shaking", "stiffness",
-        "difficulty walking", "balance problems", "rigidity"
-    ],
-    "headache": [
-        "migraine", "severe headache", "chronic headache",
-        "visual disturbance", "aura", "tension headache"
-    ],
-    "dementia": [
-        "memory loss", "confusion", "dementia", "Alzheimer's",
-        "cognitive decline", "forgetfulness", "disorientation"
-    ]
-}
-```
-
-**Gastroenterology**:
-```python
-GASTROENTEROLOGY_SUBSPECIALTIES = {
-    "hepatology": [
-        "jaundice", "liver disease", "hepatitis", "cirrhosis",
-        "fatty liver", "elevated liver enzymes", "ascites"
-    ],
-    "inflammatory_bowel_disease": [
-        "Crohn's", "ulcerative colitis", "IBD", "bloody diarrhea",
-        "chronic diarrhea", "abdominal pain", "weight loss"
-    ],
-    "pancreatic": [
-        "pancreatitis", "pancreatic", "upper abdominal pain",
-        "radiating to back", "nausea", "vomiting"
-    ],
-    "motility": [
-        "GERD", "acid reflux", "heartburn", "dysphagia",
-        "difficulty swallowing", "esophageal", "achalasia"
-    ]
-}
-```
-
-#### Matching Algorithm
-
-```python
-def suggest_subspecialty(symptoms: str, specialty: str) -> str:
-    """
-    Analyze symptoms and suggest specific sub-specialty.
-    
-    Args:
-        symptoms: Patient symptom description
-        specialty: Primary medical specialty
-    
-    Returns:
-        Sub-specialty hint or empty string
-    """
-    symptoms_lower = symptoms.lower()
-    
-    # Get keyword mapping for specialty
-    subspecialty_map = SUBSPECIALTY_KEYWORDS.get(specialty, {})
-    
-    # Score each sub-specialty by keyword matches
-    scores = {}
-    for subspecialty, keywords in subspecialty_map.items():
-        match_count = sum(
-            1 for keyword in keywords 
-            if keyword in symptoms_lower
-        )
-        if match_count > 0:
-            scores[subspecialty] = match_count
-    
-    # Return highest scoring sub-specialty
-    if scores:
-        best_subspecialty = max(scores, key=scores.get)
-        return best_subspecialty
-    
-    return ""
+Symptom: "I have episodes of rapid irregular heartbeat and feel dizzy"
+Keywords Detected: "irregular heartbeat" + "rapid"
+Best Match: Electrophysiology (30 points awarded)
 ```
 
 ---
 
-### Match Quality Determination
+#### 2. Neurology Sub-Specializations
 
-```python
-def _determine_match_quality(score: float) -> str:
-    """Convert numeric score to quality rating"""
-    if score >= 100:
-        return "excellent"
-    elif score >= 70:
-        return "good"
-    elif score >= 50:
-        return "fair"
-    else:
-        return "low"
+| Sub-Specialty | Key Symptom Keywords | Clinical Focus |
+|---------------|----------------------|----------------|
+| **Stroke & Cerebrovascular** | stroke, CVA, paralysis, weakness, facial drooping, slurred speech, TIA, sudden onset, numbness on one side | Acute stroke care, stroke prevention, TIA management |
+| **Epilepsy** | seizure, epilepsy, convulsions, fits, loss of consciousness, twitching, jerking, blackouts | Seizure disorders, epilepsy management, medication optimization |
+| **Movement Disorders** | tremor, Parkinson's, shaking, stiffness, difficulty walking, balance problems, rigidity, dystonia | Parkinson's disease, essential tremor, dystonia |
+| **Headache & Pain** | migraine, severe headache, chronic headache, visual disturbance, aura, tension headache | Migraine management, headache disorders |
+| **Dementia & Cognitive** | memory loss, confusion, dementia, Alzheimer's, cognitive decline, forgetfulness, disorientation | Memory disorders, Alzheimer's disease, cognitive assessment |
+
+**Example Match**:
 ```
-
-### Match Explanation Generation
-
-Every match includes a detailed explanation:
-
-```python
-def _generate_match_explanation(doctor: Dict, details: Dict) -> str:
-    """Generate human-readable match explanation"""
-    
-    reasons = [f"Dr. {doctor['name']} was matched because:"]
-    
-    if details['slot_match'] == 'exact':
-        reasons.append("appointment slot matches patient preference")
-    
-    if details['language_match']:
-        reasons.append("speaks patient's preferred language")
-    
-    if details['sub_spec_match'] == 'strong':
-        reasons.append("has specific expertise in patient's condition")
-    
-    if doctor['experience_years'] >= 15:
-        reasons.append(f"highly experienced ({doctor['experience_years']} years)")
-    
-    if doctor['patient_rating'] >= 4.5:
-        reasons.append(f"excellent patient rating ({doctor['patient_rating']}/5.0)")
-    
-    if doctor.get('awards'):
-        reasons.append("recognized with professional awards")
-    
-    return ", ".join(reasons) + "."
+Symptom: "Sudden weakness on right side, face drooping, trouble speaking"
+Keywords Detected: "sudden" + "weakness" + "facial drooping" + "trouble speaking"
+Best Match: Stroke & Cerebrovascular (30 points awarded)
 ```
 
 ---
 
-## Service Components
+#### 3. Gastroenterology Sub-Specializations
 
-### 1. PDF Generator (`src/services/pdf_generator.py`)
+| Sub-Specialty | Key Symptom Keywords | Clinical Focus |
+|---------------|----------------------|----------------|
+| **Hepatology** | jaundice, liver disease, hepatitis, cirrhosis, fatty liver, elevated liver enzymes, ascites, yellow skin | Liver diseases, hepatitis management, cirrhosis |
+| **Inflammatory Bowel Disease** | Crohn's, ulcerative colitis, IBD, bloody diarrhea, chronic diarrhea, abdominal pain, weight loss | Crohn's disease, ulcerative colitis, IBD management |
+| **Pancreatic** | pancreatitis, pancreatic, upper abdominal pain, radiating to back, nausea, vomiting | Pancreatic disorders, pancreatitis |
+| **Motility & GERD** | GERD, acid reflux, heartburn, dysphagia, difficulty swallowing, esophageal, achalasia | Reflux disease, swallowing disorders |
 
-**Technology**: ReportLab library
-
-**Purpose**: Generate professional PDF reports for patients, doctors, and admin
-
-**Report Types**:
-
-1. **Patient Report**
-   - Easy-to-understand language
-   - Color-coded urgency indicators
-   - Doctor contact information
-   - Next steps and instructions
-   - Appointment details
-
-2. **Doctor Report**
-   - Clinical terminology
-   - Full AI analysis details
-   - Risk factors and red flags
-   - Recommended diagnostic tests
-   - Patient history and conditions
-
-3. **Consolidated Report**
-   - Executive summary
-   - Statistics dashboard
-   - All patients in one document
-   - Priority breakdown
-   - Specialty distribution
-
-**Key Features**:
-- Custom styling with colors and fonts
-- Tables for structured data
-- Bullet points for readability
-- Headers and footers with branding
-- Page numbers and timestamps
-
----
-
-### 2. Calendar Service (`src/services/calendar_service.py`)
-
-**See [Composio Integrations - Google Calendar](#3-google-calendar-integration)** section above for detailed information.
-
----
-
-### 3. Email Service (`src/services/email_service.py`)
-
-**See [Composio Integrations - Gmail](#1-gmail-integration)** section above for detailed information.
-
----
-
-### 4. Sheets Service (`src/services/sheets_service.py`)
-
-**See [Composio Integrations - Google Sheets](#2-google-sheets-integration)** section above for detailed information.
-
----
-
-## Configuration Management
-
-### Centralized Config (`src/config/settings.py`)
-
-**Design Pattern**: Singleton configuration class with environment variable loading
-
-**Features**:
-- ✅ Environment variable validation
-- ✅ Default value handling
-- ✅ Type conversion and casting
-- ✅ Configuration status reporting
-- ✅ Feature availability checking
-
-**Structure**:
-
-```python
-class Config:
-    """Centralized configuration management"""
-    
-    # AI Model Configuration
-    GEMINI_API_KEY: str = os.getenv('GEMINI_API_KEY', '')
-    GROK_API_KEY: str = os.getenv('GROK_API_KEY', '')
-    GROK_ENDPOINT: str = os.getenv('GROK_ENDPOINT', '')
-    OPENAI_API_KEY: str = os.getenv('OPENAI_API_KEY', '')
-    OPENAI_ENDPOINT: str = os.getenv('OPENAI_ENDPOINT', '')
-    
-    # Composio Configuration
-    COMPOSIO_API_KEY: str = os.getenv('COMPOSIO_API_KEY', '')
-    COMPOSIO_USER_ID: str = os.getenv('COMPOSIO_USER_ID', '')
-    COMPOSIO_SHEETS_ACCOUNT_ID: str = os.getenv('COMPOSIO_SHEETS_ACCOUNT_ID', '')
-    COMPOSIO_CALENDAR_ACCOUNT_ID: str = os.getenv('COMPOSIO_CALENDAR_ACCOUNT_ID', '')
-    COMPOSIO_GMAIL_ACCOUNT_ID: str = os.getenv('COMPOSIO_GMAIL_ACCOUNT_ID', '')
-    COMPOSIO_DRIVE_ACCOUNT_ID: str = os.getenv('COMPOSIO_DRIVE_ACCOUNT_ID', '')
-    
-    # Application Configuration
-    ADMIN_EMAIL: str = os.getenv('ADMIN_EMAIL', 'admin@example.com')
-    FLASK_SECRET_KEY: str = os.getenv('FLASK_SECRET_KEY', 'dev-secret-key')
-    FLASK_DEBUG: bool = os.getenv('FLASK_DEBUG', 'False').lower() == 'true'
-    
-    @classmethod
-    def validate_config(cls) -> Dict[str, bool]:
-        """Validate all required configuration"""
-        return {
-            'ai_models': bool(cls.GEMINI_API_KEY and cls.GROK_API_KEY),
-            'composio': bool(cls.COMPOSIO_API_KEY and cls.COMPOSIO_USER_ID),
-            'google_sheets': bool(cls.COMPOSIO_SHEETS_ACCOUNT_ID),
-            'google_calendar': bool(cls.COMPOSIO_CALENDAR_ACCOUNT_ID),
-            'gmail': bool(cls.COMPOSIO_GMAIL_ACCOUNT_ID),
-            'google_drive': bool(cls.COMPOSIO_DRIVE_ACCOUNT_ID)
-        }
-    
-    @classmethod
-    def print_config_status(cls):
-        """Print configuration status"""
-        status = cls.validate_config()
-        
-        print("🔧 Configuration Status:")
-        print(f"  AI Models: {'✓' if status['ai_models'] else '✗'}")
-        print(f"  Composio: {'✓' if status['composio'] else '✗'}")
-        print(f"  Google Sheets: {'✓' if status['google_sheets'] else '✗'}")
-        print(f"  Google Calendar: {'✓' if status['google_calendar'] else '✗'}")
-        print(f"  Gmail: {'✓' if status['gmail'] else '✗'}")
-        print(f"  Google Drive: {'✓' if status['google_drive'] else '✗'}")
+**Example Match**:
 ```
-
-**Usage**:
-```python
-from src.config import config
-
-# Access configuration
-if config.COMPOSIO_API_KEY:
-    # Use Composio features
-    pass
-
-# Check feature availability
-features = config.validate_config()
-if features['google_sheets']:
-    # Create Google Sheet
-    pass
+Symptom: "Yellow skin and eyes, abdominal swelling, fatigue"
+Keywords Detected: "yellow skin" (jaundice) + "abdominal swelling" (ascites)
+Best Match: Hepatology (30 points awarded)
 ```
 
 ---
 
-## Data Flow & Pipeline
+#### 4. Pulmonology Sub-Specializations
 
-### Complete Triage Workflow
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│ STEP 1: Patient Data Input                                  │
-│ • Load from Patient_Details/patients_information.json       │
-│ • Validate required fields                                  │
-│ • Parse symptoms and medical history                        │
-└────────────────────┬────────────────────────────────────────┘
-                     │
-┌────────────────────▼────────────────────────────────────────┐
-│ STEP 2: Gemini Analysis (AI Agent 1)                        │
-│ • Comprehensive symptom analysis                            │
-│ • Medical specialty identification                          │
-│ • Condition recognition                                     │
-│ • Red flag detection                                        │
-│ • Recommended tests                                         │
-│                                                             │
-│ Output: specialty, conditions, reasoning, red_flags         │
-└────────────────────┬────────────────────────────────────────┘
-                     │
-┌────────────────────▼────────────────────────────────────────┐
-│ STEP 3: Grok Urgency Assessment (AI Agent 2)                │
-│ • Calculate urgency score (0-100)                           │
-│ • Determine risk level                                      │
-│ • Identify critical red flags                               │
-│ • Estimate time-to-treatment                                │
-│                                                             │
-│ Output: urgency_score, risk_level, time_to_treatment        │
-└────────────────────┬────────────────────────────────────────┘
-                     │
-┌────────────────────▼────────────────────────────────────────┐
-│ STEP 4: O4-Mini Final Evaluation (AI Agent 3)               │
-│ • Cross-validate previous analyses                          │
-│ • Resolve specialty conflicts                               │
-│ • Generate consolidated action plan                         │
-│ • Provide confidence scores                                 │
-│                                                             │
-│ Output: final_specialty, confidence, action_plan            │
-└────────────────────┬────────────────────────────────────────┘
-                     │
-┌────────────────────▼────────────────────────────────────────┐
-│ STEP 5: Doctor Matching (Enhanced Algorithm)                │
-│ • 8-factor scoring calculation                              │
-│ • Sub-specialization detection                              │
-│ • Urgency-based prioritization                              │
-│ • Age-appropriate matching                                  │
-│ • Match quality determination                               │
-│                                                             │
-│ Output: best_doctor, match_score, match_details             │
-└────────────────────┬────────────────────────────────────────┘
-                     │
-┌────────────────────▼────────────────────────────────────────┐
-│ STEP 6: Report Generation                                   │
-│ • JSON summary report                                       │
-│ • Patient PDF report (simplified language)                  │
-│ • Doctor PDF report (clinical details)                      │
-│ • Consolidated admin PDF                                    │
-│                                                             │
-│ Output: Multiple PDF files + JSON data                      │
-└────────────────────┬────────────────────────────────────────┘
-                     │
-┌────────────────────▼────────────────────────────────────────┐
-│ STEP 7: Composio Integrations (Parallel Execution)          │
-│                                                             │
-│ ┌─────────────────┐ ┌─────────────────┐ ┌────────────────┐ │
-│ │ Google Sheets   │ │ Google Calendar │ │ Google Drive   │ │
-│ │ • Create sheet  │ │ • Schedule appt │ │ • Upload PDFs  │ │
-│ │ • Format data   │ │ • Add attendees │ │ • Share links  │ │
-│ │ • Get URL       │ │ • Create Meet   │ │ • Set perms    │ │
-│ └─────────────────┘ └─────────────────┘ └────────────────┘ │
-│                                                             │
-│ Output: sheet_url, calendar_event, drive_links              │
-└────────────────────┬────────────────────────────────────────┘
-                     │
-┌────────────────────▼────────────────────────────────────────┐
-│ STEP 8: Email Notifications (Composio Gmail)                │
-│ • Admin email (consolidated report)                         │
-│ • Patient emails (individual reports + links)               │
-│ • Doctor emails (clinical summaries)                        │
-│                                                             │
-│ Output: Email delivery confirmations                        │
-└─────────────────────────────────────────────────────────────┘
-```
-
-### Data Structures
-
-**Patient Input**:
-```json
-{
-  "name": "John Doe",
-  "age": 45,
-  "gender": "Male",
-  "contact_number": "+91-9876543210",
-  "email": "john@example.com",
-  "symptoms": "Severe chest pain radiating to left arm, shortness of breath, sweating",
-  "pre_existing_conditions": ["Hypertension", "Type 2 Diabetes"],
-  "preferred_language": "English",
-  "preferred_slot": "10:00"
-}
-```
-
-**Triage Result** (Internal Structure):
-```json
-{
-  "patient": {
-    "name": "John Doe",
-    "age": 45,
-    "gender": "Male",
-    "contact_number": "+91-9876543210",
-    "email": "john@example.com"
-  },
-  "analyses": {
-    "gemini": {
-      "specialty": "Cardiology",
-      "potential_conditions": ["Acute Coronary Syndrome", "Myocardial Infarction"],
-      "reasoning": "Symptoms suggest cardiac origin...",
-      "red_flags": ["Chest pain radiating to arm", "Diaphoresis"],
-      "recommended_tests": ["ECG", "Troponin", "CK-MB"]
-    },
-    "grok": {
-      "urgency_score": 95,
-      "risk_level": "critical",
-      "time_to_treatment": "immediate",
-      "red_flags": ["Possible heart attack"],
-      "reasoning": "High-risk cardiac event likely..."
-    },
-    "o4mini": {
-      "final_specialty": "Cardiology",
-      "confidence": 0.98,
-      "action_plan": "Immediate emergency department referral...",
-      "additional_recommendations": ["Aspirin 325mg", "Oxygen therapy"]
-    }
-  },
-  "matched_doctor": {
-    "name": "Dr. Suresh Iyer",
-    "qualification": "MD, DM (Cardiology)",
-    "experience_years": 20,
-    "sub_specialization": "Interventional Cardiology, Heart Failure",
-    "languages_spoken": ["English", "Hindi", "Tamil"],
-    "patient_rating": 4.9,
-    "slots": ["09:00", "11:00", "14:00"],
-    "contact_email": "dr.iyer@hospital.com",
-    "awards": ["Excellence in Interventional Cardiology 2022"],
-    "match_score": 145.5,
-    "match_quality": "excellent",
-    "match_details": {
-      "slot_match": "alternative",
-      "language_match": true,
-      "sub_spec_match": "strong",
-      "rating_score": 4.9,
-      "experience_years": 20,
-      "has_awards": true,
-      "age_appropriate": "adult",
-      "urgency_experience_match": true
-    },
-    "match_explanation": "Dr. Suresh Iyer was matched because: speaks patient's preferred language, has specific expertise in patient's condition, highly experienced (20 years), excellent patient rating (4.9/5.0), recognized with professional awards."
-  },
-  "integrations": {
-    "google_sheets_url": "https://docs.google.com/spreadsheets/d/abc123/edit",
-    "calendar_event_id": "evt_xyz789",
-    "meeting_link": "https://meet.google.com/abc-defg-hij",
-    "drive_links": {
-      "patient_report": "https://drive.google.com/file/d/file1/view",
-      "doctor_report": "https://drive.google.com/file/d/file2/view"
-    }
-  },
-  "timestamp": "2025-10-21T14:30:00Z"
-}
-```
+| Sub-Specialty | Key Symptom Keywords | Clinical Focus |
+|---------------|----------------------|----------------|
+| **Asthma & Allergy** | asthma, wheezing, allergies, difficulty breathing, chest tightness, seasonal | Asthma management, allergic conditions |
+| **COPD** | COPD, chronic bronchitis, emphysema, smoking, chronic cough, sputum production | Chronic lung disease, smoking-related conditions |
+| **Interstitial Lung Disease** | fibrosis, scarring, chronic cough, progressive shortness of breath | Lung scarring disorders, fibrosis |
+| **Sleep Medicine** | sleep apnea, snoring, daytime sleepiness, CPAP, sleep disorders | Sleep-related breathing disorders |
 
 ---
 
-## API Integration Details
+#### 5. Orthopedics Sub-Specializations
 
-### Gemini API
-
-**Library**: `google-generativeai`
-**Model**: `gemini-2.5-pro`
-
-**Initialization**:
-```python
-import google.generativeai as genai
-
-genai.configure(api_key=config.GEMINI_API_KEY)
-model = genai.GenerativeModel('gemini-2.5-pro')
-```
-
-**Request Structure**:
-```python
-response = model.generate_content([
-    "System: You are a medical expert...",
-    f"Patient Symptoms: {symptoms}",
-    f"Medical History: {conditions}",
-    "Provide analysis in JSON format..."
-])
-```
-
-**Rate Limits**: Check Google AI Studio documentation
+| Sub-Specialty | Key Symptom Keywords | Clinical Focus |
+|---------------|----------------------|----------------|
+| **Sports Medicine** | sports injury, ligament tear, ACL, meniscus, athletic injury, sprain | Athletic injuries, ligament repairs |
+| **Spine** | back pain, neck pain, herniated disc, sciatica, spinal, vertebral | Spine disorders, disc problems |
+| **Joint Replacement** | arthritis, joint pain, knee replacement, hip replacement, severe joint wear | Joint replacement surgery, severe arthritis |
+| **Trauma** | fracture, broken bone, dislocation, trauma, accident, fall | Fracture management, acute trauma |
 
 ---
 
-### Grok API
+#### 6. Dermatology Sub-Specializations
 
-**Protocol**: HTTP REST API
-**Model**: `grok-4-fast-reasoning`
-
-**Request Structure**:
-```python
-import requests
-
-headers = {
-    "Authorization": f"Bearer {config.GROK_API_KEY}",
-    "Content-Type": "application/json"
-}
-
-payload = {
-    "model": "grok-4-fast-reasoning",
-    "messages": [
-        {"role": "system", "content": "You are a medical triage specialist..."},
-        {"role": "user", "content": patient_data}
-    ],
-    "temperature": 0.3
-}
-
-response = requests.post(
-    config.GROK_ENDPOINT,
-    headers=headers,
-    json=payload
-)
-```
+| Sub-Specialty | Key Symptom Keywords | Clinical Focus |
+|---------------|----------------------|----------------|
+| **Medical Dermatology** | eczema, psoriasis, rash, itching, skin condition, chronic | Chronic skin conditions, medical management |
+| **Cosmetic Dermatology** | wrinkles, aging skin, cosmetic, aesthetic, skin rejuvenation | Cosmetic procedures, aesthetic treatments |
+| **Surgical Dermatology** | skin cancer, melanoma, mole removal, biopsy, lesion | Skin cancer, surgical procedures |
+| **Pediatric Dermatology** | childhood rash, diaper rash, pediatric skin, infant skin condition | Pediatric skin conditions |
 
 ---
 
-### OpenAI API
+### How Sub-Specialization Matching Works
 
-**Library**: `openai`
-**Model**: `o4-mini`
+**Step-by-Step Process**:
 
-**Initialization**:
-```python
-from openai import OpenAI
-
-client = OpenAI(
-    api_key=config.OPENAI_API_KEY,
-    base_url=config.OPENAI_ENDPOINT
-)
-```
-
-**Request Structure**:
-```python
-response = client.chat.completions.create(
-    model="o4-mini",
-    messages=[
-        {"role": "system", "content": "You are a clinical evaluator..."},
-        {"role": "user", "content": analyses_to_evaluate}
-    ],
-    temperature=0.2
-)
-```
+1. **Symptom Analysis**
+   - Patient describes: "I have been having episodes of rapid irregular heartbeat, sometimes feeling dizzy and short of breath"
+   
+2. **Keyword Extraction**
+   - System identifies: "rapid irregular heartbeat", "dizzy"
+   
+3. **Database Lookup**
+   - Searches Cardiology sub-specialization keywords
+   - Finds matches in "Electrophysiology" category
+   
+4. **Match Scoring**
+   - Counts keyword matches: 2 strong matches
+   - Determines match strength: **Strong Match**
+   
+5. **Point Assignment**
+   - Awards 30 points for strong sub-specialization match
+   
+6. **Doctor Filtering**
+   - Prioritizes doctors with "Electrophysiology" or "Arrhythmia" in their sub-specialization field
 
 ---
 
-### Composio API
+### Real-World Impact Examples
 
-**Library**: `composio-core`
-**Authentication**: API Key
+#### Example 1: Cardiac Case
 
-**Initialization**:
-```python
-from composio import Composio
+**Patient**: 62-year-old with "crushing chest pain radiating to left arm, sweating"
 
-composio = Composio(api_key=config.COMPOSIO_API_KEY)
-```
+**Without Sub-Specialization Matching**:
+- General cardiologist matched → May focus on routine care
+- Delay in recognizing acute MI → Delayed intervention
 
-**Action Execution Pattern**:
-```python
-result = composio.tools.execute(
-    action="ACTION_NAME",
-    user_id=config.COMPOSIO_USER_ID,
-    arguments={
-        "param1": "value1",
-        "param2": "value2"
-    },
-    connected_account_id=config.COMPOSIO_ACCOUNT_ID
-)
-
-# Check result
-if result.get('successful'):
-    data = result.get('data', {})
-    # Process data
-else:
-    error = result.get('error', 'Unknown error')
-    # Handle error
-```
+**With Sub-Specialization Matching**:
+- Keywords: "chest pain" + "radiating to arm" → **Interventional Cardiology**
+- Interventional cardiologist matched → Expert in emergency cardiac procedures
+- Immediate recognition of acute MI → Rapid catheterization if needed
+- **Result**: Faster treatment, better outcomes
 
 ---
 
-## Enhancement History
+#### Example 2: Neurological Case
 
-### Version 1.0 - Basic System
-- ✅ 3-factor doctor matching
-- ✅ Single AI model analysis
-- ✅ Basic PDF reports
-- ✅ Command-line interface
+**Patient**: 45-year-old with "recurrent episodes of jerking movements, loss of awareness"
 
-### Version 1.5 - Multi-Model AI
-- ✅ Gemini + Grok + OpenAI pipeline
-- ✅ Urgency scoring system
-- ✅ Enhanced PDF reports
-- ✅ Basic web dashboard
+**Without Sub-Specialization Matching**:
+- General neurologist matched → Broad expertise
+- Standard workup initiated
 
-### Version 2.0 - Enhanced Matching
-- ✅ 8-factor scoring algorithm
-- ✅ Sub-specialization matching (200+ keywords)
-- ✅ Age-appropriate care
-- ✅ Urgency-based prioritization
-- ✅ Match transparency and explanations
-
-### Version 2.1 - Composio Integration
-- ✅ Google Sheets dashboards
-- ✅ Google Calendar scheduling
-- ✅ Gmail notifications
-- ✅ Google Drive storage
-- ✅ Complete automation
-
-### Future Enhancements (Planned)
-- [ ] Machine learning for outcome prediction
-- [ ] Patient feedback integration
-- [ ] Real-time doctor availability
-- [ ] Geographic optimization
-- [ ] Multi-language patient support
-- [ ] Mobile app
-- [ ] EHR integration
+**With Sub-Specialization Matching**:
+- Keywords: "jerking movements" + "loss of awareness" → **Epilepsy**
+- Epilepsy specialist matched → Expert in seizure disorders
+- Immediate recognition of complex partial seizures
+- Specialized EEG interpretation and medication management
+- **Result**: Accurate diagnosis, optimal medication selection
 
 ---
 
-## Summary
+#### Example 3: Gastrointestinal Case
 
-RavenCare is a **production-grade medical triage system** that combines:
+**Patient**: 28-year-old with "chronic bloody diarrhea, abdominal cramping, weight loss"
 
-1. **Multi-Model AI**: Three AI models working together for accurate analysis
-2. **Intelligent Matching**: 8-factor algorithm with sub-specialization awareness
-3. **Complete Automation**: Composio-powered Google Workspace integrations
-4. **Professional Output**: PDFs, dashboards, emails, and calendar events
-5. **Clean Architecture**: Modular, maintainable, and extensible codebase
+**Without Sub-Specialization Matching**:
+- General gastroenterologist matched → Broad GI expertise
 
-**Powered by Composio** for seamless Google Workspace integrations.
+**With Sub-Specialization Matching**:
+- Keywords: "chronic" + "bloody diarrhea" + "weight loss" → **Inflammatory Bowel Disease**
+- IBD specialist matched → Expert in Crohn's and ulcerative colitis
+- Recognition of likely IBD → Immediate colonoscopy and biopsy planning
+- **Result**: Rapid diagnosis, appropriate immunosuppressive therapy
 
 ---
 
-*Last Updated: October 21, 2025*
-*RavenCare v2.1 - Technical Documentation*
+### Benefits of Sub-Specialization Intelligence
+
+✅ **Precision Matching**: Patients see doctors with exact relevant expertise  
+✅ **Faster Diagnosis**: Specialists recognize condition patterns immediately  
+✅ **Better Outcomes**: Sub-specialists have higher success rates in their focus area  
+✅ **Reduced Referrals**: Less need for secondary referrals to other specialists  
+✅ **Patient Satisfaction**: Confidence in seeing "the right doctor" for their problem  
+✅ **System Efficiency**: Optimal resource utilization across medical staff
+
+---
+
+### Algorithm Intelligence
+
+The sub-specialization matching algorithm is **context-aware**:
+
+- **Multiple Keywords**: Weighs multiple matching keywords for stronger matches
+- **Keyword Variations**: Recognizes medical synonyms (MI = heart attack = myocardial infarction)
+- **Combination Patterns**: Detects symptom combinations that suggest specific conditions
+- **Priority Scoring**: Some keywords carry more weight (e.g., "stroke" is high priority)
+- **Fallback Logic**: If no strong match found, defaults to general specialist in that specialty
+
+This intelligence ensures that the system doesn't just match keywords mechanically, but understands the clinical context and makes medically sound decisions.
+
+---
+
+## Match Quality & Scoring Examples
+
+To illustrate how the 8-Factor Scoring Algorithm works in practice, here are detailed examples of different matching scenarios with complete score breakdowns.
+
+### Example 1: Critical Cardiac Emergency - Excellent Match
+
+**Patient Profile**:
+- Name: Rajesh Kumar, Age: 58, Male
+- Symptoms: "Severe crushing chest pain for 30 minutes, radiating to left arm and jaw, profuse sweating, nausea, shortness of breath"
+- Pre-existing: Hypertension, Type 2 Diabetes, Family history of heart disease
+- Urgency Score: **95/100 (Critical)**
+- Specialty: **Cardiology**
+- Preferred Language: Hindi
+- Preferred Slot: 10:00 AM
+
+**Doctor Profile**:
+- Name: Dr. Suresh Iyer
+- Qualification: MD, DM (Cardiology), FSCAI
+- Experience: **25 years**
+- Sub-specialization: "**Interventional Cardiology**, Acute Coronary Syndrome, Complex PCI"
+- Languages: Hindi, English, Tamil
+- Rating: **4.9/5.0**
+- Available Slots: 09:00, **10:00**, 14:00
+- Awards: "Excellence in Interventional Cardiology 2022", "Best Cardiologist Award 2023"
+
+**8-Factor Score Breakdown**:
+
+| Factor | Calculation | Points | Reasoning |
+|--------|-------------|--------|-----------|
+| **Slot Availability** | Exact + Critical | **60/60** | Has exact 10:00 slot (40) + Critical urgency bonus (20) |
+| **Language Match** | Perfect match | **25/25** | Speaks Hindi fluently ✓ |
+| **Doctor Rating** | 4.9/5.0 | **19.6/20** | (4.9/5.0) × 20 = 19.6 |
+| **Experience** | 25 years | **12.5/15** | (25/30) × 15 = 12.5 |
+| **Sub-Specialization** | Strong match | **30/30** | "Interventional" + "Acute Coronary Syndrome" = perfect for MI |
+| **Awards** | 2 major awards | **10/10** | Excellence awards ✓ |
+| **Age-Appropriate** | Adult | **0/10** | No bonus for adults |
+| **Urgency-Experience** | Critical + 25 years | **10/10** | Perfect alignment: Critical case needs 20+ years ✓ |
+
+**TOTAL SCORE**: **167.1 / 170 points (98.3%)**  
+**Match Quality**: **EXCELLENT**
+
+**Match Explanation**:
+> "Dr. Suresh Iyer is an EXCELLENT match (98%) for this critical cardiac emergency. He has the exact appointment slot the patient requested, speaks the patient's preferred language (Hindi), and most importantly, he is a senior Interventional Cardiologist with 25 years of experience specifically in Acute Coronary Syndrome - the exact expertise needed for a suspected heart attack. His exceptional patient rating (4.9/5.0) and professional awards further confirm his clinical excellence. This is an ideal match for this life-threatening situation."
+
+---
+
+### Example 2: Pediatric Case - Good Match
+
+**Patient Profile**:
+- Name: Aarav Sharma, Age: 7, Male
+- Symptoms: "Heart murmur detected during school checkup, occasional chest discomfort during play, gets tired easily"
+- Pre-existing: None
+- Urgency Score: **45/100 (Moderate)**
+- Specialty: **Cardiology** (Pediatric)
+- Preferred Language: Hindi
+- Preferred Slot: 15:00
+
+**Doctor Profile**:
+- Name: Dr. Priya Malhotra
+- Qualification: MD (Pediatrics), DM (Pediatric Cardiology)
+- Experience: **12 years**
+- Sub-specialization: "**Pediatric Cardiology**, Congenital Heart Defects, Pediatric Echocardiography"
+- Languages: Hindi, English
+- Rating: **4.7/5.0**
+- Available Slots: 14:00, 16:00 (no 15:00)
+- Awards: None listed
+
+**8-Factor Score Breakdown**:
+
+| Factor | Calculation | Points | Reasoning |
+|--------|-------------|--------|-----------|
+| **Slot Availability** | Alternative | **20/60** | Has alternative slots (14:00, 16:00) but not exact 15:00 |
+| **Language Match** | Perfect match | **25/25** | Speaks Hindi ✓ |
+| **Doctor Rating** | 4.7/5.0 | **18.8/20** | (4.7/5.0) × 20 = 18.8 |
+| **Experience** | 12 years | **6/15** | (12/30) × 15 = 6.0 |
+| **Sub-Specialization** | Strong match | **30/30** | Pediatric Cardiology + Congenital Heart Defects = ideal for murmur |
+| **Awards** | No awards | **0/10** | No awards listed |
+| **Age-Appropriate** | Pediatric specialist | **10/10** | Perfect: 7-year-old with Pediatric Cardiologist ✓✓ |
+| **Urgency-Experience** | Moderate urgency | **0/10** | No bonus (not high/critical urgency) |
+
+**TOTAL SCORE**: **109.8 / 170 points (64.6%)**  
+**Match Quality**: **GOOD**
+
+**Match Explanation**:
+> "Dr. Priya Malhotra is a GOOD match (65%) for this pediatric cardiac case. While she doesn't have the exact time slot requested, she is a specialized Pediatric Cardiologist - which is essential for evaluating a child's heart murmur. Her 12 years of experience in Pediatric Cardiology and sub-specialization in Congenital Heart Defects make her ideally suited to evaluate and manage this condition. Her excellent rating (4.7/5.0) and language match further support this recommendation."
+
+---
+
+### Example 3: Neurological Emergency - Excellent Match
+
+**Patient Profile**:
+- Name: Lakshmi Devi, Age: 72, Female
+- Symptoms: "Sudden weakness on right side of body, face drooping on right, slurred speech, started 1 hour ago"
+- Pre-existing: Hypertension, Atrial Fibrillation
+- Urgency Score: **98/100 (Critical - Stroke)**
+- Specialty: **Neurology**
+- Preferred Language: Tamil
+- Preferred Slot: IMMEDIATE
+
+**Doctor Profile**:
+- Name: Dr. Venkat Raman
+- Qualification: MD, DM (Neurology), DNB
+- Experience: **22 years**
+- Sub-specialization: "**Stroke & Cerebrovascular Disease**, Acute Stroke Management, Thrombolysis"
+- Languages: Tamil, English, Telugu
+- Rating: **4.8/5.0**
+- Available Slots: EMERGENCY AVAILABLE
+- Awards: "Excellence in Stroke Care 2021"
+
+**8-Factor Score Breakdown**:
+
+| Factor | Calculation | Points | Reasoning |
+|--------|-------------|--------|-----------|
+| **Slot Availability** | Emergency + Critical | **60/60** | Immediate availability (40) + Critical bonus (20) |
+| **Language Match** | Perfect match | **25/25** | Speaks Tamil ✓ |
+| **Doctor Rating** | 4.8/5.0 | **19.2/20** | (4.8/5.0) × 20 = 19.2 |
+| **Experience** | 22 years | **11/15** | (22/30) × 15 = 11.0 |
+| **Sub-Specialization** | Strong match | **30/30** | Stroke specialist + "Acute Stroke Management" = perfect for stroke |
+| **Awards** | Stroke care award | **10/10** | Recognized excellence in stroke care ✓ |
+| **Age-Appropriate** | Geriatric + experienced | **5/10** | 72-year-old with 22 years experience = good match |
+| **Urgency-Experience** | Critical + 22 years | **10/10** | Critical case with 20+ years experience ✓✓ |
+
+**TOTAL SCORE**: **170.2 / 170 points (100%+)**  
+**Match Quality**: **EXCELLENT (PERFECT)**
+
+**Match Explanation**:
+> "Dr. Venkat Raman is a PERFECT match (100%) for this critical stroke emergency. This is a time-sensitive situation requiring immediate intervention (within 4.5-hour window for thrombolysis). Dr. Raman is immediately available, speaks the patient's language (Tamil), and most critically, he is a senior Stroke & Cerebrovascular specialist with 22 years of experience specifically in Acute Stroke Management. His award in Stroke Care Excellence confirms his expertise. This is the ideal doctor for this life-threatening emergency."
+
+---
+
+### Example 4: Routine Case - Fair Match
+
+**Patient Profile**:
+- Name: Amit Patel, Age: 35, Male
+- Symptoms: "Occasional heartburn after meals, mild discomfort, happening for 2 weeks"
+- Pre-existing: None
+- Urgency Score: **25/100 (Low)**
+- Specialty: **Gastroenterology**
+- Preferred Language: Gujarati
+- Preferred Slot: 11:00
+
+**Doctor Profile**:
+- Name: Dr. Neha Shah
+- Qualification: MD (Internal Medicine), DM (Gastroenterology)
+- Experience: **4 years**
+- Sub-specialization: "General Gastroenterology"
+- Languages: Hindi, English (NOT Gujarati)
+- Rating: **4.3/5.0**
+- Available Slots: 11:00
+- Awards: None
+
+**8-Factor Score Breakdown**:
+
+| Factor | Calculation | Points | Reasoning |
+|--------|-------------|--------|-----------|
+| **Slot Availability** | Exact match | **40/60** | Has exact 11:00 slot (40), no urgency bonus |
+| **Language Match** | No match | **0/25** | Doesn't speak Gujarati ✗ |
+| **Doctor Rating** | 4.3/5.0 | **17.2/20** | (4.3/5.0) × 20 = 17.2 |
+| **Experience** | 4 years | **2/15** | (4/30) × 15 = 2.0 |
+| **Sub-Specialization** | No specific match | **0/30** | "General" doesn't match GERD specifically |
+| **Awards** | No awards | **0/10** | No awards listed |
+| **Age-Appropriate** | Adult | **0/10** | No bonus for adults |
+| **Urgency-Experience** | Low urgency | **0/10** | No bonus (low urgency) |
+
+**TOTAL SCORE**: **59.2 / 170 points (34.8%)**  
+**Match Quality**: **FAIR**
+
+**Match Explanation**:
+> "Dr. Neha Shah is a FAIR match (35%) for this routine case. She has the exact time slot requested and is a qualified gastroenterologist capable of managing common GERD symptoms. However, there are some limitations: she doesn't speak the patient's preferred language (Gujarati), she's relatively early in her career (4 years), and doesn't have specific sub-specialization in reflux disorders. For a low-urgency, routine case like this, she is acceptable, though not ideal. Consider expanding search if patient strongly prefers Gujarati-speaking doctor."
+
+---
+
+### Key Takeaways from Examples
+
+1. **Critical Cases Get Best Matches**: The algorithm ensures life-threatening cases (Urgency 90+) are matched with senior, specialized doctors (Examples 1 & 3)
+
+2. **Sub-Specialization is Crucial**: 30 points can make or break a match - seeing a Stroke specialist vs. general neurologist can save lives
+
+3. **Age Matters**: Pediatric patients MUST see pediatric specialists (Example 2 gets 10 bonus points)
+
+4. **Language Helps**: 25 points for language match improves communication and patient satisfaction
+
+5. **Experience Counts for Emergencies**: Critical cases require 20+ years experience for the urgency-experience bonus
+
+6. **Fair Matches Are Acceptable**: For routine low-urgency cases (Example 4), a fair match is sufficient since clinical risk is low
+
+---
+
+## Summary: Why the 8-Factor Algorithm is Revolutionary
+
+The RavenCare 8-Factor Scoring Algorithm represents a **paradigm shift** in medical triage and doctor matching:
+
+### Traditional Matching (Most Systems)
+❌ Basic 3-factor matching: Availability + Distance + Ratings  
+❌ No clinical sophistication  
+❌ Treats all cases equally (routine = emergency)  
+❌ No sub-specialization awareness  
+❌ Random assignment within specialty  
+❌ Poor outcomes for complex cases  
+
+### RavenCare Advanced Matching
+✅ **8-factor comprehensive scoring** (170 possible points)  
+✅ **Clinical intelligence** (sub-specialization matching)  
+✅ **Urgency-aware** (critical cases → senior doctors)  
+✅ **Age-appropriate** (pediatric/geriatric considerations)  
+✅ **Patient-centered** (language, preferences)  
+✅ **Quality-focused** (experience, ratings, awards)  
+✅ **Explainable** (detailed match reasoning provided)  
+✅ **Outcome-optimized** (right doctor, right patient, right time)
+
+### Real-World Impact
+
+- **Lives Saved**: Critical patients matched with emergency specialists
+- **Faster Diagnosis**: Sub-specialty matching reduces diagnostic delays
+- **Better Outcomes**: Right expertise applied to specific conditions
+- **Higher Satisfaction**: Patients trust the matching process
+- **System Efficiency**: Optimal resource utilization
+- **Reduced Errors**: Appropriate experience level for case complexity
+
+---
+
+**The Bottom Line**: RavenCare doesn't just match patients with "a doctor" - it matches them with "the right doctor" using intelligent, medically sound algorithms that consider clinical appropriateness, urgency, expertise, and patient preferences simultaneously.
+
+

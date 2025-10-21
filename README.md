@@ -1,4 +1,4 @@
-# 🏥 RavenCare - AI-Powered Medical Triage System
+# 🏥 RavenCare - AI-Powered Medical Triage System biult with help of Composio
 
 ## 🎯 Overview
 
@@ -123,119 +123,7 @@ ADMIN_EMAIL=admin@your-domain.com
 FLASK_SECRET_KEY=random_secret_key
 ```
 
-### Optional Features
-Enable by setting Composio account IDs:
-- 📊 Google Sheets: `COMPOSIO_SHEETS_ACCOUNT_ID`
-- 📅 Google Calendar: `COMPOSIO_CALENDAR_ACCOUNT_ID`
-- 📧 Gmail: `COMPOSIO_GMAIL_ACCOUNT_ID`
-- ☁️ Google Drive: `COMPOSIO_DRIVE_ACCOUNT_ID`
 
----
-
-## 📊 How It Works
-
-### Complete Triage Pipeline
-
-```
-📝 Patient Intake
-    ↓
-🔬 Gemini Analysis (Stage 1)
-   ├─ Symptom analysis
-   ├─ Specialty mapping
-   └─ Condition identification
-    ↓
-⚡ Grok Urgency Scoring (Stage 2)
-   ├─ Risk calculation (0-100)
-   ├─ Red flag detection
-   └─ Time-to-treatment recommendation
-    ↓
-🎯 O4-Mini Final Evaluation (Stage 3)
-   ├─ Cross-validation
-   ├─ Final specialty determination
-   └─ Action plan generation
-    ↓
-👨‍⚕️ Intelligent Doctor Matching (Stage 4)
-   ├─ 8-factor scoring algorithm
-   ├─ Sub-specialization matching
-   ├─ Urgency + age-appropriate care
-   └─ Match score: 0-170 points
-    ↓
-📋 Report Generation (Stage 5)
-   ├─ JSON summary
-   ├─ Professional PDFs
-   ├─ Google Sheets (via Composio)
-   ├─ Calendar appointments (via Composio)
-   └─ Email notifications (via Composio)
-```
-
-### Urgency Classification
-
-| Level | Score | Action | Timeline |
-|-------|-------|--------|----------|
-| 🚨 **Critical** | 76-100 | Emergency care | Immediate |
-| ⚠️ **High** | 51-75 | Urgent care | Within hours |
-| ℹ️ **Moderate** | 26-50 | Same-day appointment | Within 24h |
-| ✅ **Low** | 0-25 | Routine care | Within week |
-
----
-
-## 🏗️ Project Structure
-
-```
-RavenCare/
-├── src/                              # Modular source code
-│   ├── agents/                       # AI Analysis Agents
-│   │   ├── gemini_analyzer.py       # Gemini 2.5 Pro integration
-│   │   ├── grok_analyzer.py         # Grok 4 integration
-│   │   └── o4mini_evaluator.py      # OpenAI O4-Mini integration
-│   ├── services/                     # Business Logic Services
-│   │   ├── doctor_matcher.py        # 8-factor matching algorithm
-│   │   ├── advanced_matcher.py      # Sub-specialization matching
-│   │   ├── pdf_generator.py         # Professional PDF reports
-│   │   ├── email_service.py         # 📧 Composio Gmail integration
-│   │   ├── calendar_service.py      # 📅 Composio Calendar integration
-│   │   └── sheets_service.py        # 📊 Composio Sheets integration
-│   ├── config/                       # Configuration Management
-│   │   └── settings.py              # Centralized config + validation
-│   ├── utils/                        # Utility functions
-│   └── triage_orchestrator.py       # Main workflow coordinator
-├── templates/                        # Web Interface
-│   └── index.html                   # Real-time dashboard (SSE)
-├── app.py                            # Flask web application
-├── Doctor_Details/                   # Doctor database (JSON)
-├── Patient_Details/                  # Patient intake data
-├── PDF_Reports_Professional/         # Generated reports
-├── requirements.txt                  # Python dependencies
-├── README.md                         # This file
-└── INFORMATION.md                    # Technical documentation
-```
-
----
-
-## 🎯 Doctor Matching Excellence
-
-### 8-Factor Scoring System (170 Points Max)
-
-| Factor | Points | Description |
-|--------|--------|-------------|
-| 🕐 Slot Availability | 40 (60*) | Exact slot match + urgency boost |
-| 🗣️ Language Match | 25 | Patient communication preference |
-| ⭐ Doctor Rating | 20 | Based on patient reviews |
-| 🎓 Experience | 15 | Years of practice |
-| 🔬 Sub-Specialization | 30 | **NEW**: Expertise match (200+ keywords) |
-| 🏆 Awards | 10 | Professional recognition |
-| 👶👴 Age-Appropriate | 10 | Pediatric/geriatric specialization |
-| ⚡ Urgency-Experience | 10 | High urgency → experienced doctors |
-
-**\*Urgency boost**: Critical cases get priority for immediate slots
-
-### Match Quality Ratings
-- ✅ **Excellent** (100-170): Perfect match
-- ✅ **Good** (70-99): Strong match
-- ⚠️ **Fair** (50-69): Acceptable match
-- ❌ **Low** (<50): Limited options
-
----
 
 ## 🔗 Composio Integrations
 
@@ -292,27 +180,7 @@ RavenCare/
 
 ---
 
-## 📄 Professional PDF Reports
 
-### Patient Reports
-- ✅ Easy-to-understand medical explanations
-- ✅ Clear next steps and instructions
-- ✅ Doctor contact information
-- ✅ Color-coded urgency indicators
-
-### Doctor Reports
-- ✅ Detailed clinical reasoning
-- ✅ Full AI analysis from all models
-- ✅ Risk factors and red flags
-- ✅ Recommended diagnostic tests
-
-### Consolidated Admin Reports
-- ✅ Executive summary with statistics
-- ✅ Priority distribution breakdown
-- ✅ Specialty distribution analysis
-- ✅ Quick reference for all patients
-
----
 
 ## 🌐 Web Dashboard
 
@@ -352,24 +220,6 @@ RavenCare/
 
 ---
 
-## 🏆 Why RavenCare Wins Hackathons
-
-1. ✅ **Production-Ready Code**: Industry-standard architecture
-2. ✅ **Complete Workflow**: End-to-end automation
-3. ✅ **Real Integrations**: Working Composio + Google services
-4. ✅ **Multi-Model AI**: Robust, validated analysis
-5. ✅ **Professional UI**: Both web and terminal interfaces
-6. ✅ **Comprehensive Docs**: Easy to understand and extend
-
----
-
-## 📞 Support & Documentation
-
-- 📖 **Technical Details**: See `INFORMATION.md`
-- 🔧 **Configuration**: Review `.env.example`
-- 💻 **Code Comments**: Inline documentation throughout
-
----
 
 ## ⚠️ Disclaimer
 
@@ -389,6 +239,4 @@ This system is designed for **educational and demonstration purposes**. It shoul
 
 ---
 
-**Built with ❤️ for better healthcare delivery**
 
-*Powered by Composio • Version 2.0 • October 2025*

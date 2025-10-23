@@ -9,7 +9,7 @@
 - **Ensemble Intelligence Architecture**: Three AI models (Gemini, Grok, OpenAI) collaborate through consensus-based decision making for enhanced diagnostic accuracy
 - **Intelligent Matching Algorithm**: 8-factor scoring system with 200+ medical keywords for precise doctor-patient alignment
 - **Complete Automation**: End-to-end workflow automation from triage to appointment scheduling via **Composio**
-- **Production-Grade**: Secure, modular architecture ready for real-world deployment
+- **Production-Grade**: Finetune two 7b LLMs such as Mistral or Gemma and deepseek's reasoning Model! this will keep the data secure
 
 
 Read : [information.md](https://github.com/SamirXR/RavenCare/blob/main/INFORMATION.md) to see how it works.

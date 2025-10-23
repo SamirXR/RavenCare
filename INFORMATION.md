@@ -15,12 +15,24 @@ RavenCare is an AI-powered medical triage system that analyzes patient symptoms,
 
 ### Key Capabilities
 
-✅ **Multi-AI Analysis**: Leverages three AI models (Gemini, Grok, O4-Mini) for comprehensive assessment
-✅ **Intelligent Urgency Scoring**: 0-100 scale with risk stratification
-✅ **Smart Doctor Matching**: Advanced 8-factor algorithm with 170-point maximum score
-✅ **Sub-Specialization Awareness**: 200+ medical keywords for precise matching
-✅ **Age-Appropriate Care**: Pediatric and geriatric considerations
-✅ **Urgency-Based Prioritization**: Critical cases matched with experienced doctors
+✅ **Multi-AI Analysis**  
+Leverages three AI models (Gemini, Grok, O4-Mini) for comprehensive assessment  
+
+✅ **Intelligent Urgency Scoring**  
+0–100 scale with risk stratification  
+
+✅ **Smart Doctor Matching**  
+Advanced 8-factor algorithm with 170-point maximum score  
+
+✅ **Sub-Specialization Awareness**  
+200+ medical keywords for precise matching  
+
+✅ **Age-Appropriate Care**  
+Pediatric and geriatric considerations  
+
+✅ **Urgency-Based Prioritization**  
+Critical cases matched with experienced doctors  
+
 
 ---
 

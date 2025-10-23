@@ -11,6 +11,9 @@
 - **Complete Automation**: End-to-end workflow automation from triage to appointment scheduling via **Composio**
 - **Production-Grade**: Secure, modular architecture ready for real-world deployment
 
+
+Read : [information.md](https://github.com/SamirXR/RavenCare/blob/main/INFORMATION.md) to see how it works.
+
 ---
 
 ## Key Features
